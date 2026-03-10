@@ -1,0 +1,55 @@
+/**
+ * Custom Scrollbar Styles
+ */
+
+.tpo-scrollbar {
+  overflow-y: auto;
+
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  // Webkit (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    transition: background 0.2s ease;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  // Show scrollbar when active (hover or scrolling)
+  &.tpo-scrollbar--active {
+    // Firefox
+    scrollbar-color: var(--themeplus-bg-light) transparent;
+
+    // Webkit
+    &::-webkit-scrollbar-track {
+      background: transparent;
+
+      &:hover {
+        background: rgba(var(--themeplus-rgb-neutral), .1);
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--themeplus-bg-light);
+      border-radius: 4px;
+
+      &:hover {
+        background: var(--themeplus-bg-secondary);
+      }
+
+      &:active {
+        background: var(--themeplus-bg-secondary);
+      }
+    }
+  }
+}

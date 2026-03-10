@@ -1,0 +1,207 @@
+/**
+ * ThemePlus Header
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-header {
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacing-lg;
+  gap: $spacing-lg;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-header;
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__left {
+    flex: 1;
+  }
+
+  // Theme Toggle
+  &__theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--themeplus-bg-canvas);
+    color: var(--themeplus-text-secondary);
+    border: 1px dashed var(--themeplus-border-dark);
+    @include flex-center;
+    @include transition;
+
+    &:hover {
+      background: var(--themeplus-bg-primary);
+    }
+
+    &:focus {
+      @include focus-outline;
+    }
+  }
+
+  &__theme-icon {
+    font-size: 18px;
+  }
+
+  // Section Name
+  &__section-name {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: var(--themeplus-text-primary);
+  }
+
+  // Actions
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}
+
+// Responsive
+@include respond-to('small') {
+  .tpo-header {
+    padding: 0 $spacing-md;
+
+    &__section-name {
+      display: none;
+    }
+
+    &__actions {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+// ============================================
+// Save Indicator - 3 States
+// ============================================
+.tpo-header__save-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--themeplus-bg-canvas);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  user-select: none;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tpo-header__save-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tpo-header__save-text {
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// State 1: Initial (hidden by default - handled in JSX)
+.tpo-header__save-indicator--initial {
+  display: none;
+}
+
+// State 2: Unsaved - Orange glow (stays until saved)
+.tpo-header__save-indicator--unsaved {
+  background: var(--themeplus-bg-canvas);
+  border-color: rgba(251, 146, 60, 0.3);
+
+  .tpo-header__save-dot {
+    background: #fb923c;
+    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.2),
+    0 0 12px rgba(251, 146, 60, 0.6),
+    0 0 20px rgba(251, 146, 60, 0.4);
+    animation: pulse-glow-orange 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; // ⭐ Only here
+  }
+
+  .tpo-header__save-text {
+    color: #fb923c;
+    font-weight: 600;
+  }
+}
+
+// State 3: Saved - Green (hides after 2 seconds)
+.tpo-header__save-indicator--saved {
+  background: var(--themeplus-bg-canvas);
+  border-color: rgba(16, 185, 129, 0.3);
+
+  .tpo-header__save-dot {
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+    animation: none;
+  }
+
+  .tpo-header__save-text {
+    color: #10b981;
+    font-weight: 600;
+  }
+}
+
+// Hover effect (all states)
+.tpo-header__save-indicator:hover {
+  background: rgba(var(--themeplus-rgb-white), 0.8);
+  transform: translateY(-1px);
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow-orange {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.3),
+    0 0 12px rgba(251, 146, 60, 0.6),
+    0 0 20px rgba(251, 146, 60, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.15),
+    0 0 20px rgba(251, 146, 60, 0.8),
+    0 0 30px rgba(251, 146, 60, 0.5);
+  }
+}
+
+// Dark mode
+.tpo-theme--dark {
+  .tpo-header__save-indicator {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .tpo-header__save-indicator--unsaved {
+    background: rgba(251, 146, 60, 0.15);
+    border-color: rgba(251, 146, 60, 0.4);
+  }
+
+  .tpo-header__save-indicator--saved {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+
+  .tpo-header__save-indicator:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}

@@ -1,0 +1,167 @@
+/**
+ * ThemePlus Mixins
+ */
+
+@use "sass:color";
+@use 'variables' as *;
+
+// Flexbox center
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flexbox between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Flex gap
+@mixin flex-gap($gap: $spacing-sm) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+// Transition
+@mixin transition($property: all) {
+  transition: $property $transition-speed $transition-ease;
+}
+
+// Form fields
+@mixin form-fields() {
+  padding: 10px $spacing-md;
+  border-radius: $border-radius-sm;
+}
+
+// Gradient border
+@mixin gradient-border(
+  $gradient-style: var(--themeplus-gradient-aurora),
+  $border-width: 2px,
+  $bg-color1: white,
+  $bg-color2: white,
+  $bg-angle: 180deg,
+  $border-radius: 0px
+) {
+  background: linear-gradient($bg-angle, $bg-color1, $bg-color2) padding-box, $gradient-style border-box;
+  border: $border-width solid transparent !important;
+  border-radius: $border-radius;
+}
+
+// Gradient text
+@mixin gradient-text($gradient-style: var(--themeplus-gradient-aurora)) {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-image: $gradient-style;
+}
+
+// Text shadow
+@mixin text-shadow($shadow-color: rgba(var(--themeplus-rgb-primary), 0.3)) {
+  text-shadow: 0 4px 8px $shadow-color;
+}
+
+// Box shadow
+@mixin box-shadow(
+  $horizontal-offset: 0,
+  $vertical-offset: 0,
+  $blur-radius: 0,
+  $spread-radius: 2px,
+  $rgb-value: var(--themeplus-rgb-primary),
+  $alpha: 0.1
+) {
+  box-shadow: $horizontal-offset $vertical-offset $blur-radius $spread-radius rgba($rgb-value, $alpha);
+}
+
+// Truncate text
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Scrollbar styling
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    display: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--themeplus-bg-primary);
+    border-radius: $border-radius-xs;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--themeplus-bg-secondary);
+    border-radius: $border-radius-xs;
+
+    &:hover {
+      background: var(--themeplus-bg-tertiary);
+    }
+  }
+}
+
+// Focus outline
+@mixin focus-outline {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+}
+
+@mixin focus-shadow-primary {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.25);
+}
+
+@mixin focus-shadow-neutral {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-neutral), 0.25);
+}
+
+// Card
+@mixin card(
+  $padding: $spacing-lg,
+  $background: rgba(var(--themeplus-rgb-white), .5),
+  $border-width: 2px,
+  $border-style: solid,
+  $border-color: #fff,
+  $border-radius: $border-radius-lg,
+  $box-shadow: inset 0 0 2px 4px rgba(var(--themeplus-rgb-white), .75)
+) {
+  padding: $padding;
+  background: $background;
+  border: $border-width $border-style $border-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+@mixin card-alt(
+  $background: rgba(var(--themeplus-rgb-white), .5),
+  $border-width: 2px,
+  $border-style: solid,
+  $border-color: #fff,
+  $box-shadow: inset 0 0 2px 4px rgba(var(--themeplus-rgb-white), .75)
+) {
+  background: $background;
+  border: $border-width $border-style $border-color;
+  box-shadow: $box-shadow;
+}
+
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'small' {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == 'medium' {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == 'large' {
+    @media (min-width: 1025px) {
+      @content;
+    }
+  }
+}

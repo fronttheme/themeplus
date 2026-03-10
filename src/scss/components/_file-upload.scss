@@ -1,0 +1,38 @@
+/**
+ * ThemePlus File Upload Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-file-upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: $spacing-lg;
+  border: 2px dashed var(--themeplus-border-light);
+  background: #fff;
+  border-radius: $border-radius-md;
+  width: 150px;
+  height: 150px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--themeplus-text-secondary);
+
+  i {
+    font-size: 40px;
+    color: var(--themeplus-primary);
+    @include text-shadow;
+  }
+
+  &:hover {
+    @include gradient-border($border-radius: $border-radius-md);
+
+    i {
+      @include gradient-text;
+    }
+  }
+}

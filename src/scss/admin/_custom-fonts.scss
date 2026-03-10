@@ -1,0 +1,182 @@
+/**
+ * Custom Fonts Admin Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-custom-font-uploader {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.tpo-custom-font-uploader__footer {
+  display: flex;
+  justify-content: end;
+}
+
+.tpo-font-files {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+
+  h4 {
+    margin: 0;
+  }
+
+  .description {
+    color: var(--themeplus-text-muted);
+  }
+
+  .tpo-font-file-upload {
+    display: flex;
+    align-items: center;
+    gap: $spacing-base;
+    background: var(--themeplus-bg-canvas);
+    padding: $spacing-base;
+    border-radius: $border-radius-sm;
+    border: 1px solid var(--themeplus-border-light);
+
+    label {
+      min-width: 140px;
+      flex-shrink: 0;
+    }
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .tpo-button.tpo-button--light {
+        order: 2;
+        max-width: max-content;
+      }
+    }
+  }
+}
+
+.tpo-font-formats {
+  background: rgba(var(--themeplus-rgb-neutral), .1);
+  padding: $spacing-base;
+  margin-top: $spacing-md;
+  border-radius: $border-radius-sm;
+  box-shadow: var(--themeplus-shadow-hard);
+
+  p.description {
+    color: var(--themeplus-text-primary);
+  }
+}
+
+.tpo-custom-font-uploads {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.tpo-font-file-upload__filename {
+  font-family: "Jetbrains Mono", monospace;
+  font-weight: 500;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  i {
+    margin-right: 4px;
+    font-size: $font-size-lg;
+  }
+}
+
+// Custom Fonts Table
+table.tpo-custom-font-uploader__table {
+  background: none;
+  border: none;
+  box-shadow: none;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin: -8px 0;
+  overflow: hidden;
+  width: 100%;
+
+  .tpo-custom-fonts--name {
+    width: 30%;
+    font-weight: 500;
+  }
+
+  .tpo-custom-fonts--variants {
+    width: 20%;
+  }
+
+  .tpo-custom-fonts--preview {
+    width: 35%;
+  }
+
+  .tpo-custom-fonts--action {
+    width: 15%;
+  }
+}
+
+table.tpo-custom-font-uploader__table > * > * {
+  padding: 8px 16px;
+}
+
+table.tpo-custom-font-uploader__table tr th,
+table.tpo-custom-font-uploader__table tr td {
+  border-bottom: 0;
+  padding: 16px;
+  background-color: #fff;
+  color: var(--themeplus-text-primary);
+  text-align: left;
+  font-size: $font-size-base;
+  vertical-align: middle;
+}
+
+table.tpo-custom-font-uploader__table thead th {
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: $font-size-sm;
+}
+
+table.tpo-custom-font-uploader__table tfoot tr th {
+  font-weight: 500;
+}
+
+table.tpo-custom-font-uploader__table tr th:first-of-type,
+table.tpo-custom-font-uploader__table tr td:first-of-type {
+  border-top-left-radius: $border-radius-md;
+  border-bottom-left-radius: $border-radius-md;
+}
+
+table.tpo-custom-font-uploader__table tr:not(tfoot tr) th:last-of-type,
+table.tpo-custom-font-uploader__table tr td:last-of-type {
+  border-top-right-radius: $border-radius-md;
+  border-bottom-right-radius: $border-radius-md;
+}
+
+/* Table End */
+
+// Invalid font row
+.tpo-font-row--invalid {
+  background-color: #fff3cd;
+
+  td {
+    opacity: 0.7;
+  }
+}
+
+// Warning icon
+.tpo-font-warning {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  color: #f0b849;
+  font-size: 18px;
+
+  i {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}

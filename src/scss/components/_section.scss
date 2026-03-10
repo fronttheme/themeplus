@@ -1,0 +1,45 @@
+/**
+ * ThemePlus Section Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-section {
+  margin: $spacing-lg 0;
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: var(--themeplus-text-primary);
+    margin-bottom: $spacing-sm;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: $color-primary;
+      border-radius: 2px;
+    }
+  }
+
+  &__desc {
+    color: var(--themeplus-text-primary);
+    line-height: 1.6;
+
+    p {
+      margin: $spacing-xs 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

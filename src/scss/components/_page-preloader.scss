@@ -1,0 +1,137 @@
+/**
+ * ThemePlus Page Preloader
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-footer__preloader-toggle {
+  // Base styles
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border: none;
+  border-radius: 40px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Icon styles
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+    i {
+      font-size: 16px;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  // Label styles
+  &__label {
+    position: relative;
+    padding-right: 4px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+  }
+
+  // Disabled state (OFF)
+  &.is-disabled {
+    color: var(--themeplus-text-primary);
+
+    .tpo-footer__preloader-icon {
+      i {
+        color: #ef4444; // Red for ban icon
+        transform: rotate(0deg);
+      }
+    }
+
+    &__label::after {
+    }
+
+    &:hover {
+      .tpo-footer__preloader-icon {
+        i {
+          transform: rotate(90deg);
+        }
+      }
+
+      &__label::after {
+        width: 100%;
+      }
+    }
+  }
+
+  // Enabled state (ON)
+  &.is-enabled {
+    background: transparent;
+    border: 1px solid transparent;
+    color: $color-secondary;
+
+    .tpo-footer__preloader-icon {
+      i {
+        color: $color-primary;
+      }
+    }
+
+    &__label::after {
+    }
+
+    &:hover {
+      background: transparent;
+      border: 1px solid rgba($color-white, 0.25);
+
+      &__label::after {
+        width: 100%;
+      }
+    }
+
+    &:active {
+    }
+  }
+
+  // Focus state for accessibility
+  &:focus-visible {
+    outline: 2px solid rgba($color-primary, 0.25);
+    outline-offset: 2px;
+  }
+
+  // Click/tap effect
+  &:active {
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .tpo-footer__preloader-toggle {
+    &.is-disabled {
+      border: 1px solid rgba($color-neutral, 0.25);
+      color: var(--themeplus-text-muted);
+
+      &:hover {
+        background: rgba($color-primary, 0.05);
+        border: 1px solid rgba($color-primary, 0.5);
+      }
+    }
+  }
+}

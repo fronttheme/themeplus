@@ -1,0 +1,79 @@
+/**
+ * ThemePlus Date Picker Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// WordPress resets
+.tpo-datepicker__content * {
+  --wp-admin-theme-color: var(--themeplus-primary);
+  --wp-components-color-gray-200: var(--themeplus-neutral-50);
+  color: var(--themeplus-text-primary);
+
+  .components-button {
+    border-radius: $border-radius-sm;
+  }
+
+  button:hover {
+    color: var(--themeplus-primary);
+  }
+
+  button:focus {
+    box-shadow: none !important;
+  }
+
+  .tpo-button__text {
+    color: #fff;
+  }
+
+  .tpo-button__content {
+    color: #fff;
+  }
+}
+
+.tpo-datepicker {
+  &__input {
+    color: var(--themeplus-text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;
+    gap: $spacing-sm;
+    background: var(--themeplus-bg-canvas);
+    border: 1px solid var(--themeplus-border-light);
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+
+    i {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--themeplus-primary);
+      background: rgba(var(--themeplus-rgb-primary), .1);
+      @include transition;
+
+      &:hover {
+        color: #fff;
+        background: rgba(var(--themeplus-rgb-primary), 1);
+      }
+    }
+  }
+
+  &__footer {
+    .tpo-button {
+      margin-top: $spacing-base;
+    }
+  }
+
+  &__actions {
+    margin-top: $spacing-md;
+  }
+
+  &__content {
+    padding: $spacing-sm;
+  }
+}
+

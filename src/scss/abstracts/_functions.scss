@@ -1,0 +1,15 @@
+/**
+ * ThemePlus Functions
+ */
+
+@use "variables" as *;
+
+// Convert px to rem
+@function rem($pixels, $context: 16) {
+  @return #{$pixels / $context}rem;
+}
+
+// Get spacing value
+@function spacing($multiplier) {
+  @return $spacing-md * $multiplier;
+}

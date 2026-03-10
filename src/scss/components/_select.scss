@@ -1,0 +1,438 @@
+/**
+ * ThemePlus Select Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-select {
+  position: relative;
+  width: 100%;
+
+  &--open {
+    background: var(--themeplus-bg-canvas);
+    border-radius: $border-radius-lg;
+  }
+
+  // ============================================
+  // SELECT BUTTON
+  // ============================================
+  &__button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: var(--themeplus-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    border: 1px solid rgba(var(--themeplus-rgb-neutral), .5);
+    background-color: rgba(var(--themeplus-rgb-white), .75);
+    cursor: pointer;
+    @include form-fields;
+    @include transition;
+
+    &:hover {
+      color: var(--themeplus-text-muted);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    // Open state
+    .tpo-select--open & {
+      border-color: var(--themeplus-neutral);
+    }
+
+    // Open state - Bottom position (default)
+    .tpo-select--open.tpo-select--bottom & {
+      border-radius: $border-radius-lg $border-radius-lg 0 0;
+      background: var(--themeplus-bg-canvas);
+      border-bottom-color: transparent;
+    }
+
+    .tpo-select--small.tpo-select--open.tpo-select--bottom & {
+      border-radius: $border-radius-md $border-radius-md 0 0;
+    }
+
+    // Open state - Top position
+    .tpo-select--open.tpo-select--top & {
+      border-radius: 0 0 $border-radius-lg $border-radius-lg;
+      background: var(--themeplus-bg-canvas);
+      border-top-color: transparent;
+    }
+
+    .tpo-select--small.tpo-select--open.tpo-select--top & {
+      border-radius: 0 0 $border-radius-md $border-radius-md;
+    }
+
+    // Disabled state
+    &:disabled {
+      background: var(--themeplus-neutral);
+      color: #fff;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  &__value {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  &__arrow {
+    margin-left: 8px;
+    font-size: 10px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  // ============================================
+  // DROPDOWN
+  // ============================================
+  &__dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: var(--themeplus-bg-canvas);
+    border: 1px solid var(--themeplus-neutral);
+    box-shadow: var(--themeplus-shadow-xl);
+    z-index: 1000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    // Default: Opens downward (below button)
+    .tpo-select--bottom & {
+      top: auto;
+      border-top: none;
+      border-bottom-left-radius: $border-radius-lg;
+      border-bottom-right-radius: $border-radius-lg;
+      animation: tpo-select-dropdown-enter-bottom 0.15s ease-out;
+    }
+
+    // Opens upward (above button)
+    .tpo-select--top & {
+      bottom: 100%;
+      border-bottom: none;
+      border-top-left-radius: $border-radius-lg;
+      border-top-right-radius: $border-radius-lg;
+      box-shadow: var(--themeplus-shadow-xl-top);
+      animation: tpo-select-dropdown-enter-top 0.15s ease-out;
+    }
+
+    @keyframes tpo-select-dropdown-enter-bottom {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes tpo-select-dropdown-enter-top {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // ============================================
+  // SEARCH INPUT
+  // ============================================
+  &__search {
+    padding: 8px 8px 0;
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--themeplus-border-light);
+    border-radius: 12px !important;
+    font-size: 13px;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--themeplus-primary);
+    }
+
+    &::placeholder {
+      color: var(--themeplus-text-muted);
+    }
+  }
+
+  // ============================================
+  // OPTIONS LIST
+  // ============================================
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    background: #fff;
+    margin: 8px;
+    padding: 8px;
+    border: 2px solid var(--themeplus-bg-light);
+    border-radius: $border-radius-md;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: $border-radius-sm;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover,
+    &--focused {
+      background: rgba(var(--themeplus-rgb-neutral), 0.08);
+    }
+
+    &--selected {
+      background: rgba(var(--themeplus-rgb-neutral), 0.15);
+      font-weight: 500;
+
+      &:hover {
+        background: rgba(var(--themeplus-rgb-neutral), 0.15);
+        cursor: auto;
+      }
+    }
+
+    &--empty {
+      padding: 20px 12px;
+      text-align: center;
+      color: var(--themeplus-text-muted);
+      cursor: default;
+      font-style: italic;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  &__checkmark {
+    margin-left: 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  // ============================================
+  // SIZE VARIANTS
+  // ============================================
+  &--small {
+    .tpo-select__button {
+      min-height: 32px;
+      padding: 4px 8px;
+      font-size: 13px;
+    }
+
+    .tpo-select__search-input,
+    .tpo-select__option {
+      padding: 6px 8px !important;
+      font-size: 13px !important;
+      border-radius: $border-radius-sm !important;
+    }
+
+    .tpo-select__list {
+      border-radius: $border-radius-sm !important;
+    }
+
+    .tpo-select__option {
+      border-radius: 4px !important;
+    }
+  }
+
+  &--large {
+    .tpo-select__button {
+      min-height: 48px;
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+
+    .tpo-select__option {
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+  }
+
+  // ============================================
+  // DISABLED STATE
+  // ============================================
+  &--disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  // ============================================
+  // MOBILE OPTIMIZATION
+  // ============================================
+  @media (max-width: 768px) {
+    &__dropdown {
+      // Increase touch target size on mobile
+      .tpo-select__option {
+        padding: 12px;
+        font-size: 16px; // Prevent zoom on iOS
+      }
+    }
+
+    &__search-input {
+      font-size: 16px; // Prevent zoom on iOS
+    }
+  }
+
+  // ============================================
+  // HIGH CONTRAST MODE
+  // ============================================
+  @media (prefers-contrast: high) {
+    &__button {
+      border-width: 2px;
+    }
+
+    &__option--selected {
+      outline: 2px solid currentColor;
+      outline-offset: -2px;
+    }
+  }
+
+  // ============================================
+  // REDUCED MOTION
+  // ============================================
+  @media (prefers-reduced-motion: reduce) {
+    &__button,
+    &__arrow,
+    &__option {
+      transition: none;
+    }
+
+    &__dropdown {
+      animation: none;
+    }
+  }
+}
+
+// Custom Styles (Optional)
+// Can be deleted by styling as reset select style
+.tpo-unit-selector {
+  flex: 0 0 auto;
+  min-width: 80px;
+
+  .tpo-unit-select {
+    // Custom styling for unit selector if needed
+    .tpo-select__button {
+      min-width: 100px;
+      max-width: 150px;
+      text-transform: uppercase;
+    }
+
+    .tpo-select__option {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.tpo-border__control {
+  .tpo-border__select {
+    .tpo-select__button {
+      min-width: 120px; // Adjust as needed
+    }
+  }
+}
+
+// Multi-select specific styles
+.tpo-select--multiple {
+  .tpo-select__value {
+    font-weight: 500;
+  }
+}
+
+.tpo-select__actions {
+  padding: 0 8px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tpo-select__clear {
+  padding: 0;
+  margin: 0 4px;
+  width: 18px;
+  height: 18px;
+  background: #9ca3af;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #6b7280;
+  }
+}
+
+.tpo-select__bulk-actions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.tpo-select__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+  min-height: 20px;
+}
+
+.tpo-select__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 5px 4px 12px;
+  background: var(--themeplus-bg-light);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tpo-select__badge-remove {
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  background: rgba(var(--themeplus-rgb-neutral), .5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 10px !important;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(var(--themeplus-rgb-neutral), .75);
+  }
+}

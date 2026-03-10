@@ -1,0 +1,364 @@
+/**
+ * ThemePlus Dev Panel Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Header
+.tpo-dev-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+
+  &__title {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+
+    p {
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+.tpo-dev-badge {
+  padding: 8px 16px;
+  background: var(--themeplus-gradient-cosmic);
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// Stats
+.tpo-dev-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.tpo-dev-stat {
+  @include gradient-border($border-radius: $border-radius-lg);
+  padding: 24px;
+  text-align: center;
+
+  &__value {
+    font-size: 32px;
+    font-weight: 700;
+    @include gradient-text;
+  }
+}
+
+// Filters
+.tpo-dev-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.tpo-dev-search {
+  flex: 1;
+  min-width: 300px;
+  padding-left: 40px !important;
+}
+
+.tpo-dev-results {
+  white-space: nowrap;
+  max-width: max-content;
+}
+
+// Field Cards
+.tpo-dev-fields {
+  display: grid;
+  gap: 16px;
+}
+
+.tpo-dev-card {
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--themeplus-bg-light);
+    border-radius: 100px;
+    padding: 4px 4px 4px 15px;
+  }
+
+  &__id {
+    font-family: "Jetbrains Mono", monospace;
+    font-weight: 600;
+    background-color: transparent;
+  }
+
+  &__type {
+    padding: 4px 12px;
+    background: var(--themeplus-gradient-cosmic);
+    color: white;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.tpo-dev-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--themeplus-border-light);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.tpo-dev-meta-label {
+  min-width: 80px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--themeplus-text-secondary);
+}
+
+.tpo-dev-value {
+  padding: 2px 8px;
+  background: rgba(var(--themeplus-rgb-primary), .1);
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: "Jetbrains Mono", monospace;
+}
+
+.tpo-dev-type {
+  font-size: 11px;
+  color: var(--themeplus-text-secondary);
+  font-style: italic;
+}
+
+// Usage Section
+.tpo-dev-usage {
+  border-top: 1px solid var(--themeplus-border-base);
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-base;
+
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--themeplus-text-secondary);
+  }
+}
+
+.tpo-dev-code {
+  background: var(--themeplus-bg-canvas);
+  color: var(--themeplus-text-primary);
+  border-radius: $border-radius-md;
+  border: 1px solid var(--themeplus-border-light);
+  font-weight: 500;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--themeplus-bg-light);
+    border-radius: $border-radius-md $border-radius-md 0 0;
+    font-size: 12px;
+    font-weight: 600;
+
+    span {
+      gap: 8px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    button {
+      padding: 4px 12px;
+      background: var(--themeplus-bg-primary);
+      color: var(--themeplus-text-primary);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  pre {
+    margin: 0;
+    padding: 12px;
+    border-radius: 0 0 6px 6px;
+    overflow-x: auto;
+
+    code {
+      font-family: 'Jetbrains Mono', monospace;
+      color: var(--themeplus-text-primary);
+      line-height: 1.6;
+      background: transparent;
+    }
+  }
+}
+
+// Loading/Error states
+.tpo-dev-loading,
+.tpo-dev-error {
+  padding: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--themeplus-text-primary);
+}
+
+// Empty state
+.tpo-dev-empty {
+  text-align: center;
+  padding: 80px 40px;
+  color: var(--themeplus-text-primary);
+
+  i {
+    font-size: 64px;
+    opacity: 0.3;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+// Custom select styling
+.tpo-dev-select {
+  min-width: 180px;
+}
+
+// Meta row with vertical layout for formatted values
+.tpo-dev-meta-row--vertical {
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 8px;
+}
+
+// Formatted value display
+.tpo-dev-value--formatted {
+  width: 100%;
+  margin: 0;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Jetbrains Mono', Monaco, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+
+  code {
+    display: block;
+    white-space: pre;
+    background-color: transparent;
+    font-family: 'Jetbrains Mono', Monaco, monospace;
+  }
+}
+
+// Regular inline value (for dependency, etc)
+.tpo-dev-value {
+  font-family: 'Jetbrains Mono', monospace;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 4px;
+
+  // Don't apply formatted styles to inline values
+  &:not(.tpo-dev-value--formatted) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+  }
+}
+
+// Search wrapper
+.tpo-dev-search-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+// Search icon (left side)
+.tpo-dev-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+// Search input
+.tpo-dev-search {
+  flex: 1;
+  width: 100%;
+
+  // Remove default browser search clear button
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  &::-webkit-search-decoration {
+    display: none;
+  }
+
+  &::-ms-clear {
+    display: none;
+  }
+}
+
+// Clear button (right side)
+.tpo-dev-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: var(--themeplus-text-muted);
+  width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include transition;
+
+  &:hover {
+    background: var(--themeplus-neutral-100);
+    color: #fff;
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  i {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,156 @@
+/**
+ * Modal overlay
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: $z-index-modal;
+  @include flex-center;
+  background: rgba(var(--themeplus-rgb-neutral-900), 0.5);
+  padding: 20px;
+  animation: tpo-modal-fade-in 0.2s ease;
+}
+
+@keyframes tpo-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Modal container
+.tpo-modal {
+  // Form fields
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 100%;
+    color: inherit;
+    border: 1px solid rgba(var(--themeplus-rgb-neutral), .5);
+    background-color: rgba(var(--themeplus-rgb-white), .75);
+    @include transition;
+    @include form-fields;
+
+    &:focus {
+      outline: none;
+      border-color: rgba(var(--themeplus-rgb-primary), .75);
+      box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.25);
+    }
+
+    &::placeholder {
+      color: rgba(var(--themeplus-rgb-neutral), .5);
+    }
+  }
+
+  width: 90%;
+  max-width: 800px;
+  background: var(--themeplus-bg-canvas);
+  border-radius: $border-radius-xl;
+  box-shadow: var(--themeplus-shadow-lg);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: tpo-modal-slide-up 0.3s ease;
+
+  &:focus {
+    outline: none;
+  }
+
+  // Sizes
+  &--small {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  &--medium {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  &--large {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  &--full {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+  }
+
+  // Modal header
+  &__header {
+    padding: $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--themeplus-text-primary);
+    margin: 0;
+  }
+
+  // Modal body
+  &__body {
+    flex: 1;
+    padding: $spacing-md;
+    margin: 0 $spacing-md;
+    border-radius: $border-radius-md;
+    max-height: 500px;
+    @include card-alt;
+  }
+
+  // Modal title with spinner
+  &__title-with-spinner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    i.fa-spinner {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  // Footer
+  &__footer {
+    padding: $spacing-lg;
+  }
+
+  // Sticky footer (always visible even when body scrolls)
+  &__footer--sticky {
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+@keyframes tpo-modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

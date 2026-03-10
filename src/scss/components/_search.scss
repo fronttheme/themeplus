@@ -1,0 +1,66 @@
+/**
+ * ThemePlus Search Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-search {
+  width: 100%;
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  &__icon {
+    position: absolute;
+    left: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--themeplus-text-primary);
+    pointer-events: none;
+    font-size: 16px;
+  }
+
+  &__input {
+    width: 100%;
+    padding: $spacing-sm $spacing-xl $spacing-sm 40px;
+    border: $border-width solid var(--themeplus-border-base);
+    border-radius: $border-radius-sm;
+    font-size: $font-size-base;
+    @include transition;
+
+    &:focus {
+      @include focus-outline;
+      border-color: $color-primary;
+    }
+
+    &::placeholder {
+      color: var(--themeplus-text-secondary);
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    right: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    @include flex-center;
+    border-radius: 50%;
+    font-size: 12px;
+    color: var(--themeplus-text-secondary);
+    @include transition;
+
+    &:hover {
+      background: var(--themeplus-bg-primary);
+      color: var(--themeplus-text-primary);
+    }
+
+    &:focus {
+      @include focus-outline;
+    }
+  }
+}

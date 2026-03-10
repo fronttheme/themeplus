@@ -1,0 +1,70 @@
+/**
+ * ThemePlus Footer
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-footer {
+  margin-top: $spacing-sm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacing-lg;
+  gap: $spacing-lg;
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  // Social
+  &__social {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__social-link {
+    width: 32px;
+    height: 32px;
+    @include flex-center;
+    border-radius: $border-radius-sm;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #fff;
+      border: 1px solid var(--themeplus-border-light);
+      box-shadow: var(--themeplus-shadow-ring-sm);
+    }
+
+    &:focus {
+      background: var(--themeplus-bg-canvas);
+      border: 1px solid var(--themeplus-border-light);
+      box-shadow: var(--themeplus-shadow-ring-sm);
+    }
+  }
+
+  // Actions
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}
+
+// Responsive
+@include respond-to('small') {
+  .tpo-footer {
+    flex-direction: column;
+    height: auto;
+    padding: $spacing-md;
+
+    &__left,
+    &__right {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

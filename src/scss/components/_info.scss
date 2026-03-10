@@ -1,0 +1,99 @@
+/**
+ * ThemePlus Info Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-md;
+  background: #fff;
+  border: 2px solid rgba(var(--themeplus-rgb-info), .5);
+  box-shadow: 0 6px rgba(var(--themeplus-rgb-info), 0.25);
+
+  &__icon {
+    background: rgba(var(--themeplus-rgb-info), 0.1);
+    color: var(--themeplus-info);
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-size: $font-size-2xl;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__content {
+    flex: 1;
+    color: var(--themeplus-text-primary);
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__text {
+    line-height: 1.6;
+
+    p {
+      margin: $spacing-xs 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // Style variants
+  &--success {
+    border: 2px solid rgba(var(--themeplus-rgb-green), .5);
+    box-shadow: 0 6px rgba(var(--themeplus-rgb-green), 0.25);
+
+    .tpo-info__icon {
+      background: rgba(var(--themeplus-rgb-green), 0.1);
+      color: var(--themeplus-green);
+    }
+  }
+
+  &--info {
+    border: 2px solid rgba(var(--themeplus-rgb-info), .5);
+    box-shadow: 0 6px rgba(var(--themeplus-rgb-info), 0.25);
+
+    .tpo-info__icon {
+      background: rgba(var(--themeplus-rgb-info), 0.1);
+      color: var(--themeplus-info);
+    }
+  }
+
+  &--warning {
+    border: 2px solid rgba(var(--themeplus-rgb-warning), .5);
+    box-shadow: 0 6px rgba(var(--themeplus-rgb-warning), 0.25);
+
+    .tpo-info__icon {
+      background: rgba(var(--themeplus-rgb-warning), 0.1);
+      color: var(--themeplus-warning);
+    }
+  }
+
+  &--danger {
+    border: 2px solid rgba(var(--themeplus-rgb-error), .5);
+    box-shadow: 0 6px rgba(var(--themeplus-rgb-error), 0.25);
+
+    .tpo-info__icon {
+      background: rgba(var(--themeplus-rgb-error), 0.1);
+      color: var(--themeplus-error);
+    }
+  }
+}

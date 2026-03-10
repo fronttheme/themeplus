@@ -1,0 +1,39 @@
+/**
+ * ThemePlus Image Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-image {
+  &__preview {
+    position: relative;
+    display: inline-block;
+    border: $border-width solid var(--themeplus-border-light);
+    border-radius: $border-radius-md;
+    overflow: hidden;
+
+    &:hover .tpo-image__actions {
+      opacity: 1;
+    }
+  }
+
+  &__img {
+    display: block;
+    max-width: 300px;
+    height: auto;
+  }
+
+  &__actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(var(--themeplus-rgb-neutral-800), 0.7);
+    padding: $spacing-sm;
+    opacity: 0;
+    justify-content: center;
+    @include transition;
+  }
+
+}

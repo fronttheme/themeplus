@@ -1,0 +1,79 @@
+/**
+ * TextInput Component Styles
+ */
+
+@use '../abstracts/variables' as *;
+
+.tpo-text-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+// Input
+.tpo-text-input {
+  // Disabled
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--themeplus-bg-secondary);
+  }
+
+  // Sizes
+  &--small {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  &--medium {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  &--large {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  // Full width
+  &--full-width {
+    width: 100%;
+  }
+
+  // With prefix
+  &--has-prefix {
+    padding-left: 40px;
+  }
+
+  // With suffix
+  &--has-suffix {
+    padding-right: 40px;
+  }
+}
+
+// Prefix
+.tpo-text-input__prefix {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--themeplus-text-tertiary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+
+  i {
+    font-size: 14px;
+  }
+}
+
+// Suffix
+.tpo-text-input__suffix {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

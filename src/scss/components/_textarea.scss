@@ -1,0 +1,21 @@
+/**
+ * ThemePlus Textarea Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field__textarea {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: $border-width solid var(--themeplus-border-base);
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  font-family: inherit;
+  resize: vertical;
+  @include transition;
+
+  &::placeholder {
+    color: var(--themeplus-text-primary);
+  }
+}

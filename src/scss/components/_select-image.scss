@@ -1,0 +1,45 @@
+/**
+ * ThemePlus Select (Image) Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-select-image {
+  position: relative;
+  width: 100%;
+  display: flex;
+  gap: $spacing-md;
+
+  &__option {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    width: 120px;
+    background: #fff;
+    border: 2px solid var(--themeplus-bg-light);
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    text-align: center;
+    cursor: pointer;
+    @include transition;
+
+    &--selected {
+      @include gradient-border($border-radius: $border-radius-md);
+      font-weight: 500;
+    }
+
+    &:hover:not(&--selected) {
+      border: 2px solid var(--themeplus-neutral-200);
+    }
+  }
+
+  &__input {
+    display: none !important;
+  }
+
+  &__image img {
+    max-width: 60px;
+    max-height: 60px;
+  }
+}

@@ -1,0 +1,33 @@
+/**
+ * ThemePlus Group Field Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field--group {
+  .tpo-group {
+
+    // Empty state
+    &__empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-xl;
+      text-align: center;
+      color: var(--themeplus-text-secondary);
+
+      i {
+        font-size: 48px;
+        color: var(--themeplus-text-secondary);
+        margin-bottom: $spacing-md;
+      }
+
+      p {
+        margin: 0;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

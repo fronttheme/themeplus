@@ -1,0 +1,14 @@
+/**
+ * ThemePlus Link Field Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field--link {
+  .tpo-link {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}

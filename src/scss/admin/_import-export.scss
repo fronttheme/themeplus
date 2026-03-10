@@ -1,0 +1,134 @@
+/**
+ * ThemePlus Import/Export Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-import-export {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  &__section {
+    padding: $spacing-xl;
+    background: #fff;
+    border: 2px solid rgba(var(--themeplus-rgb-primary), .5);
+    border-radius: $border-radius-md;
+
+    &--danger {
+      background: rgba(var(--themeplus-rgb-error), .1);
+      border: 2px solid rgba(var(--themeplus-rgb-error), .5);
+    }
+  }
+
+  &__header {
+    margin-bottom: $spacing-lg;
+  }
+
+  &__info-title,
+  &__title {
+    display: inline-flex;
+    gap: $spacing-sm;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--themeplus-text-secondary);
+    margin-bottom: $spacing-sm;
+
+    i {
+      color: var(--themeplus-text-muted);
+      @include text-shadow(
+          $shadow-color: rgba(var(--themeplus-rgb-neutral), 0.3)
+      );
+    }
+  }
+
+  &__description {
+    color: var(--themeplus-text-secondary);
+    line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+  }
+
+  &__file-input {
+    display: none;
+  }
+
+  &__import-box {
+    margin-top: $spacing-lg;
+    padding: $spacing-sm $spacing-sm $spacing-lg;
+    background: var(--themeplus-bg-light);
+    border-radius: $border-radius-md;
+  }
+
+  &__textarea {
+    width: 100%;
+    padding: $spacing-md;
+    border: $border-width solid var(--themeplus-border-base);
+    border-radius: $border-radius-sm;
+    font-family: monospace;
+    font-size: $font-size-sm;
+    resize: vertical;
+    @include transition;
+
+    &:focus {
+      @include focus-outline;
+      border-color: $color-primary;
+    }
+  }
+
+  &__import-actions {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+  }
+
+  &__info {
+    padding: $spacing-lg;
+    background: rgba(var(--themeplus-rgb-info), .1);
+    border: 2px solid rgba(var(--themeplus-rgb-info), .5);
+    border-radius: $border-radius-md;
+  }
+
+  &__info-title {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: var(--themeplus-text-secondary);
+    margin-bottom: $spacing-md;
+  }
+
+  &__info-list {
+    list-style: disc;
+    padding-left: $spacing-lg;
+
+    li {
+      color: var(--themeplus-text-secondary);
+      line-height: 1.8;
+      margin-bottom: $spacing-xs;
+    }
+  }
+}
+
+// Responsive
+@include respond-to('small') {
+  .tpo-import-export {
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__button {
+      width: 100%;
+      text-align: center;
+    }
+
+    &__import-actions {
+      flex-direction: column;
+    }
+  }
+}

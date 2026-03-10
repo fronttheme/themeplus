@@ -1,0 +1,122 @@
+/**
+ * ThemePlus Spinner Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  // Wrapper 1: Field container (has max-width)
+  &__field {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    min-width: 120px;
+    max-width: 150px;
+    position: relative;
+  }
+
+  // Wrapper 2: Unit container (outside field)
+  &__unit-wrapper {
+    display: flex;
+    align-items: center;
+    min-width: 30px;
+  }
+
+  &__button {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 8px;
+    right: auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    @include flex-center;
+    cursor: pointer;
+    background: var(--themeplus-gradient-button-light);
+    border: none;
+    color: var(--themeplus-text-muted);
+    @include transition;
+
+    &:hover:not(:disabled) {
+      background: var(--themeplus-bg-secondary);
+      color: #fff;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    &--increment {
+      left: auto;
+      right: 8px;
+    }
+
+    i {
+      font-size: 10px;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: $spacing-sm 36px; // Space for buttons
+    border: $border-width solid var(--themeplus-border-base);
+    border-radius: $border-radius-sm;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    background: var(--themeplus-bg-primary);
+    color: var(--themeplus-text-primary);
+    @include transition;
+
+    &:hover {
+      border-color: var(--themeplus-border-hover);
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      background: #fff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--themeplus-bg-tertiary);
+    }
+
+    // Remove default number input arrows
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  // Unit label (now outside field)
+  &__unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--themeplus-text-tertiary);
+    white-space: nowrap;
+  }
+}

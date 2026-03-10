@@ -1,0 +1,109 @@
+/**
+ * ThemePlus Modal Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index-modal + 100;
+  @include flex-center;
+  animation: fadeIn 0.2s ease-out;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--themeplus-rgb-neutral-800), 0.6);
+  }
+
+  &__container {
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    background: #fff;
+    border-radius: $border-radius-sm * 2;
+    box-shadow: 0 20px 60px rgba(var(--themeplus-rgb-neutral-800), 0.3);
+    padding: $spacing-xl;
+    text-align: center;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  &__icon {
+    font-size: 64px;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__content {
+    margin-bottom: $spacing-xl;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--themeplus-text-primary);
+    margin-bottom: $spacing-md;
+  }
+
+  &__message {
+    color: var(--themeplus-text-secondary);
+    line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: center;
+  }
+
+  // Type variations
+  &--success {
+    .tpo-dialog__icon {
+      color: var(--themeplus-green);
+    }
+  }
+
+  &--error {
+    .tpo-dialog__icon {
+      color: var(--themeplus-error);
+    }
+  }
+
+  &--warning {
+    .tpo-dialog__icon {
+      color: var(--themeplus-warning);
+    }
+  }
+
+  &--confirm {
+    .tpo-dialog__icon {
+      color: var(--themeplus-info);
+      @include text-shadow(
+          $shadow-color: rgba(var(--themeplus-rgb-info), 0.3)
+      );
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

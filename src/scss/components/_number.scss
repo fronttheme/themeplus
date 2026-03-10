@@ -1,0 +1,62 @@
+/**
+ * ThemePlus Number Field (Simple Mode)
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-number {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  max-width: 200px;
+
+  &__input {
+    flex: 1;
+    width: 100%;
+    padding: $spacing-sm;
+    border: $border-width solid var(--themeplus-border-base);
+    border-radius: $border-radius-sm;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    background: var(--themeplus-bg-primary);
+    color: var(--themeplus-text-primary);
+    @include transition;
+
+    &:hover {
+      border-color: var(--themeplus-border-hover);
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      background: #fff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--themeplus-bg-tertiary);
+    }
+
+    // Remove spinner arrows
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  &__unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--themeplus-text-tertiary);
+    white-space: nowrap;
+  }
+}

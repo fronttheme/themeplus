@@ -1,0 +1,15 @@
+/**
+ * ThemePlus Typography
+ */
+
+@use '../abstracts/variables' as *;
+
+.tpo-modal,
+.tpo-main-wrapper {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: var(--themeplus-text-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

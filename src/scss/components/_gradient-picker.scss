@@ -1,0 +1,97 @@
+/**
+ * ThemePlus Gradient Picker Field Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.toplevel_page_themeplus {
+  .components-dropdown__content .components-popover__content {
+    box-shadow: var(--themeplus-shadow-2xl) !important;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+
+    .components-input-control__container {
+      border-radius: $border-radius-sm;
+    }
+
+    .components-input-control__backdrop {
+      border-color: var(--themeplus-border-base) !important;
+      box-shadow: none !important;
+    }
+
+    .components-input-control__input {
+      color: var(--themeplus-text-secondary) !important;
+    }
+  }
+}
+
+.tpo-gradient-picker-component {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .css-1y1qek0 {
+    background-color: var(--themeplus-bg-canvas);
+    border-radius: $border-radius-sm;
+    color: var(--themeplus-text-primary) !important;
+  }
+}
+
+.tpo-gradient-picker {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-base;
+
+  &__preview-box {
+    padding: 25px;
+    border-radius: $border-radius-sm;
+  }
+
+  &__preview-label {
+    background: var(--themeplus-gradient-cosmic);
+    color: #fff;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: $spacing-sm $spacing-base;
+    border-radius: 100px;
+    border: 1px solid #fff;
+  }
+
+  &__wordpress {
+    .components-custom-gradient-picker__gradient-bar.has-gradient {
+      background-image: none;
+    }
+
+    .components-custom-gradient-picker__gradient-bar-background {
+      border-radius: $border-radius-sm;
+    }
+  }
+
+  &__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    border-radius: $border-radius-md;
+    width: max-content;
+    padding: $spacing-xs;
+    background: rgba(var(--themeplus-rgb-neutral), .1);
+
+    .components-button {
+      padding: $spacing-sm $spacing-base !important;
+      background: none !important;
+      border: 1px solid transparent !important;
+    }
+
+    code {
+      background: none;
+    }
+  }
+
+  &__output {
+    background: var(--themeplus-bg-canvas);
+    padding: $spacing-sm $spacing-base;
+    border-radius: $border-radius-sm;
+    border: 1px solid var(--themeplus-border-light);
+  }
+}

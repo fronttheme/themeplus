@@ -1,0 +1,107 @@
+/**
+ * ThemePlus Spacing Field Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field--spacing {
+  .tpo-spacing {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    // Controls
+    &__controls {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr) auto auto; // column for unit
+      gap: $spacing-sm;
+      align-items: start;
+    }
+
+    &__control {
+      display: flex;
+      flex-direction: column;
+    }
+
+    // Visual representation
+    &__visual {
+      padding: $spacing-md;
+      background: var(--themeplus-bg-primary);
+      border-radius: $border-radius-md;
+    }
+
+    &__visual-box {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      background: var(--themeplus-bg-canvas);
+      border: 2px dashed var(--themeplus-border-base);
+      border-radius: $border-radius-sm;
+    }
+
+    &__visual-label {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      padding: 4px 8px;
+      font-size: $font-size-sm;
+      font-weight: 600;
+      border-radius: $border-radius-sm;
+      background: #fff;
+      color: $color-primary;
+      border: 1px solid rgba($color-primary, 0.2);
+      box-shadow: 0 2px 4px rgba(var(--themeplus-rgb-neutral-900), 0.05);
+
+      &--top {
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &--right {
+        right: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &--bottom {
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &--left {
+        left: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    // Responsive
+    @media (max-width: 992px) {
+      &__controls {
+        grid-template-columns: repeat(2, 1fr);
+
+        // Span the last row
+        .tpo-spacing__link-wrapper,
+        .tpo-spacing__unit {
+          grid-column: span 1;
+        }
+      }
+    }
+
+    @media (max-width: 576px) {
+      &__controls {
+        grid-template-columns: 1fr;
+
+        .tpo-spacing__link-wrapper,
+        .tpo-spacing__unit {
+          grid-column: span 1;
+        }
+      }
+    }
+  }
+}

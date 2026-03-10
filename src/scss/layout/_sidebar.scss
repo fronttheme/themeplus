@@ -1,0 +1,336 @@
+/**
+ * ThemePlus Sidebar
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-sidebar {
+  width: $sidebar-width;
+  border-radius: $child-radius;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  position: sticky;
+  top: 0;
+
+  // Header
+  &__header {
+    padding: $spacing-lg $spacing-lg 0;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__logo {
+    width: 60px;
+    height: 60px;
+    @include flex-center;
+  }
+
+  &__logo-icon {
+    font-size: 24px;
+  }
+
+  &__info {
+    flex: 1;
+    position: relative;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-family: "Zain", sans-serif;
+    font-weight: 600;
+    text-transform: lowercase;
+    color: var(--themeplus-text-primary);
+  }
+
+  &__version {
+    font-size: 12px;
+    color: #fff;
+    position: absolute;
+    top: -10px;
+    right: 0;
+    left: auto;
+    padding: 2px 4px;
+    border-radius: 8px 8px 8px 0;
+    background: var(--themeplus-secondary);
+  }
+
+  // Search
+  &__search {
+    padding: 0 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .tpo-button--small.tpo-button--icon-only {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      position: absolute;
+      left: auto;
+      right: 20px;
+    }
+
+    .tpo-search-key-short-icon {
+      position: absolute;
+      width: 42px;
+      top: calc(50% + 1px);
+      transform: translateY(-50%);
+      left: auto;
+      right: 24px;
+      line-height: 1;
+
+      svg {
+        fill: var(--themeplus-bg-secondary);
+      }
+    }
+
+    &:focus-within .tpo-search-key-short-icon {
+      display: none;
+    }
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: 10px 16px !important;
+    border: 2px solid var(--themeplus-bg-primary) !important;
+    box-shadow: 0 0 0 2px #fff !important;
+
+    @include transition;
+
+    &:focus {
+      box-shadow: var(--themeplus-shadow-xl) !important;
+      @include gradient-border($border-radius: $border-radius-sm);
+    }
+  }
+
+  &__search-clear {
+    position: absolute;
+    right: calc($spacing-lg + $spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    @include flex-center;
+    border-radius: 50%;
+    font-size: 12px;
+    color: #fff;
+    background: var(--themeplus-bg-secondary);
+    border: 0;
+    @include transition;
+
+    &:hover {
+      background: rgba(var(--themeplus-rgb-error), .75);
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  &__search-results {
+    padding: $spacing-sm $spacing-lg;
+    background: var(--themeplus-bg-primary);
+    border-bottom: $border-width solid var(--themeplus-border-base);
+    font-size: $font-size-sm;
+  }
+
+  &__search-results-text {
+    color: var(--themeplus-text-primary);
+  }
+
+  // Navigation
+  &__nav {
+    flex: 1;
+    padding: 0 12px 8px;
+    position: relative;
+  }
+
+  &__list {
+    position: relative;
+    overflow: hidden;
+    padding: 0 0 $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__item--expanded {
+    padding-bottom: 8px;
+    background: rgba(var(--themeplus-rgb-white), .5);
+    border: 1px solid #fff;
+    border-radius: $border-radius-md;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease;
+  }
+
+  // Main walker (parent links)
+  &__sub-walker,
+  &__main-walker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(var(--themeplus-rgb-white), 0.75);
+    border: 2px solid #fff;
+    border-radius: $border-radius-md;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__sub-walker {
+    left: 8px;
+    width: calc(100% - 16px);
+    border-radius: $border-radius-sm;
+  }
+
+  // Remove old nav-active-walker
+  &__nav-active-walker {
+    display: none; // Remove this old one
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+    background: none;
+    color: var(--themeplus-text-secondary);
+    border: 0;
+    @include transition;
+    position: relative;
+    z-index: 1;
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+  &__sublink-icon,
+  &__link-icon {
+    @include gradient-text($gradient-style: var(--themeplus-gradient-purple));
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  &__sublink-icon i,
+  &__link-icon i {
+    @include text-shadow($shadow-color: rgba(var(--themeplus-rgb-neutral), 0.2));
+  }
+
+  &__link-text {
+    flex: 1;
+    text-align: left;
+    font-weight: 500;
+    @include truncate;
+  }
+
+  &__link-arrow {
+    font-size: 12px;
+    @include transition(transform);
+
+    .tpo-sidebar__link--active & {
+      transform: rotate(90deg);
+    }
+  }
+
+  // Sub navigation
+  &__sublist {
+    position: relative;
+    animation: slideDown 0.2s ease-out;
+  }
+
+  &__sublink {
+    color: var(--themeplus-text-secondary);
+    font-size: $font-size-sm;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    padding: 8px 12px;
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+    background: none;
+    border: 0;
+    @include transition;
+
+    &:hover {
+      color: var(--themeplus-text-primary);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+  // Footer
+  &__footer {
+    padding: $spacing-lg;
+    text-align: center;
+    font-size: $font-size-sm;
+    color: var(--themeplus-text-primary);
+  }
+
+  &__footer-link {
+    color: $color-primary;
+    @include transition;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__footer-separator {
+    margin: 0 $spacing-sm;
+  }
+}
+
+// Animations
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+// Responsive
+@include respond-to('medium') {
+  .tpo-sidebar {
+    width: 240px;
+  }
+}
+
+@include respond-to('small') {
+  .tpo-sidebar {
+    position: fixed;
+    left: -280px;
+    z-index: $z-index-sidebar;
+    @include transition(left);
+
+    &--open {
+      left: 0;
+    }
+  }
+}

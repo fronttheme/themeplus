@@ -1,0 +1,318 @@
+/**
+ * ThemePlus Button Component Styles
+ * Universal button system for consistent UI
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Field Button Group
+.tpo-actions-bar,
+.tpo-field-group--button,
+.tpo-ui-group--button {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+// Input/Select Fields with Button
+.tpo-field-has-btn {
+  display: flex;
+  gap: $spacing-sm;
+  height: 100%;
+}
+
+.tpo-field-has-btn__input {
+  flex: 1;
+}
+
+.tpo-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid transparent;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  font-weight: 500;
+  line-height: 1.25 !important;
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  @include transition;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.1);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  // Disabled state
+  &--disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Loading state
+  &--loading {
+    position: relative;
+    pointer-events: none;
+
+    .tpo-button__content {
+      opacity: 0;
+    }
+  }
+
+  // Spinner
+  &__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  // Content wrapper
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  // ==========================================
+  // STYLES
+  // ==========================================
+
+  // Outline
+  &--outline {
+    background: transparent;
+    color: var(--themeplus-primary);
+    border-color: var(--themeplus-primary);
+
+    &:hover:not(:disabled) {
+      background: rgba(var(--themeplus-rgb-primary), 0.1);
+    }
+  }
+
+  // Plain
+  &--plain {
+    background: none !important;
+    color: var(--themeplus-text-primary);
+    border: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  // ==========================================
+  // COLORS
+  // ==========================================
+
+  // Primary
+  &--primary {
+    background: var(--themeplus-primary);
+    color: #fff;
+    border-color: var(--themeplus-primary);
+
+    &:hover:not(:disabled) {
+      background: var(--themeplus-primary-600);
+      border-color: var(--themeplus-primary-600);
+    }
+  }
+
+  // Secondary
+  &--secondary {
+    background: var(--themeplus-neutral);
+    color: #fff;
+    border: 1px solid var(--themeplus-neutral);
+
+    &:hover:not(:disabled) {
+      background: var(--themeplus-neutral-400);
+      border-color: var(--themeplus-neutral-400);
+    }
+  }
+
+  // Light
+  &--light {
+    background: var(--themeplus-gradient-button-light);
+    color: var(--themeplus-text-secondary);
+    border: 1px solid var(--themeplus-border-light);
+
+    &:hover:not(:disabled) {
+      background: var(--themeplus-neutral-300);
+      border-color: var(--themeplus-neutral-300);
+      color: #fff;
+    }
+  }
+
+  // Muted
+  &--muted {
+    background: var(--themeplus-bg-light);
+    color: var(--themeplus-text-primary);
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background: var(--themeplus-neutral-100);
+    }
+  }
+
+  // Gradient
+  &--gradient {
+    background: var(--themeplus-gradient-purple);
+    color: #fff;
+    border: none;
+
+    &:hover:not(:disabled) {
+      background: var(--themeplus-gradient-brand);
+    }
+  }
+
+  // Danger
+  &--danger {
+    background: #da2770;
+    color: #fff;
+    border-color: #da2770;
+
+    &:hover:not(:disabled) {
+      background: rgba(var(--themeplus-rgb-error), 0.8);
+    }
+  }
+
+  // Success / Green
+  &--success,
+  &--green {
+    background: var(--themeplus-green);
+    color: #fff;
+    border-color: var(--themeplus-green);
+
+    &:hover:not(:disabled) {
+      background: rgba(var(--themeplus-rgb-green), 0.8);
+    }
+  }
+
+  // Info
+  &--info {
+    background: var(--themeplus-info);
+    color: #fff;
+    border-color: var(--themeplus-info);
+
+    &:hover:not(:disabled) {
+      background: rgba(var(--themeplus-rgb-info), 0.8);
+    }
+  }
+
+  // Warning
+  &--warning {
+    background: var(--themeplus-warning);
+    color: var(--themeplus-text-primary);
+    border-color: var(--themeplus-warning);
+
+    &:hover:not(:disabled) {
+      background: rgba(var(--themeplus-rgb-warning), 0.8);
+    }
+  }
+
+  // ==========================================
+  // SIZES
+  // ==========================================
+
+  // Small
+  &--small {
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 6px;
+
+    .tpo-button__content {
+      gap: 4px;
+    }
+
+    &.tpo-button--icon-only {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+    }
+  }
+
+  // Medium (default)
+  &--medium {
+    &.tpo-button--icon-only {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+    }
+  }
+
+  // Large
+  &--large {
+    padding: 12px 24px;
+    font-size: 16px;
+    gap: 10px;
+    border-radius: 12px;
+
+    .tpo-button__content {
+      gap: 8px;
+    }
+
+    &.tpo-button--icon-only {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+    }
+  }
+
+  // Auto (inherits height from parent/sibling)
+  &--auto {
+    &.tpo-button--icon-only {
+      width: auto;
+      aspect-ratio: 1;
+    }
+  }
+
+  // ==========================================
+  // ICON ONLY
+  // ==========================================
+  &--icon-only {
+    padding: 0;
+    gap: 0;
+
+    .tpo-button__content {
+      gap: 0;
+    }
+
+    &.tpo-button--small {
+      &-dismiss {
+        width: 24px;
+        height: 24px;
+        background: var(--themeplus-neutral-200);
+        color: #fff;
+        border: 0;
+
+        &:hover {
+          background: var(--themeplus-error);
+        }
+      }
+    }
+
+    &.tpo-button--medium {
+      width: 36px;
+      height: 36px;
+    }
+
+    &.tpo-button--large {
+      width: 48px;
+      height: 48px;
+    }
+
+  }
+
+  // ==========================================
+  // FULL WIDTH
+  // ==========================================
+  &--full-width {
+    width: 100%;
+  }
+}

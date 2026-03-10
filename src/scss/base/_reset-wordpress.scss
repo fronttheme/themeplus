@@ -1,0 +1,67 @@
+/**
+ * ThemePlus Reset WordPress Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-main-wrapper {
+  .tpo-gradient-picker__actions .components-button,
+  button.components-circular-option-picker__clear {
+    box-shadow: none !important;
+    background: var(--themeplus-bg-canvas);
+    border: 1px solid var(--themeplus-border-base);
+    color: var(--themeplus-text-muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    @include transition;
+
+    &:hover {
+      background: var(--themeplus-bg-tertiary) !important;
+      color: #fff !important;
+    }
+
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .components-angle-picker-control__angle-circle {
+    border-color: var(--themeplus-neutral-300);
+  }
+
+  .components-angle-picker-control__angle-circle-indicator {
+    background: var(--themeplus-gradient-button);
+  }
+
+  .components-input-control__suffix .components-text,
+  .components-input-control__label,
+  .components-select-control__input,
+  .components-input-control__input {
+    color: var(--themeplus-text-secondary) !important;
+  }
+
+  .components-input-control__backdrop {
+    border: 1px solid rgba(var(--themeplus-rgb-neutral), .5) !important;
+    @include transition;
+    padding: $spacing-base $spacing-md !important;
+    border-radius: $border-radius-sm !important;
+    box-shadow: var(--themeplus-shadow-ring-sm) !important;
+
+    &:focus,
+    &:active {
+      outline: none;
+      border-color: rgba(var(--themeplus-rgb-primary), .5) !important;
+      box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.25) !important;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgba(var(--themeplus-rgb-primary), .75) !important;
+      box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.25) !important;
+    }
+  }
+
+}

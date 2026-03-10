@@ -1,0 +1,334 @@
+/**
+ * ThemePlus Reset Form Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-main-wrapper {
+
+  // Form fields
+  .tpo-field-select,
+  input:not(.tpo-slider__input),
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 100%;
+    color: inherit;
+    border: 1px solid rgba(var(--themeplus-rgb-neutral), .5);
+    background-color: rgba(var(--themeplus-rgb-white), .75);
+    @include transition;
+    @include form-fields;
+
+    &:focus {
+      outline: none;
+      border-color: rgba(var(--themeplus-rgb-primary), .75);
+      box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.25);
+    }
+
+    &::placeholder {
+      color: rgba(var(--themeplus-rgb-neutral), .5);
+    }
+  }
+
+  select {
+    box-shadow: var(--themeplus-shadow-ring-sm);
+    border-color: rgba(var(--themeplus-rgb-neutral), 0.3);
+
+    &:focus,
+    &:hover {
+      font-weight: 500;
+      color: var(--themeplus-text-primary);
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+      border-color: rgba(var(--themeplus-rgb-primary), .5);
+      box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-primary), 0.25);
+    }
+  }
+
+  .tpo-field-select__dropdown {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgba(var(--themeplus-rgb-neutral), .5);
+    box-shadow: 0 0 0 3px rgba(var(--themeplus-rgb-neutral), 0.15);
+
+    &--small {
+      min-width: 100px;
+    }
+
+    &--medium {
+      min-width: 200px;
+    }
+
+    &--50 {
+      width: 50%;
+    }
+
+    &--full {
+      width: 100%;
+    }
+  }
+
+  // Field Buttonset
+  .tpo-field-group--buttonset {
+    display: inline-flex;
+    gap: 2px;
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+    background: #fff;
+    border: 2px solid #fff;
+    width: max-content;
+
+    button {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      border: none;
+      background: var(--themeplus-gradient-button-light);
+      padding: 10px $spacing-md;
+      border-radius: $border-radius-xs;
+      color: var(--themeplus-text-primary);
+      font-weight: 500;
+      @include transition;
+      cursor: pointer;
+
+      &:hover:not(
+      .tpo-buttonset__button--active,
+      .tpo-typography__button--active,
+      .tpo-background__type-btn--active
+      ) {
+        background: var(--themeplus-bg-light);
+      }
+    }
+
+    .tpo-background__type-btn--active,
+    .tpo-typography__button--active,
+    .tpo-buttonset__button--active {
+      background: var(--themeplus-gradient-button);
+      color: #fff;
+    }
+  }
+
+  // Field Color
+  .tpo-field-color {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    position: relative;
+
+    &__preview {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border: 0;
+      border-radius: $border-radius-sm;
+      cursor: pointer;
+      @include transition;
+      position: relative;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &:focus {
+        outline: 2px solid var(--themeplus-border-light);
+        outline-offset: 2px;
+      }
+    }
+
+    // Color Picker
+    .tpo-color-picker {
+      position: absolute;
+      left: 0;
+      top: 100%;
+
+      &__overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(var(--themeplus-rgb-neutral-800), 0);
+      }
+
+      &__modal {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 1000;
+        background: #fff;
+        border: 0;
+        border-radius: $border-radius-md;
+        box-shadow: var(--themeplus-shadow-2xl);
+        padding: $spacing-md;
+
+        .react-colorful__saturation {
+          border-radius: $border-radius-xs !important;
+        }
+
+        .components-input-control__container {
+          border-radius: $border-radius-sm;
+
+          .css-ssb0uf.css-ssb0uf.css-ssb0uf {
+            border-color: var(--themeplus-border-base);
+
+            &:focus {
+              outline: none;
+              border-color: var(--themeplus-border-base) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Card (Field)
+  .tpo-field-card {
+    @include card;
+  }
+
+  .tpo-field-card-alt {
+    @include card-alt;
+  }
+
+  // Unit
+  .tpo-field-unit {
+    text-transform: uppercase;
+  }
+
+}
+
+// Field Color
+.tpo-field-color {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  position: relative;
+
+  &__preview {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    @include transition;
+    position: relative;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:focus {
+      outline: 2px solid var(--themeplus-border-light);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Color Picker Portal (Rendered in body)
+.tpo-color-picker-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  pointer-events: none;
+
+  .tpo-color-picker__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(var(--themeplus-rgb-neutral-800), 0);
+    pointer-events: all;
+  }
+
+  .tpo-color-picker__modal {
+    z-index: 1000000;
+    background: #fff;
+    border: 0;
+    border-radius: $border-radius-md;
+    box-shadow: var(--themeplus-shadow-2xl);
+    padding: $spacing-md;
+    pointer-events: all;
+    animation: tpoColorPickerFadeIn 0.15s ease;
+
+    .react-colorful__saturation {
+      border-radius: $border-radius-xs !important;
+    }
+
+    .components-input-control__container {
+      border-radius: $border-radius-sm;
+
+      .css-ssb0uf.css-ssb0uf.css-ssb0uf {
+        border-color: var(--themeplus-border-base);
+
+        &:focus {
+          outline: none;
+          border-color: var(--themeplus-border-base) !important;
+        }
+      }
+    }
+
+    .components-select-control__input,
+    .components-input-control__input {
+      color: var(--themeplus-text-secondary) !important;
+    }
+  }
+
+  // Position Variants
+  &.tpo-color-picker--bottom .tpo-color-picker__modal {
+    animation-name: tpoColorPickerSlideDown;
+  }
+
+  &.tpo-color-picker--top .tpo-color-picker__modal {
+    animation-name: tpoColorPickerSlideUp;
+  }
+
+  &.tpo-color-picker--right .tpo-color-picker__modal {
+    animation-name: tpoColorPickerSlideRight;
+  }
+}
+
+// Animations for each direction
+@keyframes tpoColorPickerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tpoColorPickerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tpoColorPickerSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tpoColorPickerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

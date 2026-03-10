@@ -1,0 +1,51 @@
+/**
+ * ThemePlus Border Field Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field--border {
+  .tpo-border {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    // Controls grid
+    &__controls {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: $spacing-xl;
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    // Single control
+    &__control {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+    }
+
+    &__label {
+      font-size: $font-size-sm;
+      font-weight: 500;
+      color: var(--themeplus-text-primary);
+    }
+
+    &__input-group {
+      @include flex-gap;
+    }
+
+    // Preview
+    &__preview {
+      padding: $spacing-lg;
+      text-align: center;
+      background: var(--themeplus-bg-canvas);
+      font-weight: 500;
+      color: var(--themeplus-text-primary);
+    }
+  }
+}

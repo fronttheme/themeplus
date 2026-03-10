@@ -1,0 +1,43 @@
+/**
+ * Preloader Component Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-preloader {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-lg;
+  min-height: 100vh;
+  font-size: $font-size-lg;
+  color: var(--themeplus-text-primary);
+
+  // Overlay version (fullscreen)
+  &--overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 999999;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__message {
+    animation: tpo-preloader-text-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes tpo-preloader-text-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

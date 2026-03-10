@@ -1,0 +1,222 @@
+/**
+ * ThemePlus Variables
+ */
+
+// Typography
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+$font-size-base: 14px;
+$font-size-sm: 13px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+$font-size-2xl: 24px;
+$line-height-base: 1.5;
+
+// Spacings
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-base: 12px;
+
+// Layout
+$container-spacing: 20px;
+$container-padding: $spacing-sm;
+$container-radius: 20px;
+$child-radius: calc($container-radius - $container-padding);
+$container-width: 1320px;
+$container-height: 800px;
+$sidebar-width: 280px;
+$header-height: 60px;
+$footer-height: 60px;
+
+// Transitions
+$transition-speed: 0.3s;
+$transition-ease: ease;
+$transition-ease-out: ease-out;
+$transition-ease-snappy: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Borders
+$border-radius-xl: 20px;
+$border-radius-lg: 16px;
+$border-radius-md: 12px;
+$border-radius-sm: 8px;
+$border-radius-xs: 4px;
+$border-width: 2px;
+
+// Z-index
+$z-index-sidebar: 100;
+$z-index-header: 90;
+$z-index-modal: 1000;
+
+// ============== COLORS ============== //
+// Function to generate palette from base color
+@function generate-color-palette($base-color) {
+  $palette: (
+      50: lighten(desaturate($base-color, 10%), 42%),
+      100: lighten(desaturate($base-color, 8%), 36%),
+      200: lighten(desaturate($base-color, 6%), 28%),
+      300: lighten(desaturate($base-color, 4%), 18%),
+      400: lighten(desaturate($base-color, 2%), 8%),
+      500: $base-color,
+      600: darken(saturate($base-color, 5%), 8%),
+      700: darken(saturate($base-color, 8%), 16%),
+      800: darken(saturate($base-color, 10%), 24%),
+      900: darken(saturate($base-color, 12%), 32%),
+      950: darken(saturate($base-color, 15%), 42%)
+  );
+
+  @return $palette;
+}
+
+// Function to convert hex color to RGB string
+@function hex-to-rgb($color) {
+  @return #{red($color)}, #{green($color)}, #{blue($color)};
+}
+
+// Function to generate RGB palette
+@function generate-rgb-palette($base-color) {
+  $palette: generate-color-palette($base-color);
+  $rgb-palette: ();
+
+  @each $key, $color in $palette {
+    $rgb-palette: map-merge($rgb-palette, (
+        $key: hex-to-rgb($color)
+    ));
+  }
+
+  @return $rgb-palette;
+}
+
+// Theme colors
+$color-primary: #7F27FF;
+$color-secondary: #17a2b8;
+$color-neutral: #3a3070;
+
+// Generate the palettes
+$primary-palette: generate-color-palette($color-primary);
+$secondary-palette: generate-color-palette($color-secondary);
+$neutral-palette: generate-color-palette($color-neutral);
+
+// Generate RGB palettes
+$primary-rgb-palette: generate-rgb-palette($color-primary);
+$secondary-rgb-palette: generate-rgb-palette($color-secondary);
+$neutral-rgb-palette: generate-rgb-palette($color-neutral);
+
+// Fixed Semantic Colors
+$color-success: #04AA6D;
+$color-error: #e11b63;
+$color-warning: #EC942C;
+$color-info: #3b99f6;
+
+// Essential colors
+$color-white: #ffffff;
+$color-black: #000000;
+$color-green: #10a6a1;
+
+// Color light
+$color-light: #f3f0ff;
+
+// Create CSS variables
+:root {
+  // Theme color HEX variables
+  @each $key, $value in $primary-palette {
+    --themeplus-primary-#{$key}: #{$value};
+  }
+  @each $key, $value in $secondary-palette {
+    --themeplus-secondary-#{$key}: #{$value};
+  }
+  @each $key, $value in $neutral-palette {
+    --themeplus-neutral-#{$key}: #{$value};
+  }
+
+  // Theme color RGB variables
+  @each $key, $value in $primary-rgb-palette {
+    --themeplus-rgb-primary-#{$key}: #{$value};
+  }
+  @each $key, $value in $secondary-rgb-palette {
+    --themeplus-rgb-secondary-#{$key}: #{$value};
+  }
+  @each $key, $value in $neutral-rgb-palette {
+    --themeplus-rgb-neutral-#{$key}: #{$value};
+  }
+
+  // Fixed semantic HEX colors
+  --themeplus-success: #{$color-success};
+  --themeplus-warning: #{$color-warning};
+  --themeplus-error: #{$color-error};
+  --themeplus-info: #{$color-info};
+  --themeplus-green: #{$color-green};
+
+  // Fixed semantic RGB colors
+  --themeplus-rgb-success: #{hex-to-rgb($color-success)};
+  --themeplus-rgb-warning: #{hex-to-rgb($color-warning)};
+  --themeplus-rgb-error: #{hex-to-rgb($color-error)};
+  --themeplus-rgb-info: #{hex-to-rgb($color-info)};
+  --themeplus-rgb-green: #{hex-to-rgb($color-green)};
+
+  // Essential colors
+  --themeplus-white: #ffffff;
+  --themeplus-black: #000000;
+  --themeplus-rgb-white: 255, 255, 255;
+  --themeplus-rgb-black: 0, 0, 0;
+
+  // ===== THEME COLORS (Semantic usage) ===== //
+  // Common colors
+  --themeplus-primary: var(--themeplus-primary-500);
+  --themeplus-secondary: var(--themeplus-secondary-500);
+  --themeplus-neutral: var(--themeplus-neutral-500);
+  --themeplus-rgb-primary: var(--themeplus-rgb-primary-500);
+  --themeplus-rgb-secondary: var(--themeplus-rgb-secondary-500);
+  --themeplus-rgb-neutral: var(--themeplus-rgb-neutral-500);
+
+  // Background colors
+  --themeplus-bg-canvas: #{$color-light};
+  --themeplus-bg-light: rgba(var(--themeplus-rgb-neutral-50), .5);
+  --themeplus-bg-primary: var(--themeplus-neutral-50);
+  --themeplus-bg-secondary: var(--themeplus-neutral-100);
+  --themeplus-bg-tertiary: var(--themeplus-neutral-200);
+
+  // Text colors
+  --themeplus-text-primary: var(--themeplus-neutral-600); // Headings
+  --themeplus-text-secondary: var(--themeplus-neutral); // Body
+  --themeplus-text-muted: var(--themeplus-neutral-400); // Small
+
+  // Border colors
+  --themeplus-border-light: var(--themeplus-neutral-100);
+  --themeplus-border-base: var(--themeplus-neutral-200);
+  --themeplus-border-dark: var(--themeplus-neutral-300);
+
+  // Shadows
+  --themeplus-shadow-none: none;
+  --themeplus-shadow-sm: 0 1px 2px 0 rgba(var(--themeplus-rgb-neutral), 0.05);
+  --themeplus-shadow-md: 0 4px 6px -1px rgba(var(--themeplus-rgb-neutral-800), 0.1), 0 2px 4px -1px rgba(var(--themeplus-rgb-neutral-800), 0.06);
+  --themeplus-shadow-lg: 0 10px 15px -3px rgba(var(--themeplus-rgb-neutral-800), 0.1), 0 4px 6px -2px rgba(var(--themeplus-rgb-neutral-800), 0.05);
+  --themeplus-shadow-xl: 0 20px 25px -5px rgba(var(--themeplus-rgb-neutral-800), 0.1), 0 10px 10px -5px rgba(var(--themeplus-rgb-neutral-800), 0.04);
+  --themeplus-shadow-xl-top: 0 -20px 25px -5px rgba(var(--themeplus-rgb-neutral-800), 0.1), 0 -10px 10px -5px rgba(var(--themeplus-rgb-neutral-800), 0.04);
+  --themeplus-shadow-2xl: 0 25px 50px -12px rgba(var(--themeplus-rgb-neutral-800), 0.25);
+  --themeplus-shadow-2xl-top: 0 -25px 50px -12px rgba(var(--themeplus-rgb-neutral-800), 0.25);
+  --themeplus-shadow-glow: 0 0 20px rgba(var(--themeplus-rgb-primary), 0.15);
+  --themeplus-shadow-glow-lg: 0 0 40px rgba(var(--themeplus-rgb-primary), 0.2);
+  --themeplus-shadow-ring-sm: 0 0 0 3px rgba(var(--themeplus-rgb-neutral), 0.1);
+  --themeplus-shadow-ring-md: 0 0 0 4px rgba(var(--themeplus-rgb-neutral), 0.15);
+  --themeplus-shadow-heavy-md: 0 8px 16px 0 rgba(var(--themeplus-rgb-neutral-800), 0.2);
+  --themeplus-shadow-heavy-lg: 0 15px 30px 0 rgba(var(--themeplus-rgb-neutral-800), 0.25);
+  --themeplus-shadow-hard: 0 2px rgba(var(--themeplus-rgb-neutral), .15);
+
+  // Gradients
+  --themeplus-gradient-primary: linear-gradient(135deg, var(--themeplus-primary), var(--themeplus-primary-600));
+  --themeplus-gradient-secondary: linear-gradient(135deg, var(--themeplus-secondary), var(--themeplus-secondary-600));
+  --themeplus-gradient-brand: linear-gradient(135deg, var(--themeplus-primary), var(--themeplus-secondary));
+  --themeplus-gradient-sunset: linear-gradient(135deg, #ff6b6b, #feca57, #ff9ff3);
+  --themeplus-gradient-ocean: linear-gradient(135deg, #667eea, #764ba2);
+  --themeplus-gradient-dark: linear-gradient(135deg, var(--themeplus-neutral-800), var(--themeplus-neutral-900));
+  --themeplus-gradient-cosmic: linear-gradient(120deg, #7209d4, #2832d4 33%, #00a5b2);
+  --themeplus-gradient-aurora: linear-gradient(120deg, #a16eff 33%, #ff41eb);
+  --themeplus-gradient-prism: linear-gradient(-45deg, #262261, #90278e, #34d28b, #ec297b);
+  --themeplus-gradient-rainbow: linear-gradient(-45deg, #f3226c, #7209d4, #338aff, #3cf0c5);
+  --themeplus-gradient-button: linear-gradient(135deg, #902474, #fd73ba);
+  --themeplus-gradient-button-light: linear-gradient(135deg, var(--themeplus-bg-canvas), var(--themeplus-bg-light));
+  --themeplus-gradient-purple: linear-gradient(135deg, #682490, #b173fd);
+}
+

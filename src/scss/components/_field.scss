@@ -1,0 +1,66 @@
+/**
+ * ThemePlus Field Component Base
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__label--depth0,
+  &__label {
+    font-weight: 500;
+    color: var(--themeplus-text-primary);
+    font-size: $font-size-base;
+  }
+
+  &__label--depth0 {
+    font-size: $font-size-sm;
+  }
+
+  &__required {
+    color: var(--themeplus-error);
+    margin-left: $spacing-xs;
+  }
+
+  &__help {
+    font-size: $font-size-sm;
+    color: var(--themeplus-text-muted);
+    line-height: 1.5;
+  }
+}
+
+.tpo-field--depth0,
+.tpo-field--component {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+/* Multi options 2 column */
+.tpo-field__options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-lg;
+}
+
+.tpo-field--group .tpo-field__label {
+  font-weight: 500;
+  color: var(--themeplus-text-primary);
+  font-size: $font-size-sm;
+}
+
+.tpo-fields--group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}

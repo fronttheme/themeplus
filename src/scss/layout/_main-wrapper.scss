@@ -1,0 +1,32 @@
+/**
+ * ThemePlus Main Wrapper
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.toplevel_page_themeplus {
+  background: #f4f1ff;
+}
+
+.tpo-container {
+  display: flex;
+  width: 100%;
+  max-width: $container-width;
+  height: $container-height;
+  padding: $container-padding;
+  margin-top: $container-spacing;
+  border-radius: $container-radius;
+  background: linear-gradient(90deg, var(--themeplus-bg-canvas), var(--themeplus-neutral-50));
+  border: 2px solid #fff;
+  overflow: hidden;
+  gap: 8px;
+  position: relative;
+}
+
+.tpo-body-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; // Prevent flex overflow
+}

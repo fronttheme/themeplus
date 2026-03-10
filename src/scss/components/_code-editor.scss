@@ -1,0 +1,51 @@
+/**
+ * ThemePlus Code Editor
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-code-editor {
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-md;
+    align-items: center;
+  }
+
+  &__info {
+    display: inline-flex;
+    gap: $spacing-sm;
+  }
+
+  &__language {
+    font-weight: 600;
+
+    i {
+      margin-right: $spacing-xs;
+    }
+  }
+
+  &__wrapper {
+    .CodeMirror-wrap {
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      border: 2px solid var(--themeplus-border-light);
+
+      .CodeMirror-linenumber {
+        color: var(--themeplus-neutral-100);
+      }
+    }
+
+    .CodeMirror-gutter.CodeMirror-linenumbers {
+      background: var(--themeplus-bg-light);
+      box-shadow: none;
+    }
+
+    .CodeMirror-wrap pre {
+      color: var(--themeplus-text-primary);
+      font-weight: 500;
+      font-family: "JetBrains Mono", monospace;
+    }
+  }
+}

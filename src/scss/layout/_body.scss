@@ -1,0 +1,58 @@
+/**
+ * ThemePlus Body
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-body {
+  flex: 1;
+  background: var(--themeplus-bg-canvas);
+  border: 2px solid #fff;
+  border-radius: $container-radius;
+
+  &__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-xl;
+  }
+
+  &__section {
+    margin-bottom: $spacing-xl;
+  }
+
+  &__section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--themeplus-text-primary);
+    margin-bottom: $spacing-md;
+  }
+
+  &__section-description {
+    color: var(--themeplus-text-primary);
+    margin-bottom: $spacing-lg;
+    line-height: 1.6;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__empty {
+    @include flex-center;
+    min-height: 400px;
+    color: var(--themeplus-text-primary);
+    font-size: $font-size-lg;
+  }
+}
+
+// Responsive
+@include respond-to('small') {
+  .tpo-body {
+    &__content {
+      padding: $spacing-lg $spacing-md;
+    }
+  }
+}

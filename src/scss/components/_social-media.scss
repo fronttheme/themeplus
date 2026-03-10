@@ -1,0 +1,74 @@
+/**
+ * ThemePlus Social Media Component
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field--social-media {
+  .tpo-social-media {
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: $spacing-md;
+    }
+
+    &__item {
+      display: flex;
+      gap: $spacing-md;
+      align-items: center;
+      background: var(--themeplus-bg-canvas);
+      border: 1px solid var(--themeplus-border-light);
+      border-radius: $border-radius-md;
+      justify-content: space-between;
+      padding: $spacing-sm $spacing-md;
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      background: var(--themeplus-bg-light);
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+
+      i {
+        font-size: $font-size-xl;
+      }
+    }
+
+    &__fields {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+
+      select.tpo-social-media__platform {
+        min-width: 200px;
+      }
+
+      input.tpo-social-media__url {
+        width: 100%;
+      }
+    }
+
+    &__limit {
+      color: var(--themeplus-info);
+      font-size: $font-size-sm;
+      margin-left: 6px;
+    }
+
+    &__empty {
+      display: inline-flex;
+      gap: $spacing-xs;
+      align-items: center;
+      margin-top: $spacing-md;
+
+      i {
+        color: var(--themeplus-primary);
+      }
+    }
+  }
+}

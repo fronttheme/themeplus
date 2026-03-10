@@ -1,0 +1,50 @@
+/**
+ * ThemePlus Repeater Field Styles
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tpo-field--repeater {
+  .tpo-repeater {
+    &__row-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $spacing-lg;
+    }
+
+    &__rows {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+
+    &__row-title {
+      font-weight: 500;
+      @include gradient-text($gradient-style: var(--themeplus-gradient-cosmic));
+    }
+
+    &__row-content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+      margin-top: $spacing-lg;
+    }
+
+    .tpo-repeater__add.tpo-file-upload {
+      margin-top: $spacing-lg;
+    }
+
+    &__empty {
+      display: inline-flex;
+      gap: $spacing-xs;
+      align-items: center;
+      margin-top: $spacing-md;
+
+      i {
+        color: var(--themeplus-primary);
+      }
+    }
+  }
+}
