@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# themeplus
-A modern theme options framework for WordPress
-=======
 ![ThemePlus — Modern Theme Options Framework for WordPress](https://www.fronttheme.com/wp-content/uploads/2026/03/themeplus-modern-theme-options-framework-for-wordpress.webp)
 
 # ThemePlus — Modern Theme Options Framework for WordPress
@@ -476,4 +472,3 @@ ThemePlus is licensed under the [GPL-2.0-or-later](./LICENSE) license — the sa
 ---
 
 Made with ❤️ for the WordPress community · [fronttheme.com](https://fronttheme.com)
->>>>>>> 4bfc2c7 (Initial release — ThemePlus v1.0.0)
