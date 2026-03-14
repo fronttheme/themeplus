@@ -10,7 +10,7 @@
     "blocks:start": "wp-scripts start",
     "blocks:build": "wp-scripts build",
     "pot": "wp i18n make-pot . languages/themeplus.pot --domain=themeplus --exclude=node_modules,vendor,build,assets,README",
-    "package": "npm run build && npm run pot && rm -rf ../themeplus-packaged && rm -f ../themeplus.zip && rsync -av --exclude-from='.distignore' . ../themeplus-packaged && cd .. && zip -r themeplus.zip themeplus-packaged && echo '✅ themeplus.zip ready for release!'"
+    "package": "npm run build && npm run pot && rm -rf package/themeplus && rm -f package/themeplus.zip && mkdir -p package/themeplus && rsync -av --exclude-from='.distignore' . package/themeplus && cd package && zip -r themeplus.zip themeplus && rm -rf themeplus && echo '✅ package/themeplus.zip ready!'"
   },
   "keywords": [
     "wordpress",
