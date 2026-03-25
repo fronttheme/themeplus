@@ -32,7 +32,7 @@ function Typography({
   const [googleFonts, setGoogleFonts] = useState([]);
   const [customFonts, setCustomFonts] = useState([]);
   const [loadingFonts, setLoadingFonts] = useState(true);
-  const [activeFontTab, setActiveFontTab] = useState('google');
+  const [customFontsLoaded, setCustomFontsLoaded] = useState(false);
 
   // Get unit for property
   const getUnit = (property) => {
@@ -63,6 +63,16 @@ function Typography({
     'Georgia', 'Helvetica', 'Impact', 'Lucida Console',
     'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana',
   ];
+
+  const detectFontTab = (fontFamily) => {
+    if (!fontFamily) return 'google';
+    if (standardFonts.includes(fontFamily)) return 'standard';
+    return 'google'; // default to google (custom handled by useEffect below)
+  };
+
+  const [activeFontTab, setActiveFontTab] = useState(
+    () => detectFontTab(value['font-family'])
+  );
 
   // Font style options
   const fontStyleOptions = {
@@ -108,20 +118,46 @@ function Typography({
 
   // Load Google Fonts
   useEffect(() => {
-    loadGoogleFonts();
-  }, []);
+    if (fontFamily) { // Only load if font-family control is shown
+      loadGoogleFonts();
+    }
+  }, [fontFamily]);
 
   // Load Custom Fonts
   useEffect(() => {
     loadCustomFonts();
   }, []);
 
+  useEffect(() => {
+    if (customFonts.length > 0) {
+      const currentFont = value['font-family'];
+      if (currentFont && customFonts.includes(currentFont)) {
+        setActiveFontTab('custom');
+      }
+    }
+  }, [customFonts]);
+
   // Load font preview when changed
   useEffect(() => {
-    if (fontFamilyValue && !standardFonts.includes(fontFamilyValue)) {
+    // Only proceed after custom fonts are loaded
+    if (!customFontsLoaded) return;
+
+    // Check if this is a custom font that already has @font-face
+    const isCustomFont = customFonts.includes(fontFamilyValue);
+    const isStandardFont = standardFonts.includes(fontFamilyValue);
+
+    // Only load from Google Fonts if:
+    // 1. It's NOT a standard font (system font)
+    // 2. It's NOT a custom font (already has @font-face)
+    // 3. It's a Google Font
+    if (
+      fontFamilyValue &&
+      !isStandardFont &&
+      !isCustomFont
+    ) {
       GoogleFontsService.loadFontPreview(fontFamilyValue, subsetsValue);
     }
-  }, [fontFamilyValue, subsetsValue]);
+  }, [fontFamilyValue, subsetsValue, customFonts, customFontsLoaded]);
 
   const loadGoogleFonts = async () => {
     try {
@@ -153,6 +189,8 @@ function Typography({
       setCustomFonts(validatedFonts.filter(name => name !== null));
     } catch (error) {
       console.error('Error loading custom fonts:', error);
+    } finally {
+      setCustomFontsLoaded(true);
     }
   };
 
@@ -165,7 +203,12 @@ function Typography({
 
   const handleFontSelect = (font) => {
     handleChange('font-family', font);
-    if (!standardFonts.includes(font)) {
+
+    // Only load from Google Fonts CDN if it's NOT a standard font AND NOT a custom font
+    const isStandardFont = standardFonts.includes(font);
+    const isCustomFont = customFonts.includes(font);
+
+    if (!isStandardFont && !isCustomFont) {
       GoogleFontsService.loadFontPreview(font, subsetsValue);
     }
   };

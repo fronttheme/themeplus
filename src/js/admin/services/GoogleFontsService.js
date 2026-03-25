@@ -5,8 +5,6 @@
  * File: src/js/admin/services/GoogleFontsService.js
  */
 
-const GOOGLE_FONTS_API_KEY = '';
-const GOOGLE_FONTS_API_URL = 'https://www.googleapis.com/webfonts/v1/webfonts';
 const CACHE_KEY = 'themeplus_google_fonts';
 const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -60,22 +58,29 @@ class GoogleFontsService {
     }
   }
 
-  async fetchFromAPI() {
-    if (!GOOGLE_FONTS_API_KEY || GOOGLE_FONTS_API_KEY.length < 30) {
+  async fetchFromJSON() {
+    const jsonUrl = window.themePlusData?.googleFontsUrl;
+
+    if (!jsonUrl) {
       return POPULAR_FONTS;
     }
 
     try {
-      const url = `${GOOGLE_FONTS_API_URL}?key=${GOOGLE_FONTS_API_KEY}&sort=popularity`;
-      const response = await fetch(url);
+      const response = await fetch(jsonUrl);
 
       if (!response.ok) {
-        throw new Error('API Error');
+        throw new Error('Failed to load fonts JSON');
       }
 
       const data = await response.json();
-      return data.items.map(item => item.family);
+
+      // Handle both trimmed format [{family, variants, category}]
+      // and raw API format {items: [...]}
+      const items = Array.isArray(data) ? data : data.items;
+
+      return items.map(item => item.family);
     } catch (error) {
+      console.warn('Google Fonts JSON failed, using fallback:', error);
       return POPULAR_FONTS;
     }
   }
@@ -97,7 +102,7 @@ class GoogleFontsService {
     this.loading = true;
 
     try {
-      this.fonts = await this.fetchFromAPI();
+      this.fonts = await this.fetchFromJSON();
       this.cacheFonts(this.fonts);
     } catch (error) {
       this.fonts = POPULAR_FONTS;

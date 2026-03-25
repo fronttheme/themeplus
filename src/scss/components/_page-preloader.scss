@@ -10,17 +10,17 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 20px;
-  background-color: transparent;
-  border: none;
-  border-radius: 40px;
+  padding: 8px 12px;
+  background: linear-gradient(0deg, #e7e4f7, white);
+  border: 2px solid #fff;
+  border-radius: 20px;
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.3px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 
   // Icon styles
   &__icon {
@@ -57,12 +57,11 @@
 
   // Disabled state (OFF)
   &.is-disabled {
-    color: var(--themeplus-text-primary);
+    color: var(--themeplus-text-muted);
 
     .tpo-footer__preloader-icon {
       i {
         color: #ef4444; // Red for ban icon
-        transform: rotate(0deg);
       }
     }
 
@@ -70,11 +69,7 @@
     }
 
     &:hover {
-      .tpo-footer__preloader-icon {
-        i {
-          transform: rotate(90deg);
-        }
-      }
+      background: linear-gradient(120deg, white, #e7e4f7);
 
       &__label::after {
         width: 100%;
@@ -84,13 +79,14 @@
 
   // Enabled state (ON)
   &.is-enabled {
-    background: transparent;
-    border: 1px solid transparent;
-    color: $color-secondary;
+    background: linear-gradient(0deg, var(--themeplus-bg-canvas), var(--themeplus-bg-primary));
+    border: 2px solid var(--themeplus-bg-canvas);
+    color: var(--themeplus-text-muted);
+    box-shadow: 0 0 8px var(--themeplus-bg-canvas);
 
     .tpo-footer__preloader-icon {
       i {
-        color: $color-primary;
+        color: #a869f0;
       }
     }
 
@@ -98,9 +94,6 @@
     }
 
     &:hover {
-      background: transparent;
-      border: 1px solid rgba($color-white, 0.25);
-
       &__label::after {
         width: 100%;
       }
@@ -122,15 +115,27 @@
 }
 
 // Dark mode support
-@media (prefers-color-scheme: dark) {
+[data-themeplus-theme="dark"] {
   .tpo-footer__preloader-toggle {
+    &.is-enabled,
     &.is-disabled {
-      border: 1px solid rgba($color-neutral, 0.25);
-      color: var(--themeplus-text-muted);
+      background: linear-gradient(-120deg, var(--themeplus-text-muted), var(--themeplus-neutral));
+      border: 2px solid var(--themeplus-neutral);
+      color: $color-white;
+    }
 
+    &.is-enabled {
+      border-color: var(--themeplus-text-muted);
+      box-shadow: 0 0 8px var(--themeplus-text-muted);
+
+      i {
+        color: #69d5f0;
+      }
+    }
+
+    &.is-disabled {
       &:hover {
-        background: rgba($color-primary, 0.05);
-        border: 1px solid rgba($color-primary, 0.5);
+        background: linear-gradient(120deg, var(--themeplus-neutral-600), var(--themeplus-neutral));
       }
     }
   }

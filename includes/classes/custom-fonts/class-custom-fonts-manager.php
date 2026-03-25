@@ -28,7 +28,7 @@ class ThemePlus_Custom_Fonts_Manager {
   /**
    * Allowed font file types
    */
-  const ALLOWED_TYPES = ['woff', 'woff2', 'ttf', 'otf', 'eot'];
+  const ALLOWED_TYPES = ['woff', 'woff2'];
 
   /**
    * Get instance

@@ -62,9 +62,13 @@ class ThemePlus_Settings {
    * @return bool
    */
   public static function update_all_options(array $options): bool {
-    // Delete first to force update
-    delete_option(self::get_option_key());
-    return add_option(self::get_option_key(), $options);
+    $result = update_option(self::get_option_key(), $options, false);
+
+    if ($result) {
+      do_action('themeplus/options/saved', $options);
+    }
+
+    return $result;
   }
 
   /**

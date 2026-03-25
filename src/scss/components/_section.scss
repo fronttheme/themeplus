@@ -6,7 +6,7 @@
 @use '../abstracts/mixins' as *;
 
 .tpo-section {
-  margin: $spacing-lg 0;
+  margin: $spacing-lg 0 0;
 
   &__title {
     font-size: $font-size-xl;

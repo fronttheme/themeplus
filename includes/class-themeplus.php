@@ -55,6 +55,7 @@ final class ThemePlus {
     // ======================
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-config.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-settings.php';
+    require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-frontend.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-rest-api.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-admin.php';
 
@@ -93,6 +94,9 @@ final class ThemePlus {
     add_action('init', [$this, 'load_textdomain']);
     add_action('admin_menu', [$this, 'register_admin_menu']);
     add_action('rest_api_init', [new ThemePlus_REST_API(), 'register_routes']);
+
+    // Initialize frontend
+    ThemePlus_Frontend::init();
 
     // Initialize admin
     if (is_admin()) {

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-10T17:44:33+00:00\n"
+"POT-Creation-Date: 2026-03-25T18:25:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: themeplus\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: themeplus.php
 #: includes/classes/core/class-themeplus-framework-config.php:33
-#: src/js/admin/components/Layout/Sidebar.jsx:178
+#: src/js/admin/components/Layout/Sidebar.jsx:201
 msgid "ThemePlus"
 msgstr ""
 
@@ -41,11 +41,11 @@ msgstr ""
 msgid "https://fronttheme.com"
 msgstr ""
 
-#: includes/classes/core/class-themeplus-admin.php:161
+#: includes/classes/core/class-themeplus-admin.php:162
 msgid "Settings saved!"
 msgstr ""
 
-#: includes/classes/core/class-themeplus-admin.php:162
+#: includes/classes/core/class-themeplus-admin.php:163
 msgid "An error occurred."
 msgstr ""
 
@@ -96,9 +96,9 @@ msgstr ""
 msgid "Font deleted successfully"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-frontend.php:72
+#: includes/classes/custom-fonts/class-custom-fonts-frontend.php:186
 #: includes/config/default-config.php:23
-#: src/js/admin/components/Layout/Body.jsx:32
+#: src/js/admin/components/Layout/Body.jsx:33
 msgid "Custom Fonts"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr ""
 msgid "Font not found"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-mime-type.php:171
+#: includes/classes/custom-fonts/class-custom-fonts-mime-type.php:163
 msgid "You do not have permission to upload font files."
 msgstr ""
 
@@ -132,7 +132,7 @@ msgid "Import/Export"
 msgstr ""
 
 #: includes/config/default-config.php:46
-#: src/js/admin/components/Layout/Body.jsx:42
+#: src/js/admin/components/Layout/Body.jsx:43
 msgid "Developer Panel"
 msgstr ""
 
@@ -147,16 +147,16 @@ msgstr ""
 #: src/js/admin/components/Common/Dialog.jsx:32
 #: src/js/admin/components/Fields/CodeEditorField.jsx:189
 #: src/js/admin/components/Fields/RepeaterField.jsx:58
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:689
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:758
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:691
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:765
 #: src/js/admin/components/Sections/ImportExport.jsx:164
 #: src/js/admin/components/Sections/ImportExport.jsx:317
 msgid "Cancel"
 msgstr ""
 
-#: src/js/admin/App.jsx:192
-#: src/js/admin/App.jsx:237
-#: src/js/admin/App.jsx:277
+#: src/js/admin/App.jsx:196
+#: src/js/admin/App.jsx:241
+#: src/js/admin/App.jsx:281
 #: src/js/admin/components/Sections/ImportExport.jsx:41
 #: src/js/admin/components/Sections/ImportExport.jsx:98
 #: src/js/admin/components/Sections/ImportExport.jsx:175
@@ -164,13 +164,13 @@ msgstr ""
 msgid "Success!"
 msgstr ""
 
-#: src/js/admin/App.jsx:193
+#: src/js/admin/App.jsx:197
 msgid "Options saved successfully!"
 msgstr ""
 
-#: src/js/admin/App.jsx:202
-#: src/js/admin/App.jsx:247
-#: src/js/admin/App.jsx:287
+#: src/js/admin/App.jsx:206
+#: src/js/admin/App.jsx:251
+#: src/js/admin/App.jsx:291
 #: src/js/admin/components/Sections/ImportExport.jsx:50
 #: src/js/admin/components/Sections/ImportExport.jsx:116
 #: src/js/admin/components/Sections/ImportExport.jsx:146
@@ -179,52 +179,52 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: src/js/admin/App.jsx:203
+#: src/js/admin/App.jsx:207
 msgid "Failed to save options: "
 msgstr ""
 
-#: src/js/admin/App.jsx:215
+#: src/js/admin/App.jsx:219
 msgid "Reset Section?"
 msgstr ""
 
-#: src/js/admin/App.jsx:216
+#: src/js/admin/App.jsx:220
 msgid "Are you sure you want to reset this section to default values?"
 msgstr ""
 
-#: src/js/admin/App.jsx:238
+#: src/js/admin/App.jsx:242
 msgid "Section reset successfully!"
 msgstr ""
 
-#: src/js/admin/App.jsx:248
+#: src/js/admin/App.jsx:252
 msgid "Failed to reset section: "
 msgstr ""
 
-#: src/js/admin/App.jsx:258
+#: src/js/admin/App.jsx:262
 #: src/js/admin/components/Sections/ImportExport.jsx:161
 msgid "Reset All Settings?"
 msgstr ""
 
-#: src/js/admin/App.jsx:259
+#: src/js/admin/App.jsx:263
 msgid "Are you sure you want to reset ALL settings to default values? This action cannot be undone!"
 msgstr ""
 
-#: src/js/admin/App.jsx:278
+#: src/js/admin/App.jsx:282
 msgid "All settings reset successfully!"
 msgstr ""
 
-#: src/js/admin/App.jsx:288
+#: src/js/admin/App.jsx:292
 msgid "Failed to reset settings: "
 msgstr ""
 
-#: src/js/admin/App.jsx:318
+#: src/js/admin/App.jsx:322
 msgid "Loading ThemePlus"
 msgstr ""
 
-#: src/js/admin/App.jsx:329
+#: src/js/admin/App.jsx:333
 msgid "Error Loading ThemePlus"
 msgstr ""
 
-#: src/js/admin/App.jsx:331
+#: src/js/admin/App.jsx:335
 msgid "Try Again"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgstr ""
 
 #: src/js/admin/components/Common/GradientPicker.jsx:79
 #: src/js/admin/components/Fields/BorderField.jsx:107
-#: src/js/admin/components/Fields/Typography.jsx:378
+#: src/js/admin/components/Fields/Typography.jsx:421
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:581
 msgid "Preview"
 msgstr ""
@@ -297,7 +297,7 @@ msgstr ""
 
 #: src/js/admin/components/Common/IconPickerModal.jsx:168
 #: src/js/admin/components/DevPanel/DevPanel.jsx:143
-#: src/js/admin/components/Layout/Sidebar.jsx:202
+#: src/js/admin/components/Layout/Sidebar.jsx:225
 msgid "Clear search"
 msgstr ""
 
@@ -375,8 +375,8 @@ msgstr ""
 #: src/js/admin/components/Fields/RepeaterField.jsx:57
 #: src/js/admin/components/Fields/RepeaterField.jsx:228
 #: src/js/admin/components/Fields/RepeaterField.jsx:230
-#: src/js/admin/components/Fields/SocialMediaField.jsx:193
-#: src/js/admin/components/Fields/SocialMediaField.jsx:195
+#: src/js/admin/components/Fields/SocialMediaField.jsx:206
+#: src/js/admin/components/Fields/SocialMediaField.jsx:208
 msgid "Remove"
 msgstr ""
 
@@ -851,15 +851,15 @@ msgstr ""
 
 #: src/js/admin/components/Fields/RepeaterField.jsx:189
 #: src/js/admin/components/Fields/RepeaterField.jsx:191
-#: src/js/admin/components/Fields/SocialMediaField.jsx:174
-#: src/js/admin/components/Fields/SocialMediaField.jsx:176
+#: src/js/admin/components/Fields/SocialMediaField.jsx:187
+#: src/js/admin/components/Fields/SocialMediaField.jsx:189
 msgid "Move up"
 msgstr ""
 
 #: src/js/admin/components/Fields/RepeaterField.jsx:200
 #: src/js/admin/components/Fields/RepeaterField.jsx:202
-#: src/js/admin/components/Fields/SocialMediaField.jsx:184
-#: src/js/admin/components/Fields/SocialMediaField.jsx:186
+#: src/js/admin/components/Fields/SocialMediaField.jsx:197
+#: src/js/admin/components/Fields/SocialMediaField.jsx:199
 msgid "Move down"
 msgstr ""
 
@@ -888,19 +888,19 @@ msgstr ""
 msgid "Paste"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:117
+#: src/js/admin/components/Fields/SocialMediaField.jsx:130
 msgid "link"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:117
+#: src/js/admin/components/Fields/SocialMediaField.jsx:130
 msgid "links"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:211
+#: src/js/admin/components/Fields/SocialMediaField.jsx:224
 msgid "Add Social Link"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:228
+#: src/js/admin/components/Fields/SocialMediaField.jsx:241
 msgid "No social media links yet. Click the button above to add one."
 msgstr ""
 
@@ -930,144 +930,144 @@ msgstr ""
 msgid "Link values"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:69
+#: src/js/admin/components/Fields/Typography.jsx:79
 msgid "Normal"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:70
+#: src/js/admin/components/Fields/Typography.jsx:80
 msgid "Italic"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:88
+#: src/js/admin/components/Fields/Typography.jsx:98
 msgid "None"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:89
+#: src/js/admin/components/Fields/Typography.jsx:99
 msgid "Uppercase"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:90
+#: src/js/admin/components/Fields/Typography.jsx:100
 msgid "Lowercase"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:91
+#: src/js/admin/components/Fields/Typography.jsx:101
 msgid "Capitalize"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:96
+#: src/js/admin/components/Fields/Typography.jsx:106
 msgid "Latin"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:97
+#: src/js/admin/components/Fields/Typography.jsx:107
 msgid "Latin Extended"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:98
+#: src/js/admin/components/Fields/Typography.jsx:108
 msgid "Cyrillic"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:99
+#: src/js/admin/components/Fields/Typography.jsx:109
 msgid "Cyrillic Extended"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:100
+#: src/js/admin/components/Fields/Typography.jsx:110
 msgid "Greek"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:101
+#: src/js/admin/components/Fields/Typography.jsx:111
 msgid "Greek Extended"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:102
+#: src/js/admin/components/Fields/Typography.jsx:112
 msgid "Vietnamese"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:103
+#: src/js/admin/components/Fields/Typography.jsx:113
 msgid "Arabic"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:104
+#: src/js/admin/components/Fields/Typography.jsx:114
 msgid "Hebrew"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:105
+#: src/js/admin/components/Fields/Typography.jsx:115
 msgid "Thai"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:106
+#: src/js/admin/components/Fields/Typography.jsx:116
 msgid "Devanagari"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:203
+#: src/js/admin/components/Fields/Typography.jsx:246
 msgid "Font Family"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:213
+#: src/js/admin/components/Fields/Typography.jsx:256
 msgid "Google Fonts"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:221
+#: src/js/admin/components/Fields/Typography.jsx:264
 msgid "Standard"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:229
+#: src/js/admin/components/Fields/Typography.jsx:272
 msgid "Custom"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:237
+#: src/js/admin/components/Fields/Typography.jsx:280
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:570
 msgid "Loading fonts..."
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:245
+#: src/js/admin/components/Fields/Typography.jsx:288
 msgid "Select font..."
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:257
+#: src/js/admin/components/Fields/Typography.jsx:300
 msgid "Character Sets"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:269
+#: src/js/admin/components/Fields/Typography.jsx:312
 msgid "Select character sets..."
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:282
+#: src/js/admin/components/Fields/Typography.jsx:325
 msgid "Font Size"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:300
+#: src/js/admin/components/Fields/Typography.jsx:343
 msgid "Line Height"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:317
+#: src/js/admin/components/Fields/Typography.jsx:360
 msgid "Font Weight"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:332
+#: src/js/admin/components/Fields/Typography.jsx:375
 msgid "Font Style"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:344
+#: src/js/admin/components/Fields/Typography.jsx:387
 msgid "Text Transform"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:359
+#: src/js/admin/components/Fields/Typography.jsx:402
 msgid "Letter Spacing"
 msgstr ""
 
-#: src/js/admin/components/Fields/Typography.jsx:392
+#: src/js/admin/components/Fields/Typography.jsx:435
 msgid "The quick brown fox jumps over the lazy dog"
 msgstr ""
 
-#: src/js/admin/components/Layout/Body.jsx:37
+#: src/js/admin/components/Layout/Body.jsx:38
 msgid "Import/Export Settings"
 msgstr ""
 
-#: src/js/admin/components/Layout/Body.jsx:84
+#: src/js/admin/components/Layout/Body.jsx:118
 msgid "Select a tab to view settings."
 msgstr ""
 
-#: src/js/admin/components/Layout/Body.jsx:127
+#: src/js/admin/components/Layout/Body.jsx:167
 msgid "No fields available for this section."
 msgstr ""
 
@@ -1139,11 +1139,11 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#: src/js/admin/components/Layout/Sidebar.jsx:172
+#: src/js/admin/components/Layout/Sidebar.jsx:195
 msgid "ThemePlus Logo"
 msgstr ""
 
-#: src/js/admin/components/Layout/Sidebar.jsx:192
+#: src/js/admin/components/Layout/Sidebar.jsx:215
 msgid "Search fields..."
 msgstr ""
 
@@ -1192,8 +1192,8 @@ msgid "Remove File"
 msgstr ""
 
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:562
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:680
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:682
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:684
 msgid "Add Font"
 msgstr ""
 
@@ -1202,7 +1202,7 @@ msgid "No custom fonts yet. Click \"Add Font\" to upload your first custom font.
 msgstr ""
 
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:579
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:706
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:708
 msgid "Font Name"
 msgstr ""
 
@@ -1235,80 +1235,92 @@ msgstr ""
 msgid "Re-upload font files"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:660
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:639
+msgid "Delete font"
+msgstr ""
+
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:662
 msgid "Updating Font..."
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:660
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:662
 msgid "Edit Custom Font"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:661
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:663
 msgid "Re-adding Font..."
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:661
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:663
 msgid "Fix Custom Font"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:662
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:664
 msgid "Adding Font..."
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:662
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:664
 msgid "Add Custom Font"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:679
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:681
 msgid "Update Font"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:714
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:716
 msgid "My Custom Font"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:723
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:725
 msgid "Font Files"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:725
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:727
 msgid "Upload font files for different variants. Regular weight is required."
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:728
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:730
 msgid "Regular"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:729
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:731
 msgid "Italic (Optional)"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:730
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:732
 msgid "Bold (Optional)"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:731
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:733
 msgid "Bold Italic (Optional)"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:737
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:739
 msgid "Accepted formats:"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:739
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:741
 msgid "Recommended:"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:750
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:743
+msgid "Convert your fonts:"
+msgstr ""
+
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:745
+msgid "Font Squirrel Webfont Generator"
+msgstr ""
+
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:757
 msgid "Delete Custom Font"
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:751
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:758
 #, js-format
 msgid "Are you sure you want to delete \"%s\"? This action cannot be undone."
 msgstr ""
 
-#: src/js/admin/components/Sections/CustomFontUploader.jsx:757
+#: src/js/admin/components/Sections/CustomFontUploader.jsx:764
 msgid "Delete"
 msgstr ""
 

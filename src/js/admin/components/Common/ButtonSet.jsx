@@ -60,7 +60,7 @@ function ButtonSet({
         aria-label={label}
       >
         {normalizedOptions.map((option) => {
-          const optionValue = option.value || option;
+          const optionValue = option.value !== undefined ? option.value : option;
           const optionLabel = option.label || option;
           const isActive = value === optionValue;
 

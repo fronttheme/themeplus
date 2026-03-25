@@ -28,10 +28,16 @@
     margin-bottom: $spacing-md;
   }
 
+  &__section-excerpt,
   &__section-description {
     color: var(--themeplus-text-primary);
     margin-bottom: $spacing-lg;
     line-height: 1.6;
+  }
+
+  &__section-excerpt {
+    font-weight: 500;
+    color: var(--themeplus-text-muted);
   }
 
   &__fields {

@@ -634,7 +634,9 @@ function CustomFontUploader({onFontsUpdated}) {
                       color="muted"
                       onClick={() => confirmDeleteFont(font)}
                       disabled={deleting === font.id}
-                      loading={deleting === font.id}>
+                      loading={deleting === font.id}
+                      iconOnly={true}
+                      ariaLabel={__('Delete font', 'themeplus')}>
                       {deleting === font.id ? <i className="fa-solid fa-spinner"></i> :
                         <i className="fa-solid fa-trash-can"></i>}
                     </Button>
@@ -734,9 +736,14 @@ function CustomFontUploader({onFontsUpdated}) {
           {/* Accepted Formats */}
           <div className="tpo-font-formats">
             <p className="description">
-              <strong>{__('Accepted formats:', 'themeplus')}</strong> .woff, .woff2, .ttf, .otf
+              <strong>{__('Accepted formats:', 'themeplus')}</strong> .woff, .woff2
               <br/>
               <strong>{__('Recommended:', 'themeplus')}</strong> .woff2 for best performance
+              <br/>
+              <strong>{__('Convert your fonts:', 'themeplus')}</strong>{' '}
+              <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank" rel="noopener noreferrer">
+                {__('Font Squirrel Webfont Generator', 'themeplus')}
+              </a>
             </p>
           </div>
         </Modal>

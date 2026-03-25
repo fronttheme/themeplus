@@ -10,6 +10,8 @@ function ToggleField({
                        value = false,
                        onChange,
                        help = '',
+                       on = '',
+                       off = '',
                      }) {
   return (
     <div className="tpo-field tpo-field--toggle">
@@ -25,15 +27,24 @@ function ToggleField({
         <button
           id={id}
           type="button"
-          className={`tpo-toggle ${value ? 'tpo-toggle--active' : ''}`}
+          className={`tpo-toggle ${value ? 'tpo-toggle--active' : ''} ${!on && !off ? 'tpo-toggle--no-labels' : ''}`}
           onClick={() => onChange(!value)}
           role="switch"
           aria-checked={value}
-          aria-label={label}
-        >
-                    <span className="tpo-toggle__track">
-                        <span className="tpo-toggle__thumb"/>
-                    </span>
+          aria-label={label}>
+          <span className="tpo-toggle__track">
+            {on && (
+              <span className="tpo-toggle__label tpo-toggle__label--on">
+                {on}
+              </span>
+            )}
+            <span className="tpo-toggle__thumb"/>
+            {off && (
+              <span className="tpo-toggle__label tpo-toggle__label--off">
+                {off}
+              </span>
+            )}
+          </span>
         </button>
       </div>
 

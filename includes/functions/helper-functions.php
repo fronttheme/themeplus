@@ -13,10 +13,10 @@ if (!defined('ABSPATH')) {
  * Get option value
  *
  * @param string|null $key Option key (null returns all options)
- * @param string|null $default Default value
+ * @param mixed $default Default value
  * @return mixed
  */
-function themeplus_get_option(string $key = null, null|string $default = ''): mixed {
+function themeplus_get_option(string $key = null, mixed $default = ''): mixed {
   // Check if ThemePlus is active
   if (!class_exists('ThemePlus_Settings')) {
     return $default;

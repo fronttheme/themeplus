@@ -2,26 +2,9 @@
  * Field Helper Utilities
  *
  * File: src/js/admin/utils/fieldHelpers.js
- *
- * Supported 'required' formats:
- *
- * 1. Single condition (shorthand array):
- *    'required' => ['field_id', '==', 'value']
- *
- * 2. Multiple conditions with AND (all must pass):
- *    'required' => [
- *      ['field_id', '==', 'value'],
- *      ['other_field', '!=', ''],
- *    ]
- *
- * 3. Multiple conditions with OR (any must pass):
- *    'required' => [
- *      'relation' => 'OR',
- *      ['field_id', '==', 'red'],
- *      ['field_id', '==', 'blue'],
- *    ]
- *
- * Supported operators:
+ */
+
+/** Supported operators:
  *   ==, =        Equal to
  *   !=           Not equal to
  *   >            Greater than (numeric)
@@ -35,47 +18,96 @@
  */
 
 /**
+ * Supported 'required' formats:
+ *
+ * 1. Single condition (shorthand):
+ *    'required' => ['field_id', '==', 'value']
+ *
+ * 2. Multiple conditions — AND (all must pass):
+ *    'required' => [
+ *      ['field_id', '==', 'value'],
+ *      ['other_field', '!=', ''],
+ *    ]
+ *
+ * 3. Multiple conditions — OR (any must pass):
+ *    'required' => [
+ *      'relation' => 'OR',
+ *      ['field_id', '==', 'red'],
+ *      ['field_id', '==', 'blue'],
+ *    ]
+ *
+ * 4. Array of values — OR within a single rule (== any / != all):
+ *    'required' => ['field_id', '==', ['classic', 'minimal']]
+ *    'required' => ['field_id', '!=', ['classic', 'minimal']]
+ *
+ * 5. Mixed AND + array values:
+ *    'required' => [
+ *      ['enable_footer',     '==', true],
+ *      ['site_footer_style', '==', ['classic', 'minimal']],
+ *    ]
+ */
+
+/**
  * Resolve a scalar comparison value from any field type.
  * Array fields (dimensions, spacing, border, typography, background)
  * can be targeted via dot notation: 'container_width.width'
  *
  * @param {string} fieldId  e.g. 'container_width' or 'container_width.width'
  * @param {Object} options  Current saved options
+ * @param {Object} defaults Field default values map
  * @returns {*}
  */
-const resolveValue = (fieldId, options) => {
-  // Dot notation: 'dimensions_field.width'
+const resolveValue = (fieldId, options, defaults = {}) => {
   if (fieldId.includes('.')) {
     const [key, subKey] = fieldId.split('.');
-    const parent = options[key];
+    const parent = options[key] ?? defaults[key];
     if (parent && typeof parent === 'object') {
       return parent[subKey];
     }
     return undefined;
   }
 
-  return options[fieldId];
+  const value = options[fieldId];
+  return value !== undefined ? value : defaults[fieldId];
 };
 
 /**
  * Evaluate a single condition rule
  *
- * @param {Array}  rule    ['field_id', 'operator', 'value']
+ * @param rule
  * @param {Object} options Current saved options
+ * @param {Object} defaults Field default values map
  * @returns {boolean}
  */
-const evaluateRule = (rule, options) => {
+const evaluateRule = (rule, options, defaults = {}) => {
   const [fieldId, operator, conditionValue] = rule;
-  const currentValue = resolveValue(fieldId, options);
+  const currentValue = resolveValue(fieldId, options, defaults);
+
+  // ── Array of values — ['field', '==', ['a', 'b']] ────────────────────────
+  if (Array.isArray(conditionValue)) {
+    if (operator === '==' || operator === '=') {
+      // Match ANY value in the array
+      // loose == intentional — handles "1" == true and numeric string coercion
+      // noinspection EqualityComparisonWithCoercionJS
+      return conditionValue.some(val => currentValue == val);
+    }
+    if (operator === '!=') {
+      // Match NONE of the values in the array
+      // noinspection EqualityComparisonWithCoercionJS
+      return conditionValue.every(val => currentValue != val);
+    }
+  }
 
   switch (operator) {
     // Equality
     case '==':
     case '=':
+      // noinspection EqualityComparisonWithCoercionJS
       return currentValue == conditionValue; // loose == intentional (handles "1" == true)
 
     // Inequality
     case '!=':
+      // noinspection EqualityComparisonWithCoercionJS
       return currentValue != conditionValue;
 
     // Numeric comparisons
@@ -132,9 +164,10 @@ const evaluateRule = (rule, options) => {
  *
  * @param {Object} field   Field configuration object
  * @param {Object} options Current saved options
+ * @param {Object} defaults Field default values map
  * @returns {boolean}
  */
-export const shouldShowField = (field, options) => {
+export const shouldShowField = (field, options, defaults = {}) => {
   if (!field.required) return true;
 
   const required = field.required;
@@ -142,7 +175,7 @@ export const shouldShowField = (field, options) => {
   // ── Format 1: shorthand single rule ──────────────────────────────────────
   // 'required' => ['field_id', '==', 'value']
   if (typeof required[0] === 'string') {
-    return evaluateRule(required, options);
+    return evaluateRule(required, options, defaults);
   }
 
   // ── Format 2 & 3: multiple rules with AND (default) or OR ────────────────
@@ -154,11 +187,11 @@ export const shouldShowField = (field, options) => {
   const rules = Object.values(required).filter(item => Array.isArray(item));
 
   if (relation === 'OR') {
-    return rules.some(rule => evaluateRule(rule, options));
+    return rules.some(rule => evaluateRule(rule, options, defaults));
   }
 
   // AND (default)
-  return rules.every(rule => evaluateRule(rule, options));
+  return rules.every(rule => evaluateRule(rule, options, defaults));
 };
 
 /**

@@ -150,7 +150,9 @@ function App() {
         fields: configResponse.data.fields
       });
       if (sectionsArray.length > 0) {
-        setActiveTab(sectionsArray[0].id);
+        const firstSection = sectionsArray[0];
+        const defaultTab = firstSection.subsections?.length > 0 ? `${firstSection.id}__${firstSection.subsections[0].id}` : firstSection.id;
+        setActiveTab(defaultTab);
       }
       const optionsResponse = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
         path: '/themeplus/v1/options',
@@ -350,7 +352,8 @@ function App() {
   // CRITICAL: Pass handleSetOptions wrapper instead of raw setOptions
   const settingsValue = {
     options,
-    setOptions: handleSetOptions
+    setOptions: handleSetOptions,
+    isLoaded: !loading
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_context_ThemeContext__WEBPACK_IMPORTED_MODULE_5__.ThemeProvider, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_context_SettingsContext__WEBPACK_IMPORTED_MODULE_4__.SettingsProvider, {
     value: settingsValue
@@ -359,7 +362,8 @@ function App() {
     activeTab: activeTab,
     onTabChange: handleTabChange,
     searchQuery: searchQuery,
-    onSearchChange: setSearchQuery
+    onSearchChange: setSearchQuery,
+    isLoaded: !loading
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-body-wrapper"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Layout_Header__WEBPACK_IMPORTED_MODULE_9__["default"], {
@@ -480,11 +484,6 @@ function Button({
     return false;
   })();
 
-  // Warn if icon-only button has no aria-label
-  if (hasOnlyIcon && !ariaLabel && !props['aria-label']) {
-    console.warn('ThemePlus Button: Icon-only buttons should have an aria-label for accessibility');
-  }
-
   // Build class names
   const classNames = ['tpo-button', `tpo-button--${style}`, `tpo-button--${color}`, `tpo-button--${size}`, hasOnlyIcon && 'tpo-button--icon-only', fullWidth && 'tpo-button--full-width', loading && 'tpo-button--loading', disabled && 'tpo-button--disabled', className].filter(Boolean).join(' ');
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
@@ -572,7 +571,7 @@ function ButtonSet({
     role: "group",
     "aria-label": label
   }, normalizedOptions.map(option => {
-    const optionValue = option.value || option;
+    const optionValue = option.value !== undefined ? option.value : option;
     const optionLabel = option.label || option;
     const isActive = value === optionValue;
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
@@ -4989,12 +4988,17 @@ function InfoField({
   content,
   style = 'info'
 }) {
+  const body = desc || content;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-field tpo-field--info"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Common_Notice__WEBPACK_IMPORTED_MODULE_1__["default"], {
     status: style,
     title: title
-  }, desc || content));
+  }, body && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    dangerouslySetInnerHTML: {
+      __html: body
+    }
+  })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InfoField);
 
@@ -5806,6 +5810,21 @@ function SelectImageField({
   options = [],
   help = ''
 }) {
+  const normalizeOptions = () => {
+    if (Array.isArray(options)) {
+      return options.map(opt => ({
+        value: opt.value,
+        label: opt.label,
+        image: opt.image || opt.img || ''
+      }));
+    }
+    return Object.entries(options).map(([key, opt]) => ({
+      value: key,
+      label: opt.label || opt.alt || '',
+      image: opt.image || opt.img || ''
+    }));
+  };
+  const normalizedOptions = normalizeOptions();
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-field tpo-field--select-image"
   }, label && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -5816,10 +5835,12 @@ function SelectImageField({
     className: "tpo-field__body"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-select-image"
-  }, options.map(option => {
-    const optionValue = option.value || option;
-    const optionLabel = option.label || option;
-    const optionImage = option.image || option.img || '';
+  }, normalizedOptions.map(option => {
+    const {
+      value: optionValue,
+      label: optionLabel,
+      image: optionImage
+    } = option;
     const isSelected = value === optionValue;
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
       key: optionValue,
@@ -6084,7 +6105,20 @@ function SocialMediaField({
   help = '',
   max = 20
 }) {
-  const [links, setLinks] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(value);
+  const normalizeValue = val => {
+    if (Array.isArray(val)) return val; // already correct format
+
+    if (val && typeof val === 'object') {
+      // Convert {facebook: 'url', twitter: 'url'} → [{platform, url}]
+      return Object.entries(val).filter(([, url]) => url) // skip empty urls
+      .map(([platform, url]) => ({
+        platform,
+        url
+      }));
+    }
+    return [];
+  };
+  const [links, setLinks] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(normalizeValue(value));
 
   /**
    * Available social platforms with FontAwesome icons
@@ -6679,7 +6713,9 @@ function ToggleField({
   label,
   value = false,
   onChange,
-  help = ''
+  help = '',
+  on = '',
+  off = ''
 }) {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-field tpo-field--toggle"
@@ -6693,16 +6729,20 @@ function ToggleField({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     id: id,
     type: "button",
-    className: `tpo-toggle ${value ? 'tpo-toggle--active' : ''}`,
+    className: `tpo-toggle ${value ? 'tpo-toggle--active' : ''} ${!on && !off ? 'tpo-toggle--no-labels' : ''}`,
     onClick: () => onChange(!value),
     role: "switch",
     "aria-checked": value,
     "aria-label": label
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "tpo-toggle__track"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+  }, on && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "tpo-toggle__label tpo-toggle__label--on"
+  }, on), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "tpo-toggle__thumb"
-  })))), help && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), off && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "tpo-toggle__label tpo-toggle__label--off"
+  }, off)))), help && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-field__help"
   }, help));
 }
@@ -6767,7 +6807,7 @@ function Typography({
   const [googleFonts, setGoogleFonts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)([]);
   const [customFonts, setCustomFonts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)([]);
   const [loadingFonts, setLoadingFonts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
-  const [activeFontTab, setActiveFontTab] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)('google');
+  const [customFontsLoaded, setCustomFontsLoaded] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
 
   // Get unit for property
   const getUnit = property => {
@@ -6794,6 +6834,12 @@ function Typography({
 
   // Standard fonts
   const standardFonts = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Georgia', 'Helvetica', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana'];
+  const detectFontTab = fontFamily => {
+    if (!fontFamily) return 'google';
+    if (standardFonts.includes(fontFamily)) return 'standard';
+    return 'google'; // default to google (custom handled by useEffect below)
+  };
+  const [activeFontTab, setActiveFontTab] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(() => detectFontTab(value['font-family']));
 
   // Font style options
   const fontStyleOptions = {
@@ -6884,20 +6930,42 @@ function Typography({
 
   // Load Google Fonts
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    loadGoogleFonts();
-  }, []);
+    if (fontFamily) {
+      // Only load if font-family control is shown
+      loadGoogleFonts();
+    }
+  }, [fontFamily]);
 
   // Load Custom Fonts
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     loadCustomFonts();
   }, []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (customFonts.length > 0) {
+      const currentFont = value['font-family'];
+      if (currentFont && customFonts.includes(currentFont)) {
+        setActiveFontTab('custom');
+      }
+    }
+  }, [customFonts]);
 
   // Load font preview when changed
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    if (fontFamilyValue && !standardFonts.includes(fontFamilyValue)) {
+    // Only proceed after custom fonts are loaded
+    if (!customFontsLoaded) return;
+
+    // Check if this is a custom font that already has @font-face
+    const isCustomFont = customFonts.includes(fontFamilyValue);
+    const isStandardFont = standardFonts.includes(fontFamilyValue);
+
+    // Only load from Google Fonts if:
+    // 1. It's NOT a standard font (system font)
+    // 2. It's NOT a custom font (already has @font-face)
+    // 3. It's a Google Font
+    if (fontFamilyValue && !isStandardFont && !isCustomFont) {
       _services_GoogleFontsService__WEBPACK_IMPORTED_MODULE_3__["default"].loadFontPreview(fontFamilyValue, subsetsValue);
     }
-  }, [fontFamilyValue, subsetsValue]);
+  }, [fontFamilyValue, subsetsValue, customFonts, customFontsLoaded]);
   const loadGoogleFonts = async () => {
     try {
       setLoadingFonts(true);
@@ -6925,6 +6993,8 @@ function Typography({
       setCustomFonts(validatedFonts.filter(name => name !== null));
     } catch (error) {
       console.error('Error loading custom fonts:', error);
+    } finally {
+      setCustomFontsLoaded(true);
     }
   };
   const handleChange = (key, newValue) => {
@@ -6935,7 +7005,11 @@ function Typography({
   };
   const handleFontSelect = font => {
     handleChange('font-family', font);
-    if (!standardFonts.includes(font)) {
+
+    // Only load from Google Fonts CDN if it's NOT a standard font AND NOT a custom font
+    const isStandardFont = standardFonts.includes(font);
+    const isCustomFont = customFonts.includes(font);
+    if (!isStandardFont && !isCustomFont) {
       _services_GoogleFontsService__WEBPACK_IMPORTED_MODULE_3__["default"].loadFontPreview(font, subsetsValue);
     }
   };
@@ -7258,12 +7332,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DevPanel_DevPanel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../DevPanel/DevPanel */ "./src/js/admin/components/DevPanel/DevPanel.jsx");
 /* harmony import */ var _utils_fieldHelpers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/fieldHelpers */ "./src/js/admin/utils/fieldHelpers.js");
 /* harmony import */ var _hooks_useScrollbar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../hooks/useScrollbar */ "./src/js/admin/hooks/useScrollbar.js");
+/* harmony import */ var _BodySkeleton__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./BodySkeleton */ "./src/js/admin/components/Layout/BodySkeleton.jsx");
 
 /**
  * ThemePlus Body Component
  *
  * File: src/js/admin/components/Layout/Body.jsx
  */
+
 
 
 
@@ -7283,7 +7359,8 @@ function Body({
 }) {
   const {
     options,
-    setOptions
+    setOptions,
+    isLoaded
   } = (0,_context_SettingsContext__WEBPACK_IMPORTED_MODULE_2__.useSettings)();
 
   // Scrollbar hook
@@ -7328,20 +7405,33 @@ function Body({
       const section = sections.find(s => s.id === sectionId);
       if (!section) return null;
       const subsection = section.subsections?.find(sub => sub.id === subsectionId);
+      // Subsection
       if (subsection) return {
         title: subsection.title,
-        fields: subsection.fields || []
+        fields: subsection.fields || [],
+        excerpt: subsection.excerpt || ''
       };
     }
 
     // Regular section
     const section = sections.find(s => s.id === activeTab);
+    // Regular section
     if (section) return {
       title: section.title,
-      fields: section.fields || []
+      fields: section.fields || [],
+      excerpt: section.excerpt || ''
     };
     return null;
   };
+
+  // Build defaults map from all fields across sections
+  const defaults = {};
+  sections.forEach(section => {
+    const allFields = [...(section.fields || []), ...(section.subsections || []).flatMap(sub => sub.fields || [])];
+    allFields.forEach(f => {
+      if (f.default !== undefined) defaults[f.id] = f.default;
+    });
+  });
 
   // Search Results
   if (searchQuery && searchQuery.length >= 2) {
@@ -7355,6 +7445,16 @@ function Body({
       sections: sections,
       onClearSearch: onClearSearch
     })));
+  }
+
+  // Options not yet loaded from API → show skeleton
+  if (!isLoaded) {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("main", {
+      ref: scrollRef,
+      className: `tpo-body ${scrollbarClass}`
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "tpo-body__content"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_BodySkeleton__WEBPACK_IMPORTED_MODULE_10__["default"], null)));
   }
   const activeContent = getActiveContent();
 
@@ -7378,15 +7478,20 @@ function Body({
     className: "tpo-body__section"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     className: "tpo-body__section-title"
-  }, activeContent.title), activeContent.isCustomFonts ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Sections_CustomFontUploader__WEBPACK_IMPORTED_MODULE_6__["default"], null) : /* Import/Export Section */
+  }, activeContent.title), activeContent.excerpt && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "tpo-body__section-excerpt",
+    dangerouslySetInnerHTML: {
+      __html: activeContent.excerpt
+    }
+  }), activeContent.isCustomFonts ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Sections_CustomFontUploader__WEBPACK_IMPORTED_MODULE_6__["default"], null) : /* Import/Export Section */
   activeContent.isImportExport ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Sections_ImportExport__WEBPACK_IMPORTED_MODULE_5__["default"], {
     showModal: showModal
   }) : /* Developer Panel */
   activeContent.isDevPanel ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_DevPanel_DevPanel__WEBPACK_IMPORTED_MODULE_7__["default"], null) : /* Regular Fields */
   activeContent.fields.length > 0 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "tpo-body__fields"
-  }, activeContent.fields.map(field => {
-    if (!(0,_utils_fieldHelpers__WEBPACK_IMPORTED_MODULE_8__.shouldShowField)(field, options)) return null;
+  }, !isLoaded ? null : activeContent.fields.map(field => {
+    if (!(0,_utils_fieldHelpers__WEBPACK_IMPORTED_MODULE_8__.shouldShowField)(field, options, defaults)) return null;
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Common_FieldRenderer__WEBPACK_IMPORTED_MODULE_3__["default"], {
       key: field.id,
       field: field,
@@ -7404,6 +7509,48 @@ function Body({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No fields available for this section.', 'themeplus'))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Body);
+
+/***/ }),
+
+/***/ "./src/js/admin/components/Layout/BodySkeleton.jsx":
+/*!*********************************************************!*\
+  !*** ./src/js/admin/components/Layout/BodySkeleton.jsx ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * ThemePlus Body Skeleton
+ * File: src/js/admin/components/Layout/BodySkeleton.jsx
+ */
+
+function BodySkeleton() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-body__skeleton"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__header"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__title"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__excerpt"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__fields"
+  }, [...Array(5)].map((_, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    key: i,
+    className: "tpo-skeleton__field"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__field-label"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__field-input"
+  })))));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BodySkeleton);
 
 /***/ }),
 
@@ -7727,6 +7874,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _hooks_useScrollbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/useScrollbar */ "./src/js/admin/hooks/useScrollbar.js");
 /* harmony import */ var _Common_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Common/Button */ "./src/js/admin/components/Common/Button.jsx");
+/* harmony import */ var _SidebarSkeleton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SidebarSkeleton */ "./src/js/admin/components/Layout/SidebarSkeleton.jsx");
 
 /**
  * ThemePlus Sidebar Component
@@ -7738,12 +7886,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function Sidebar({
   sections = [],
   activeTab,
   onTabChange,
   searchQuery = '',
-  onSearchChange
+  onSearchChange,
+  isLoaded = false
 }) {
   const [mainWalkerStyle, setMainWalkerStyle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)({});
   const subWalkerRefs = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)({});
@@ -7854,7 +8004,14 @@ function Sidebar({
     if (searchQuery) {
       onSearchChange('');
     }
-    onTabChange(sectionId);
+
+    // If section has subsections, activate first subsection automatically
+    const section = sections.find(s => s.id === sectionId);
+    if (section?.subsections?.length > 0) {
+      onTabChange(`${sectionId}__${section.subsections[0].id}`);
+    } else {
+      onTabChange(sectionId);
+    }
   };
 
   // Clear search when sub-tab is clicked
@@ -7899,6 +8056,12 @@ function Sidebar({
         d: "M954.53,897.26l-163.97-163.96c28.24-33.81,51.19-71.4,68.44-112.18,23.32-55.14,35.15-113.7,35.15-174.04s-11.83-118.89-35.15-174.04c-22.52-53.24-54.75-101.05-95.8-142.1-41.05-41.05-88.86-73.28-142.1-95.8C565.97,11.83,507.42,0,447.08,0s-118.89,11.83-174.04,35.15c-53.24,22.52-101.05,54.75-142.1,95.8s-73.28,88.85-95.8,142.1C11.83,328.19,0,386.74,0,447.08s11.83,118.89,35.15,174.04c22.52,53.24,54.75,101.05,95.8,142.1,41.05,41.05,88.85,73.28,142.1,95.8,55.14,23.32,113.7,35.15,174.04,35.15s118.89-11.83,174.04-35.15c40.78-17.25,78.37-40.2,112.18-68.44l163.97,163.96c7.91,7.91,18.27,11.86,28.64,11.86s20.73-3.95,28.64-11.86c15.82-15.82,15.82-41.46,0-57.28ZM447.08,813.16c-97.78,0-189.71-38.08-258.86-107.22-69.14-69.14-107.22-161.07-107.22-258.86s38.08-189.71,107.22-258.86c69.14-69.14,161.07-107.22,258.86-107.22s189.71,38.08,258.86,107.22c69.14,69.14,107.22,161.07,107.22,258.86s-38.08,189.71-107.22,258.86c-69.14,69.14-161.07,107.22-258.86,107.22Z"
       }));
     }
+  }
+  if (!isLoaded) {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("aside", {
+      ref: sidebarRef,
+      className: `tpo-sidebar ${sidebarScrollClass}`
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_SidebarSkeleton__WEBPACK_IMPORTED_MODULE_5__["default"], null));
   }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("aside", {
     ref: sidebarRef,
@@ -8001,6 +8164,53 @@ function Sidebar({
   }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sidebar);
+
+/***/ }),
+
+/***/ "./src/js/admin/components/Layout/SidebarSkeleton.jsx":
+/*!************************************************************!*\
+  !*** ./src/js/admin/components/Layout/SidebarSkeleton.jsx ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * ThemePlus Sidebar Skeleton
+ * File: src/js/admin/components/Layout/SidebarSkeleton.jsx
+ */
+
+function SidebarSkeleton() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-sidebar__skeleton"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__brand"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__logo"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__brand-info"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__brand-name"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__brand-version"
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__search"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "tpo-skeleton__nav"
+  }, [...Array(7)].map((_, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    key: i,
+    className: "tpo-skeleton__nav-item",
+    style: {
+      width: `${75 - i * 5}%`
+    }
+  }))));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidebarSkeleton);
 
 /***/ }),
 
@@ -8634,7 +8844,9 @@ function CustomFontUploader({
     color: "muted",
     onClick: () => confirmDeleteFont(font),
     disabled: deleting === font.id,
-    loading: deleting === font.id
+    loading: deleting === font.id,
+    iconOnly: true,
+    ariaLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Delete font', 'themeplus')
   }, deleting === font.id ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", {
     className: "fa-solid fa-spinner"
   }) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", {
@@ -8691,7 +8903,11 @@ function CustomFontUploader({
     className: "tpo-font-formats"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "description"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Accepted formats:', 'themeplus')), " .woff, .woff2, .ttf, .otf", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Recommended:', 'themeplus')), " .woff2 for best performance"))), deleteConfirm && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Common_Dialog__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Accepted formats:', 'themeplus')), " .woff, .woff2", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Recommended:', 'themeplus')), " .woff2 for best performance", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Convert your fonts:', 'themeplus')), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "https://www.fontsquirrel.com/tools/webfont-generator",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font Squirrel Webfont Generator', 'themeplus'))))), deleteConfirm && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Common_Dialog__WEBPACK_IMPORTED_MODULE_5__["default"], {
     isOpen: !!deleteConfirm,
     onClose: () => !deleting && setDeleteConfirm(null),
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Delete Custom Font', 'themeplus'),
@@ -10759,8 +10975,6 @@ __webpack_require__.r(__webpack_exports__);
  * File: src/js/admin/services/GoogleFontsService.js
  */
 
-const GOOGLE_FONTS_API_KEY = '';
-const GOOGLE_FONTS_API_URL = 'https://www.googleapis.com/webfonts/v1/webfonts';
 const CACHE_KEY = 'themeplus_google_fonts';
 const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -10797,19 +11011,24 @@ class GoogleFontsService {
       // Silent fail
     }
   }
-  async fetchFromAPI() {
-    if (!GOOGLE_FONTS_API_KEY || GOOGLE_FONTS_API_KEY.length < 30) {
+  async fetchFromJSON() {
+    const jsonUrl = window.themePlusData?.googleFontsUrl;
+    if (!jsonUrl) {
       return POPULAR_FONTS;
     }
     try {
-      const url = `${GOOGLE_FONTS_API_URL}?key=${GOOGLE_FONTS_API_KEY}&sort=popularity`;
-      const response = await fetch(url);
+      const response = await fetch(jsonUrl);
       if (!response.ok) {
-        throw new Error('API Error');
+        throw new Error('Failed to load fonts JSON');
       }
       const data = await response.json();
-      return data.items.map(item => item.family);
+
+      // Handle both trimmed format [{family, variants, category}]
+      // and raw API format {items: [...]}
+      const items = Array.isArray(data) ? data : data.items;
+      return items.map(item => item.family);
     } catch (error) {
+      console.warn('Google Fonts JSON failed, using fallback:', error);
       return POPULAR_FONTS;
     }
   }
@@ -10827,7 +11046,7 @@ class GoogleFontsService {
     }
     this.loading = true;
     try {
-      this.fonts = await this.fetchFromAPI();
+      this.fonts = await this.fetchFromJSON();
       this.cacheFonts(this.fonts);
     } catch (error) {
       this.fonts = POPULAR_FONTS;
@@ -10892,26 +11111,9 @@ __webpack_require__.r(__webpack_exports__);
  * Field Helper Utilities
  *
  * File: src/js/admin/utils/fieldHelpers.js
- *
- * Supported 'required' formats:
- *
- * 1. Single condition (shorthand array):
- *    'required' => ['field_id', '==', 'value']
- *
- * 2. Multiple conditions with AND (all must pass):
- *    'required' => [
- *      ['field_id', '==', 'value'],
- *      ['other_field', '!=', ''],
- *    ]
- *
- * 3. Multiple conditions with OR (any must pass):
- *    'required' => [
- *      'relation' => 'OR',
- *      ['field_id', '==', 'red'],
- *      ['field_id', '==', 'blue'],
- *    ]
- *
- * Supported operators:
+ */
+
+/** Supported operators:
  *   ==, =        Equal to
  *   !=           Not equal to
  *   >            Greater than (numeric)
@@ -10925,46 +11127,96 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /**
+ * Supported 'required' formats:
+ *
+ * 1. Single condition (shorthand):
+ *    'required' => ['field_id', '==', 'value']
+ *
+ * 2. Multiple conditions — AND (all must pass):
+ *    'required' => [
+ *      ['field_id', '==', 'value'],
+ *      ['other_field', '!=', ''],
+ *    ]
+ *
+ * 3. Multiple conditions — OR (any must pass):
+ *    'required' => [
+ *      'relation' => 'OR',
+ *      ['field_id', '==', 'red'],
+ *      ['field_id', '==', 'blue'],
+ *    ]
+ *
+ * 4. Array of values — OR within a single rule (== any / != all):
+ *    'required' => ['field_id', '==', ['classic', 'minimal']]
+ *    'required' => ['field_id', '!=', ['classic', 'minimal']]
+ *
+ * 5. Mixed AND + array values:
+ *    'required' => [
+ *      ['enable_footer',     '==', true],
+ *      ['site_footer_style', '==', ['classic', 'minimal']],
+ *    ]
+ */
+
+/**
  * Resolve a scalar comparison value from any field type.
  * Array fields (dimensions, spacing, border, typography, background)
  * can be targeted via dot notation: 'container_width.width'
  *
  * @param {string} fieldId  e.g. 'container_width' or 'container_width.width'
  * @param {Object} options  Current saved options
+ * @param {Object} defaults Field default values map
  * @returns {*}
  */
-const resolveValue = (fieldId, options) => {
-  // Dot notation: 'dimensions_field.width'
+const resolveValue = (fieldId, options, defaults = {}) => {
   if (fieldId.includes('.')) {
+    var _options$key;
     const [key, subKey] = fieldId.split('.');
-    const parent = options[key];
+    const parent = (_options$key = options[key]) !== null && _options$key !== void 0 ? _options$key : defaults[key];
     if (parent && typeof parent === 'object') {
       return parent[subKey];
     }
     return undefined;
   }
-  return options[fieldId];
+  const value = options[fieldId];
+  return value !== undefined ? value : defaults[fieldId];
 };
 
 /**
  * Evaluate a single condition rule
  *
- * @param {Array}  rule    ['field_id', 'operator', 'value']
+ * @param rule
  * @param {Object} options Current saved options
+ * @param {Object} defaults Field default values map
  * @returns {boolean}
  */
-const evaluateRule = (rule, options) => {
+const evaluateRule = (rule, options, defaults = {}) => {
   const [fieldId, operator, conditionValue] = rule;
-  const currentValue = resolveValue(fieldId, options);
+  const currentValue = resolveValue(fieldId, options, defaults);
+
+  // ── Array of values — ['field', '==', ['a', 'b']] ────────────────────────
+  if (Array.isArray(conditionValue)) {
+    if (operator === '==' || operator === '=') {
+      // Match ANY value in the array
+      // loose == intentional — handles "1" == true and numeric string coercion
+      // noinspection EqualityComparisonWithCoercionJS
+      return conditionValue.some(val => currentValue == val);
+    }
+    if (operator === '!=') {
+      // Match NONE of the values in the array
+      // noinspection EqualityComparisonWithCoercionJS
+      return conditionValue.every(val => currentValue != val);
+    }
+  }
   switch (operator) {
     // Equality
     case '==':
     case '=':
+      // noinspection EqualityComparisonWithCoercionJS
       return currentValue == conditionValue;
     // loose == intentional (handles "1" == true)
 
     // Inequality
     case '!=':
+      // noinspection EqualityComparisonWithCoercionJS
       return currentValue != conditionValue;
 
     // Numeric comparisons
@@ -11020,16 +11272,17 @@ const evaluateRule = (rule, options) => {
  *
  * @param {Object} field   Field configuration object
  * @param {Object} options Current saved options
+ * @param {Object} defaults Field default values map
  * @returns {boolean}
  */
-const shouldShowField = (field, options) => {
+const shouldShowField = (field, options, defaults = {}) => {
   if (!field.required) return true;
   const required = field.required;
 
   // ── Format 1: shorthand single rule ──────────────────────────────────────
   // 'required' => ['field_id', '==', 'value']
   if (typeof required[0] === 'string') {
-    return evaluateRule(required, options);
+    return evaluateRule(required, options, defaults);
   }
 
   // ── Format 2 & 3: multiple rules with AND (default) or OR ────────────────
@@ -11040,11 +11293,11 @@ const shouldShowField = (field, options) => {
   // Collect only the actual rule arrays (skip the 'relation' key)
   const rules = Object.values(required).filter(item => Array.isArray(item));
   if (relation === 'OR') {
-    return rules.some(rule => evaluateRule(rule, options));
+    return rules.some(rule => evaluateRule(rule, options, defaults));
   }
 
   // AND (default)
-  return rules.every(rule => evaluateRule(rule, options));
+  return rules.every(rule => evaluateRule(rule, options, defaults));
 };
 
 /**

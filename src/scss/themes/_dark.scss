@@ -49,12 +49,8 @@
     background-image: var(--themeplus-gradient-aurora);
   }
 
-  .tpo-toggle__track {
+  .tpo-toggle:not(.tpo-toggle--active) .tpo-toggle__track {
     background: var(--themeplus-neutral-200);
-  }
-
-  .tpo-toggle--active .tpo-toggle__track {
-    background: var(--themeplus-gradient-purple);
   }
 
   .tpo-main-wrapper input:not(.tpo-slider__input),

@@ -12,10 +12,14 @@ function InfoField({
                      content,
                      style = 'info',
                    }) {
+  const body = desc || content;
+
   return (
     <div className="tpo-field tpo-field--info">
       <Notice status={style} title={title}>
-        {desc || content}
+        {body && (
+          <span dangerouslySetInnerHTML={{__html: body}}/>
+        )}
       </Notice>
     </div>
   );

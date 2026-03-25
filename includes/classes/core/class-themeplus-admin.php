@@ -146,18 +146,19 @@ class ThemePlus_Admin {
 
     // Localize script
     wp_localize_script('themeplus-admin', 'themePlusData', [
-        'config'       => ThemePlus_Framework_Config::get_all(),
-        'version'      => THEMEPLUS_VERSION,
-        'pluginUrl'    => THEMEPLUS_URL,
-        'imagesUrl'    => THEMEPLUS_URL . 'assets/images/',
-        'restUrl'      => rest_url('themeplus/v1'), // Full REST API base URL
-        'restNonce'    => wp_create_nonce('wp_rest'), // Available if needed manually
-        'themeName'    => $theme->get('Name'),
-        'themeVersion' => $theme->get('Version'),
-        'isProVersion' => false, // feature flag
-        'ajaxUrl'      => admin_url('admin-ajax.php'),
-        'isDev'        => $is_dev,
-        'i18n'         => [
+        'config'         => ThemePlus_Framework_Config::get_all(),
+        'version'        => THEMEPLUS_VERSION,
+        'pluginUrl'      => THEMEPLUS_URL,
+        'imagesUrl'      => THEMEPLUS_URL . 'assets/images/',
+        'restUrl'        => rest_url('themeplus/v1'), // Full REST API base URL
+        'restNonce'      => wp_create_nonce('wp_rest'), // Available if needed manually
+        'themeName'      => $theme->get('Name'),
+        'themeVersion'   => $theme->get('Version'),
+        'isProVersion'   => false, // feature flag
+        'ajaxUrl'        => admin_url('admin-ajax.php'),
+        'googleFontsUrl' => plugin_dir_url(THEMEPLUS_FILE) . 'assets/data/google-fonts.json',
+        'isDev'          => $is_dev,
+        'i18n'           => [
             'saved' => __('Settings saved!', 'themeplus'),
             'error' => __('An error occurred.', 'themeplus'),
         ],

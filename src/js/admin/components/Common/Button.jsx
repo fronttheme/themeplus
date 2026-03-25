@@ -70,11 +70,6 @@ function Button({
     return false;
   })();
 
-  // Warn if icon-only button has no aria-label
-  if (hasOnlyIcon && !ariaLabel && !props['aria-label']) {
-    console.warn('ThemePlus Button: Icon-only buttons should have an aria-label for accessibility');
-  }
-
   // Build class names
   const classNames = [
     'tpo-button',

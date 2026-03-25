@@ -13,9 +13,10 @@ import CustomFontUploader from '../Sections/CustomFontUploader';
 import DevPanel from '../DevPanel/DevPanel';
 import {shouldShowField} from '../../utils/fieldHelpers';
 import useScrollbar from '../../hooks/useScrollbar';
+import BodySkeleton from './BodySkeleton';
 
 function Body({sections = [], activeTab, showModal, searchQuery = '', onClearSearch}) {
-  const {options, setOptions} = useSettings();
+  const {options, setOptions, isLoaded} = useSettings();
 
   // Scrollbar hook
   const {scrollRef, scrollbarClass} = useScrollbar({
@@ -48,15 +49,37 @@ function Body({sections = [], activeTab, showModal, searchQuery = '', onClearSea
       const section = sections.find(s => s.id === sectionId);
       if (!section) return null;
       const subsection = section.subsections?.find(sub => sub.id === subsectionId);
-      if (subsection) return {title: subsection.title, fields: subsection.fields || []};
+      // Subsection
+      if (subsection) return {
+        title: subsection.title,
+        fields: subsection.fields || [],
+        excerpt: subsection.excerpt || '',
+      };
     }
 
     // Regular section
     const section = sections.find(s => s.id === activeTab);
-    if (section) return {title: section.title, fields: section.fields || []};
+    // Regular section
+    if (section) return {
+      title: section.title,
+      fields: section.fields || [],
+      excerpt: section.excerpt || '',
+    };
 
     return null;
   };
+
+  // Build defaults map from all fields across sections
+  const defaults = {};
+  sections.forEach(section => {
+    const allFields = [
+      ...(section.fields || []),
+      ...(section.subsections || []).flatMap(sub => sub.fields || []),
+    ];
+    allFields.forEach(f => {
+      if (f.default !== undefined) defaults[f.id] = f.default;
+    });
+  });
 
   // Search Results
   if (searchQuery && searchQuery.length >= 2) {
@@ -68,6 +91,17 @@ function Body({sections = [], activeTab, showModal, searchQuery = '', onClearSea
             sections={sections}
             onClearSearch={onClearSearch}
           />
+        </div>
+      </main>
+    );
+  }
+
+  // Options not yet loaded from API → show skeleton
+  if (!isLoaded) {
+    return (
+      <main ref={scrollRef} className={`tpo-body ${scrollbarClass}`}>
+        <div className="tpo-body__content">
+          <BodySkeleton/>
         </div>
       </main>
     );
@@ -93,6 +127,12 @@ function Body({sections = [], activeTab, showModal, searchQuery = '', onClearSea
       <div className="tpo-body__content">
         <div className="tpo-body__section">
           <h2 className="tpo-body__section-title">{activeContent.title}</h2>
+          {activeContent.excerpt && (
+            <p
+              className="tpo-body__section-excerpt"
+              dangerouslySetInnerHTML={{__html: activeContent.excerpt}}
+            />
+          )}
 
           {/* Custom Fonts Section */}
           {activeContent.isCustomFonts ? (
@@ -106,8 +146,8 @@ function Body({sections = [], activeTab, showModal, searchQuery = '', onClearSea
                 ) : /* Regular Fields */
                 activeContent.fields.length > 0 ? (
                   <div className="tpo-body__fields">
-                    {activeContent.fields.map((field) => {
-                      if (!shouldShowField(field, options)) return null;
+                    {!isLoaded ? null : activeContent.fields.map((field) => {
+                      if (!shouldShowField(field, options, defaults)) return null;
 
                       return (
                         <FieldRenderer

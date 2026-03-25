@@ -8,8 +8,16 @@ import {__} from '@wordpress/i18n';
 import {useEffect, useRef, useState} from '@wordpress/element';
 import useScrollbar from '../../hooks/useScrollbar';
 import Button from "../Common/Button";
+import SidebarSkeleton from './SidebarSkeleton';
 
-function Sidebar({sections = [], activeTab, onTabChange, searchQuery = '', onSearchChange}) {
+function Sidebar({
+                   sections = [],
+                   activeTab,
+                   onTabChange,
+                   searchQuery = '',
+                   onSearchChange,
+                   isLoaded = false
+                 }) {
   const [mainWalkerStyle, setMainWalkerStyle] = useState({});
   const subWalkerRefs = useRef({});
 
@@ -118,7 +126,14 @@ function Sidebar({sections = [], activeTab, onTabChange, searchQuery = '', onSea
     if (searchQuery) {
       onSearchChange('');
     }
-    onTabChange(sectionId);
+
+    // If section has subsections, activate first subsection automatically
+    const section = sections.find(s => s.id === sectionId);
+    if (section?.subsections?.length > 0) {
+      onTabChange(`${sectionId}__${section.subsections[0].id}`);
+    } else {
+      onTabChange(sectionId);
+    }
   };
 
   // Clear search when sub-tab is clicked
@@ -159,6 +174,14 @@ function Sidebar({sections = [], activeTab, onTabChange, searchQuery = '', onSea
         </svg>
       );
     }
+  }
+
+  if (!isLoaded) {
+    return (
+      <aside ref={sidebarRef} className={`tpo-sidebar ${sidebarScrollClass}`}>
+        <SidebarSkeleton/>
+      </aside>
+    );
   }
 
   return (

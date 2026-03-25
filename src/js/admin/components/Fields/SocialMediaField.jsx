@@ -19,7 +19,20 @@ function SocialMediaField({
                             help = '',
                             max = 20,
                           }) {
-  const [links, setLinks] = useState(value);
+  const normalizeValue = (val) => {
+    if (Array.isArray(val)) return val; // already correct format
+
+    if (val && typeof val === 'object') {
+      // Convert {facebook: 'url', twitter: 'url'} → [{platform, url}]
+      return Object.entries(val)
+        .filter(([, url]) => url) // skip empty urls
+        .map(([platform, url]) => ({platform, url}));
+    }
+
+    return [];
+  };
+
+  const [links, setLinks] = useState(normalizeValue(value));
 
   /**
    * Available social platforms with FontAwesome icons

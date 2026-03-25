@@ -13,6 +13,23 @@ function SelectImageField({
                             options = [],
                             help = '',
                           }) {
+  const normalizeOptions = () => {
+    if (Array.isArray(options)) {
+      return options.map(opt => ({
+        value: opt.value,
+        label: opt.label,
+        image: opt.image || opt.img || '',
+      }));
+    }
+    return Object.entries(options).map(([key, opt]) => ({
+      value: key,
+      label: opt.label || opt.alt || '',
+      image: opt.image || opt.img || '',
+    }));
+  };
+
+  const normalizedOptions = normalizeOptions();
+
   return (
     <div className="tpo-field tpo-field--select-image">
       {label && (
@@ -25,10 +42,12 @@ function SelectImageField({
 
       <div className="tpo-field__body">
         <div className="tpo-select-image">
-          {options.map((option) => {
-            const optionValue = option.value || option;
-            const optionLabel = option.label || option;
-            const optionImage = option.image || option.img || '';
+          {normalizedOptions.map((option) => {
+            const {
+              value: optionValue,
+              label: optionLabel,
+              image: optionImage
+            } = option;
             const isSelected = value === optionValue;
 
             return (

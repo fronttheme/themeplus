@@ -126,7 +126,11 @@ function App() {
       });
 
       if (sectionsArray.length > 0) {
-        setActiveTab(sectionsArray[0].id);
+        const firstSection = sectionsArray[0];
+        const defaultTab = firstSection.subsections?.length > 0
+          ? `${firstSection.id}__${firstSection.subsections[0].id}`
+          : firstSection.id;
+        setActiveTab(defaultTab);
       }
 
       const optionsResponse = await apiFetch({
@@ -337,6 +341,7 @@ function App() {
   const settingsValue = {
     options,
     setOptions: handleSetOptions,
+    isLoaded: !loading,
   };
 
   return (
@@ -349,6 +354,7 @@ function App() {
             onTabChange={handleTabChange}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
+            isLoaded={!loading}
           />
           <div className="tpo-body-wrapper">
             <Header

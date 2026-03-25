@@ -23,7 +23,7 @@ class ThemePlus_Custom_Fonts_MimeType {
   /**
    * Allowed font file types
    */
-  const ALLOWED_TYPES = ['woff', 'woff2', 'ttf', 'otf', 'eot'];
+  const ALLOWED_TYPES = ['woff', 'woff2'];
 
   /**
    * Get instance
@@ -74,9 +74,6 @@ class ThemePlus_Custom_Fonts_MimeType {
   public function add_font_mime_types($mimes): array {
     $mimes['woff'] = 'font/woff';
     $mimes['woff2'] = 'font/woff2';
-    $mimes['ttf'] = 'font/ttf';
-    $mimes['otf'] = 'font/otf';
-    $mimes['eot'] = 'application/vnd.ms-fontobject';
 
     return $mimes;
   }
@@ -127,8 +124,6 @@ class ThemePlus_Custom_Fonts_MimeType {
     $magic_bytes = [
       'woff'  => "\x77\x4f\x46\x46", // wOFF
       'woff2' => "\x77\x4f\x46\x32", // wOF2
-      'ttf'   => "\x00\x01\x00\x00", // TrueType
-      'otf'   => "\x4f\x54\x54\x4f", // OTTO
     ];
 
     foreach ($magic_bytes as $type => $bytes) {
@@ -147,9 +142,6 @@ class ThemePlus_Custom_Fonts_MimeType {
     $types = [
       'woff'  => 'font/woff',
       'woff2' => 'font/woff2',
-      'ttf'   => 'font/ttf',
-      'otf'   => 'font/otf',
-      'eot'   => 'application/vnd.ms-fontobject',
     ];
 
     return $types[$ext] ?? 'application/octet-stream';
@@ -184,7 +176,7 @@ class ThemePlus_Custom_Fonts_MimeType {
   public function add_cors_headers(): void {
     if (isset($_SERVER['REQUEST_URI'])) {
       $request_uri = $_SERVER['REQUEST_URI'];
-      if (preg_match('/\.(woff|woff2|ttf|otf|eot)(\?.*)?$/i', $request_uri)) {
+      if (preg_match('/\.(woff2?)(\?.*)?$/i', $request_uri)) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET');
         header('Access-Control-Allow-Headers: Content-Type');
