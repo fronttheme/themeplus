@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-25T18:25:46+00:00\n"
+"POT-Creation-Date: 2026-03-25T18:43:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: themeplus\n"
@@ -17,6 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: themeplus.php
 #: includes/classes/core/class-themeplus-framework-config.php:33
+#: package/themeplus/includes/classes/core/class-themeplus-framework-config.php:33
 #: src/js/admin/components/Layout/Sidebar.jsx:201
 msgid "ThemePlus"
 msgstr ""
@@ -42,96 +43,120 @@ msgid "https://fronttheme.com"
 msgstr ""
 
 #: includes/classes/core/class-themeplus-admin.php:162
+#: package/themeplus/includes/classes/core/class-themeplus-admin.php:162
 msgid "Settings saved!"
 msgstr ""
 
 #: includes/classes/core/class-themeplus-admin.php:163
+#: package/themeplus/includes/classes/core/class-themeplus-admin.php:163
 msgid "An error occurred."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-framework-config.php:34
+#: package/themeplus/includes/classes/core/class-themeplus-framework-config.php:34
 msgid "ThemePlus Options"
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:107
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:107
 msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:119
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:119
 msgid "Cookie check failed"
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:164
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:164
 msgid "Options parameter is required."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:174
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:174
 msgid "Options saved successfully."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:226
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:226
 msgid "Section not found."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:252
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:252
 msgid "Section reset successfully."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-rest-api.php:287
+#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:287
 msgid "Options reset successfully."
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-api.php:139
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-api.php:139
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:420
 msgid "Font added successfully"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-api.php:162
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-api.php:162
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:417
 msgid "Font updated successfully"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-api.php:184
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-api.php:184
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:469
 msgid "Font deleted successfully"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-frontend.php:186
 #: includes/config/default-config.php:23
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-frontend.php:186
+#: package/themeplus/includes/config/default-config.php:23
 #: src/js/admin/components/Layout/Body.jsx:33
 msgid "Custom Fonts"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-manager.php:102
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:102
 msgid "Font name and files are required"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-manager.php:110
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:110
 msgid "A font with this name already exists"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-manager.php:120
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:120
 msgid "Invalid font file"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-manager.php:128
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:128
 msgid "Invalid font file type"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-manager.php:163
 #: includes/classes/custom-fonts/class-custom-fonts-manager.php:191
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:163
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:191
 msgid "Font not found"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-mime-type.php:163
+#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-mime-type.php:163
 msgid "You do not have permission to upload font files."
 msgstr ""
 
 #: includes/config/default-config.php:34
+#: package/themeplus/includes/config/default-config.php:34
 msgid "Import/Export"
 msgstr ""
 
 #: includes/config/default-config.php:46
+#: package/themeplus/includes/config/default-config.php:46
 #: src/js/admin/components/Layout/Body.jsx:43
 msgid "Developer Panel"
 msgstr ""
