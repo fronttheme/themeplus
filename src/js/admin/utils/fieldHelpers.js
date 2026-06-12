@@ -123,20 +123,23 @@ const evaluateRule = (rule, options, defaults = {}) => {
     // String / array contains
     case 'contains':
       if (Array.isArray(currentValue)) {
-        return currentValue.includes(conditionValue);
+        // loose == intentional — consistent with the == operator
+        // noinspection EqualityComparisonWithCoercionJS
+        return currentValue.some(item => item == conditionValue);
       }
-      if (typeof currentValue === 'string') {
-        return currentValue.toLowerCase().includes(String(conditionValue).toLowerCase());
+      if (typeof currentValue === 'string' || typeof currentValue === 'number') {
+        return String(currentValue).toLowerCase().includes(String(conditionValue).toLowerCase());
       }
       return false;
 
     // String / array does not contain
     case '!contains':
       if (Array.isArray(currentValue)) {
-        return !currentValue.includes(conditionValue);
+        // noinspection EqualityComparisonWithCoercionJS
+        return !currentValue.some(item => item == conditionValue);
       }
-      if (typeof currentValue === 'string') {
-        return !currentValue.toLowerCase().includes(String(conditionValue).toLowerCase());
+      if (typeof currentValue === 'string' || typeof currentValue === 'number') {
+        return !String(currentValue).toLowerCase().includes(String(conditionValue).toLowerCase());
       }
       return true;
 
@@ -204,7 +207,9 @@ export const shouldShowField = (field, options, defaults = {}) => {
 export const highlightText = (text, query) => {
   if (!query || !text) return text;
 
-  const regex = new RegExp(`(${query})`, 'gi');
+  // Escape regex special characters — raw user input like "(" or "[" must not break the RegExp.
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'gi');
   const parts = text.split(regex);
 
   return parts.map((part, index) => {
