@@ -11,20 +11,25 @@ import FieldRenderer from './FieldRenderer';
 import {shouldShowField} from '../../utils/fieldHelpers';
 import Button from "./Button";
 
-function SearchResults({searchQuery, sections, onClearSearch}) {
+function SearchResults({searchQuery, sections, defaults = {}, onClearSearch}) {
   const {options, setOptions} = useSettings();
   const [searching, setSearching] = useState(false);
   const [matchingFields, setMatchingFields] = useState([]);
 
-  const matchesField = (field, query) => {
-    const searchableText = [
+  const matchesField = (field, tokens, sectionTitle = '', subsectionTitle = '') => {
+    const haystack = [
       field.title || '',
       field.subtitle || '',
       field.desc || '',
       field.id || '',
+      field.type || '',
+      sectionTitle,
+      subsectionTitle,
     ].join(' ').toLowerCase();
 
-    return searchableText.includes(query);
+    // Every word must appear somewhere, in any order:
+    // "media fie" → ['media', 'fie'] → both must match.
+    return tokens.every(token => haystack.includes(token));
   };
 
   const performSearch = useCallback(() => {
@@ -37,12 +42,12 @@ function SearchResults({searchQuery, sections, onClearSearch}) {
     setSearching(true);
 
     setTimeout(() => {
-      const query = searchQuery.toLowerCase();
+      const tokens = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
       const matches = [];
 
       sections.forEach(section => {
         section.fields?.forEach(field => {
-          if (matchesField(field, query)) {
+          if (matchesField(field, tokens, section.title) && shouldShowField(field, options, defaults)) {
             matches.push({
               field,
               section: section.title,
@@ -53,7 +58,7 @@ function SearchResults({searchQuery, sections, onClearSearch}) {
 
         section.subsections?.forEach(subsection => {
           subsection.fields?.forEach(field => {
-            if (matchesField(field, query)) {
+            if (matchesField(field, tokens, section.title, subsection.title) && shouldShowField(field, options, defaults)) {
               matches.push({
                 field,
                 section: section.title,
