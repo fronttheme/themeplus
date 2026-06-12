@@ -117,6 +117,9 @@
   &__search {
     padding: 0 $spacing-md;
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   &__search-input {

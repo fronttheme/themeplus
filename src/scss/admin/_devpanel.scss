@@ -300,6 +300,14 @@
 .tpo-dev-search-wrapper {
   position: relative;
   flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .tpo-button--small.tpo-button--icon-only {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 // Search icon (left side)

@@ -361,10 +361,19 @@
 
   .components-dropdown__content .components-popover__content {
     background: var(--themeplus-neutral-600);
+    box-shadow: 0 0 0 4px var(--themeplus-neutral-500);
   }
 
   h3.components-truncate.components-text.components-heading {
     color: var(--themeplus-text-secondary);
+  }
+
+  .tpo-datepicker {
+    &__content {
+      .afd-ac-a-a-bcdd-12uq5mx {
+        color: var(--themeplus-text-secondary);
+      }
+    }
   }
 
   .tpo-datepicker__content .eca-a-a-be-caccfbdc-1rdz3mm {

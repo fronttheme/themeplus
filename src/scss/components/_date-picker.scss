@@ -74,6 +74,39 @@
 
   &__content {
     padding: $spacing-sm;
+
+    .components-select-control__input {
+      color: var(--themeplus-text-muted) !important;
+    }
+
+    .components-toggle-group-control {
+      border-radius: 100px !important;
+      overflow: hidden;
+      background: var(--themeplus-bg-canvas);
+
+      &::before {
+        background: var(--themeplus-gradient-button-light) !important;
+        border: 1px solid var(--themeplus-bg-canvas) !important;
+      }
+
+      button[aria-checked="false"] {
+        div {
+          color: var(--themeplus-text-muted) !important;
+        }
+      }
+    }
+
+    .components-input-control__container {
+      border-radius: $border-radius-sm;
+    }
+
+    .components-toggle-group-control,
+    .components-input-control__backdrop,
+    .components-input-control__container input,
+    .components-datetime__time-separator {
+      color: var(--themeplus-text-muted) !important;
+      border-color: var(--themeplus-border-light) !important;
+    }
   }
 }
 

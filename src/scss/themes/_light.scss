@@ -1,0 +1,7 @@
+@use '../abstracts/variables' as *;
+
+.components-dropdown__content .components-popover__content {
+  border-radius: $border-radius-lg !important;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px var(--themeplus-neutral-50);
+}
