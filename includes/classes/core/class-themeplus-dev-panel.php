@@ -89,15 +89,35 @@ class ThemePlus_Dev_Panel {
 
     // Get dependency info
     $dependency = null;
-    if (!empty($field['required'])) {
+    if (!empty($field['required']) && is_array($field['required'])) {
       $required = $field['required'];
 
-      // Format dependency for display
-      if (is_array($required) && count($required) >= 3) {
+      if (isset($required[0]) && is_string($required[0])) {
+        // Single condition: ['field', 'operator', value]
+        // or ['field', 'operator'] for empty / !empty.
         $dependency = [
           'field'    => $required[0],
-          'operator' => $required[1],
-          'value'    => $required[2],
+          'operator' => $required[1] ?? '==',
+          'value'    => $required[2] ?? null,
+        ];
+      } else {
+        // Multiple conditions — AND by default, or 'relation' => 'OR'.
+        $conditions = [];
+
+        foreach ($required as $key => $condition) {
+          if ('relation' === $key || !is_array($condition)) {
+            continue;
+          }
+          $conditions[] = [
+            'field'    => $condition[0] ?? '',
+            'operator' => $condition[1] ?? '==',
+            'value'    => $condition[2] ?? null,
+          ];
+        }
+
+        $dependency = [
+          'relation'   => strtoupper((string)($required['relation'] ?? 'AND')),
+          'conditions' => $conditions,
         ];
       }
     } elseif (!empty($field['dependency'])) {

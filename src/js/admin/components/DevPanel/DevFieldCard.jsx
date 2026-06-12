@@ -65,15 +65,29 @@ function DevFieldCard({field}) {
     return String(value);
   };
 
+  // Format a single condition: field operator value (value omitted for empty/!empty)
+  const formatCondition = (c) => {
+    const parts = [c.field, c.operator];
+    if (c.value !== undefined && c.value !== null) {
+      parts.push(typeof c.value === 'string' ? `"${c.value}"` : JSON.stringify(c.value));
+    }
+    return parts.join(' ');
+  };
+
   // Format dependency for display
   const formatDependency = (dependency) => {
     if (!dependency) return null;
 
-    if (dependency.field && dependency.operator && dependency.value !== undefined) {
-      const valueStr = typeof dependency.value === 'string'
-        ? `"${dependency.value}"`
-        : String(dependency.value);
-      return `${dependency.field} ${dependency.operator} ${valueStr}`;
+    // Multi-condition shape from the Dev Panel API: { relation, conditions: [...] }
+    if (Array.isArray(dependency.conditions)) {
+      return dependency.conditions
+        .map(formatCondition)
+        .join(` ${dependency.relation || 'AND'} `);
+    }
+
+    // Single condition shape: { field, operator, value }
+    if (dependency.field && dependency.operator) {
+      return formatCondition(dependency);
     }
 
     return formatAsPhpArray(dependency, 0);
