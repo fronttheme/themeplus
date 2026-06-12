@@ -2,7 +2,7 @@
  * ThemePlus Select Image Field - Visual radio selector
  * Choose between options using images (layouts, styles, etc.)
  *
- * File: src/js/admin/components/Fields/SectionImageField.jsx
+ * File: src/js/admin/components/Fields/SelectImageField.jsx
  */
 
 function SelectImageField({
