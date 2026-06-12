@@ -9,17 +9,16 @@ import {useState} from '@wordpress/element';
 import Checkbox from '../Common/Checkbox';
 
 function LinkField({id, label, value = {}, onChange, help = ''}) {
-  const [link, setLink] = useState({
+  // Derived from value — Reset/Import reflect immediately.
+  const link = {
     url: value.url || '',
     text: value.text || '',
     target: value.target || '_self',
     rel: value.rel || '',
-  });
+  };
 
   const updateLink = (key, val) => {
-    const newLink = {...link, [key]: val};
-    setLink(newLink);
-    onChange(newLink);
+    onChange({...link, [key]: val});
   };
 
   return (

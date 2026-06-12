@@ -6,7 +6,7 @@
  */
 
 import {__} from '@wordpress/i18n';
-import {useState} from '@wordpress/element';
+// import {useState} from '@wordpress/element';
 import Select from '../Common/Select';
 import Button from "../Common/Button";
 import FileUpload from "../Common/FileUpload";
@@ -32,7 +32,7 @@ function SocialMediaField({
     return [];
   };
 
-  const [links, setLinks] = useState(normalizeValue(value));
+  const links = normalizeValue(value);
 
   /**
    * Available social platforms with FontAwesome icons
@@ -70,7 +70,6 @@ function SocialMediaField({
       ...links,
       {platform: 'facebook', url: ''}
     ];
-    setLinks(newLinks);
     onChange(newLinks);
   };
 
@@ -79,7 +78,6 @@ function SocialMediaField({
    */
   const removeLink = (index) => {
     const newLinks = links.filter((_, i) => i !== index);
-    setLinks(newLinks);
     onChange(newLinks);
   };
 
@@ -92,7 +90,6 @@ function SocialMediaField({
       ...newLinks[index],
       [field]: newValue
     };
-    setLinks(newLinks);
     onChange(newLinks);
   };
 
@@ -103,7 +100,6 @@ function SocialMediaField({
     if (index === 0) return;
     const newLinks = [...links];
     [newLinks[index - 1], newLinks[index]] = [newLinks[index], newLinks[index - 1]];
-    setLinks(newLinks);
     onChange(newLinks);
   };
 
@@ -114,7 +110,6 @@ function SocialMediaField({
     if (index === links.length - 1) return;
     const newLinks = [...links];
     [newLinks[index], newLinks[index + 1]] = [newLinks[index + 1], newLinks[index]];
-    setLinks(newLinks);
     onChange(newLinks);
   };
 
@@ -144,11 +139,8 @@ function SocialMediaField({
                 return (
                   <div key={index} className="tpo-social-media__item">
                     {/* Platform icon */}
-                    <div
-                      className="tpo-social-media__icon"
-                      style={{backgroundColor: platformData.color}}
-                    >
-                      <i className={`${platformData.icon}`}/>
+                    <div className={`tpo-social-media__icon tpo-social-media__icon--${link.platform}`}>
+                      <i className={platformData.icon}/>
                     </div>
 
                     {/* Fields */}
@@ -161,7 +153,7 @@ function SocialMediaField({
                           value: key,
                           label: (
                             <>
-                              <span className="tpo-social-media__label"><i className={`fab fa-${key}`}></i> {data.label}</span>
+                              <span className="tpo-social-media__label"><i className={`${data.icon}`}></i> {data.label}</span>
                             </>
                           ),
                         }))}

@@ -23,7 +23,7 @@ function RepeaterField({
                          button_label = __('Add Item', 'themeplus'),
                          showModal, // Modal function from parent
                        }) {
-  const [rows, setRows] = useState(value);
+  const rows = Array.isArray(value) ? value : [];
   const [collapsed, setCollapsed] = useState({});
 
   /**
@@ -38,7 +38,6 @@ function RepeaterField({
     });
 
     const newRows = [...rows, newRow];
-    setRows(newRows);
     onChange(newRows);
   };
 
@@ -58,7 +57,6 @@ function RepeaterField({
         cancelText: __('Cancel', 'themeplus'),
         onConfirm: () => {
           const newRows = rows.filter((_, i) => i !== index);
-          setRows(newRows);
           onChange(newRows);
         }
       });
@@ -66,7 +64,6 @@ function RepeaterField({
       // Fallback to browser confirm if showModal not available
       if (confirm(__('Are you sure you want to remove this item?', 'themeplus'))) {
         const newRows = rows.filter((_, i) => i !== index);
-        setRows(newRows);
         onChange(newRows);
       }
     }
@@ -82,7 +79,6 @@ function RepeaterField({
       ...newRows[rowIndex],
       [fieldId]: fieldValue,
     };
-    setRows(newRows);
     onChange(newRows);
   };
 
@@ -94,7 +90,6 @@ function RepeaterField({
 
     const newRows = [...rows];
     [newRows[index - 1], newRows[index]] = [newRows[index], newRows[index - 1]];
-    setRows(newRows);
     onChange(newRows);
   };
 
@@ -106,7 +101,6 @@ function RepeaterField({
 
     const newRows = [...rows];
     [newRows[index], newRows[index + 1]] = [newRows[index + 1], newRows[index]];
-    setRows(newRows);
     onChange(newRows);
   };
 
@@ -210,7 +204,6 @@ function RepeaterField({
                           if (rows.length >= max) return;
                           const newRows = [...rows];
                           newRows.splice(index + 1, 0, {...row});
-                          setRows(newRows);
                           onChange(newRows);
                         }}
                         disabled={rows.length >= max}
