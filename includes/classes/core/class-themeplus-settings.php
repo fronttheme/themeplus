@@ -62,6 +62,7 @@ class ThemePlus_Settings {
    * @return bool
    */
   public static function update_all_options(array $options): bool {
+    $options = ThemePlus_Sanitizer::sanitize_options($options);
     $result = update_option(self::get_option_key(), $options, false);
 
     if ($result) {

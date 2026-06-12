@@ -58,6 +58,7 @@ final class ThemePlus {
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-frontend.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-rest-api.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-admin.php';
+    require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-sanitizer.php';
 
     // ======================
     // 3. CUSTOM FONTS MODULE
