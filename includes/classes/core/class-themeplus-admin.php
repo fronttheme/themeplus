@@ -40,7 +40,7 @@ class ThemePlus_Admin {
       return;
     }
 
-    $is_dev = defined('WP_DEBUG') && WP_DEBUG && defined('THEMEPLUS_DEV') && THEMEPLUS_DEV;
+    $is_dev  = defined('WP_DEBUG') && WP_DEBUG && defined('THEMEPLUS_DEV') && THEMEPLUS_DEV;
     $version = THEMEPLUS_VERSION;
 
     // Enqueue WordPress media library
@@ -88,7 +88,7 @@ class ThemePlus_Admin {
           'vite-client',
           'http://localhost:3000/@vite/client',
           [],
-          null,
+          null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite HMR client; never enqueued in production.
           false
       );
 
@@ -97,7 +97,7 @@ class ThemePlus_Admin {
           'themeplus-vite-main',
           'http://localhost:3000/src/js/main.js',
           [],
-          null,
+          null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite entry point; never enqueued in production.
           false
       );
 
@@ -169,11 +169,11 @@ class ThemePlus_Admin {
    * Clean up admin page - hide other notices
    */
   public function clean_admin_page(): void {
-    $screen = get_current_screen();
+    $screen    = get_current_screen();
     $menu_slug = $this->get_menu_slug();
 
     // Only on our ThemePlus page
-    if (!$screen || !str_contains($screen->id, $menu_slug)) {
+    if (!$screen || 'toplevel_page_' . $menu_slug !== $screen->id) {
       return;
     }
 
@@ -186,16 +186,19 @@ class ThemePlus_Admin {
       .toplevel_page_<?php echo esc_attr($menu_slug); ?> .updated {
         display: none !important;
       }
+
       /* Show only ThemePlus notices */
       .themeplus-notice {
         display: block !important;
         margin: 15px 0 !important;
         border-left-color: #2271b1 !important;
       }
+
       /* Optional: Clean up admin UI */
       .toplevel_page_<?php echo esc_attr($menu_slug); ?> #wpbody-content > .notice {
         display: none;
       }
+
       /* Hide screen options & help tabs */
       .toplevel_page_<?php echo esc_attr($menu_slug); ?> #screen-meta,
       .toplevel_page_<?php echo esc_attr($menu_slug); ?> #screen-meta-links {
@@ -222,6 +225,7 @@ class ThemePlus_Admin {
     <?php
 
     // Remove admin notices via PHP
+    // scoped exclusively to the plugin's own settings screen to keep the React app's layout intact.
     remove_all_actions('admin_notices');
     remove_all_actions('all_admin_notices');
   }

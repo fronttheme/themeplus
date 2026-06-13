@@ -6,12 +6,11 @@
  */
 
 import {__} from '@wordpress/i18n';
-import {useState} from '@wordpress/element';
 import Button from "../Common/Button";
 import FileUpload from "../Common/FileUpload";
 
 function GalleryField({id, label, value = [], onChange, help = ''}) {
-  const [images, setImages] = useState(value);
+  const images = Array.isArray(value) ? value : [];
 
   /**
    * Handle WordPress media upload
@@ -32,7 +31,6 @@ function GalleryField({id, label, value = [], onChange, help = ''}) {
           alt: att.alt || '',
         }));
         const allImages = [...images, ...newImages];
-        setImages(allImages);
         onChange(allImages);
       });
 
@@ -45,7 +43,6 @@ function GalleryField({id, label, value = [], onChange, help = ''}) {
    */
   const removeImage = (index) => {
     const newImages = images.filter((_, i) => i !== index);
-    setImages(newImages);
     onChange(newImages);
   };
 

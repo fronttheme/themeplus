@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-25T18:43:08+00:00\n"
+"POT-Creation-Date: 2026-06-13T16:11:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: themeplus\n"
@@ -17,7 +17,6 @@ msgstr ""
 #. Plugin Name of the plugin
 #: themeplus.php
 #: includes/classes/core/class-themeplus-framework-config.php:33
-#: package/themeplus/includes/classes/core/class-themeplus-framework-config.php:33
 #: src/js/admin/components/Layout/Sidebar.jsx:201
 msgid "ThemePlus"
 msgstr ""
@@ -43,135 +42,192 @@ msgid "https://fronttheme.com"
 msgstr ""
 
 #: includes/classes/core/class-themeplus-admin.php:162
-#: package/themeplus/includes/classes/core/class-themeplus-admin.php:162
 msgid "Settings saved!"
 msgstr ""
 
 #: includes/classes/core/class-themeplus-admin.php:163
-#: package/themeplus/includes/classes/core/class-themeplus-admin.php:163
 msgid "An error occurred."
 msgstr ""
 
 #: includes/classes/core/class-themeplus-framework-config.php:34
-#: package/themeplus/includes/classes/core/class-themeplus-framework-config.php:34
 msgid "ThemePlus Options"
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:107
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:107
+#. translators: %s: the theme's display name.
+#: includes/classes/core/class-themeplus-framework-config.php:60
+#, php-format
+msgid "%s Settings"
+msgstr ""
+
+#. translators: %s: the theme's display name.
+#: includes/classes/core/class-themeplus-framework-config.php:63
+#, php-format
+msgid "%s Options"
+msgstr ""
+
+#: includes/classes/core/class-themeplus-rest-api.php:109
 msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:119
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:119
+#: includes/classes/core/class-themeplus-rest-api.php:121
 msgid "Cookie check failed"
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:164
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:164
+#: includes/classes/core/class-themeplus-rest-api.php:166
 msgid "Options parameter is required."
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:174
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:174
+#: includes/classes/core/class-themeplus-rest-api.php:175
 msgid "Options saved successfully."
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:226
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:226
+#: includes/classes/core/class-themeplus-rest-api.php:227
 msgid "Section not found."
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:252
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:252
+#: includes/classes/core/class-themeplus-rest-api.php:253
 msgid "Section reset successfully."
 msgstr ""
 
-#: includes/classes/core/class-themeplus-rest-api.php:287
-#: package/themeplus/includes/classes/core/class-themeplus-rest-api.php:287
+#: includes/classes/core/class-themeplus-rest-api.php:288
 msgid "Options reset successfully."
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-api.php:139
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-api.php:139
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:420
 msgid "Font added successfully"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-api.php:162
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-api.php:162
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:417
 msgid "Font updated successfully"
 msgstr ""
 
 #: includes/classes/custom-fonts/class-custom-fonts-api.php:184
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-api.php:184
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:469
 msgid "Font deleted successfully"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-frontend.php:186
+#: includes/classes/custom-fonts/class-custom-fonts-frontend.php:190
 #: includes/config/default-config.php:23
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-frontend.php:186
-#: package/themeplus/includes/config/default-config.php:23
 #: src/js/admin/components/Layout/Body.jsx:33
 msgid "Custom Fonts"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-manager.php:102
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:102
+#: includes/classes/custom-fonts/class-custom-fonts-manager.php:109
 msgid "Font name and files are required"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-manager.php:110
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:110
+#: includes/classes/custom-fonts/class-custom-fonts-manager.php:117
 msgid "A font with this name already exists"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-manager.php:120
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:120
+#: includes/classes/custom-fonts/class-custom-fonts-manager.php:127
 msgid "Invalid font file"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-manager.php:128
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:128
+#: includes/classes/custom-fonts/class-custom-fonts-manager.php:135
 msgid "Invalid font file type"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-manager.php:163
-#: includes/classes/custom-fonts/class-custom-fonts-manager.php:191
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:163
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-manager.php:191
+#: includes/classes/custom-fonts/class-custom-fonts-manager.php:170
+#: includes/classes/custom-fonts/class-custom-fonts-manager.php:198
 msgid "Font not found"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-mime-type.php:163
-#: package/themeplus/includes/classes/custom-fonts/class-custom-fonts-mime-type.php:163
+#: includes/classes/custom-fonts/class-custom-fonts-mime-type.php:171
 msgid "You do not have permission to upload font files."
 msgstr ""
 
 #: includes/config/default-config.php:34
-#: package/themeplus/includes/config/default-config.php:34
 msgid "Import/Export"
 msgstr ""
 
 #: includes/config/default-config.php:46
-#: package/themeplus/includes/config/default-config.php:46
 #: src/js/admin/components/Layout/Body.jsx:43
 msgid "Developer Panel"
 msgstr ""
 
+#: includes/config/sample-config.php:40
+msgid "Theme Settings"
+msgstr ""
+
+#: includes/config/sample-config.php:41
+msgid "Theme Options"
+msgstr ""
+
+#: includes/config/sample-config.php:70
+msgid "General Settings"
+msgstr ""
+
+#: includes/config/sample-config.php:76
+msgid "Enable Preloader"
+msgstr ""
+
+#: includes/config/sample-config.php:82
+msgid "Preloader Loading Text"
+msgstr ""
+
+#: includes/config/sample-config.php:83
+msgid "Enter preloader loading text"
+msgstr ""
+
+#: includes/config/sample-config.php:92
+msgid "Color Settings"
+msgstr ""
+
+#: includes/config/sample-config.php:98
+msgid "Primary Color"
+msgstr ""
+
+#: includes/config/sample-config.php:99
+msgid "Main theme color"
+msgstr ""
+
+#: includes/config/sample-config.php:105
+msgid "Secondary Color"
+msgstr ""
+
+#: includes/config/sample-config.php:106
+msgid "Secondary theme color"
+msgstr ""
+
+#: includes/config/sample-config.php:112
+msgid "Accent Color"
+msgstr ""
+
+#: includes/config/sample-config.php:113
+msgid "Accent color for highlights"
+msgstr ""
+
+#: includes/config/sample-config.php:122
+#: src/js/admin/data/icons.js:289
+msgid "Social Media"
+msgstr ""
+
+#: includes/config/sample-config.php:128
+msgid "Social Media Links"
+msgstr ""
+
+#: includes/config/sample-config.php:129
+msgid "Add your social media profile URLs"
+msgstr ""
+
+#: includes/config/sample-config.php:134
+msgid "Custom Social Icon"
+msgstr ""
+
 #: src/js/admin/App.jsx:74
-#: src/js/admin/App.jsx:88
+#: src/js/admin/App.jsx:82
 #: src/js/admin/components/Common/Dialog.jsx:31
 msgid "OK"
 msgstr ""
 
 #: src/js/admin/App.jsx:75
-#: src/js/admin/App.jsx:89
+#: src/js/admin/App.jsx:83
 #: src/js/admin/components/Common/Dialog.jsx:32
 #: src/js/admin/components/Fields/CodeEditorField.jsx:189
-#: src/js/admin/components/Fields/RepeaterField.jsx:58
+#: src/js/admin/components/Fields/RepeaterField.jsx:57
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:691
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:765
 #: src/js/admin/components/Sections/ImportExport.jsx:164
@@ -179,9 +235,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/js/admin/App.jsx:196
-#: src/js/admin/App.jsx:241
-#: src/js/admin/App.jsx:281
+#: src/js/admin/App.jsx:186
+#: src/js/admin/App.jsx:227
+#: src/js/admin/App.jsx:264
 #: src/js/admin/components/Sections/ImportExport.jsx:41
 #: src/js/admin/components/Sections/ImportExport.jsx:98
 #: src/js/admin/components/Sections/ImportExport.jsx:175
@@ -189,13 +245,13 @@ msgstr ""
 msgid "Success!"
 msgstr ""
 
-#: src/js/admin/App.jsx:197
+#: src/js/admin/App.jsx:187
 msgid "Options saved successfully!"
 msgstr ""
 
-#: src/js/admin/App.jsx:206
-#: src/js/admin/App.jsx:251
-#: src/js/admin/App.jsx:291
+#: src/js/admin/App.jsx:196
+#: src/js/admin/App.jsx:237
+#: src/js/admin/App.jsx:274
 #: src/js/admin/components/Sections/ImportExport.jsx:50
 #: src/js/admin/components/Sections/ImportExport.jsx:116
 #: src/js/admin/components/Sections/ImportExport.jsx:146
@@ -204,52 +260,52 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: src/js/admin/App.jsx:207
+#: src/js/admin/App.jsx:197
 msgid "Failed to save options: "
 msgstr ""
 
-#: src/js/admin/App.jsx:219
+#: src/js/admin/App.jsx:209
 msgid "Reset Section?"
 msgstr ""
 
-#: src/js/admin/App.jsx:220
+#: src/js/admin/App.jsx:210
 msgid "Are you sure you want to reset this section to default values?"
 msgstr ""
 
-#: src/js/admin/App.jsx:242
+#: src/js/admin/App.jsx:228
 msgid "Section reset successfully!"
 msgstr ""
 
-#: src/js/admin/App.jsx:252
+#: src/js/admin/App.jsx:238
 msgid "Failed to reset section: "
 msgstr ""
 
-#: src/js/admin/App.jsx:262
+#: src/js/admin/App.jsx:248
 #: src/js/admin/components/Sections/ImportExport.jsx:161
 msgid "Reset All Settings?"
 msgstr ""
 
-#: src/js/admin/App.jsx:263
+#: src/js/admin/App.jsx:249
 msgid "Are you sure you want to reset ALL settings to default values? This action cannot be undone!"
 msgstr ""
 
-#: src/js/admin/App.jsx:282
+#: src/js/admin/App.jsx:265
 msgid "All settings reset successfully!"
 msgstr ""
 
-#: src/js/admin/App.jsx:292
+#: src/js/admin/App.jsx:275
 msgid "Failed to reset settings: "
 msgstr ""
 
-#: src/js/admin/App.jsx:322
+#: src/js/admin/App.jsx:305
 msgid "Loading ThemePlus"
 msgstr ""
 
-#: src/js/admin/App.jsx:333
+#: src/js/admin/App.jsx:316
 msgid "Error Loading ThemePlus"
 msgstr ""
 
-#: src/js/admin/App.jsx:335
+#: src/js/admin/App.jsx:318
 msgid "Try Again"
 msgstr ""
 
@@ -294,10 +350,10 @@ msgid "Preview"
 msgstr ""
 
 #: src/js/admin/components/Common/GradientPicker.jsx:106
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:162
 #: src/js/admin/components/DevPanel/DevFieldCard.jsx:176
 #: src/js/admin/components/DevPanel/DevFieldCard.jsx:190
 #: src/js/admin/components/DevPanel/DevFieldCard.jsx:204
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:218
 #: src/js/admin/components/Fields/CodeEditorField.jsx:255
 msgid "Copied!"
 msgstr ""
@@ -350,43 +406,43 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:81
+#: src/js/admin/components/Common/SearchResults.jsx:86
 msgid "Searching..."
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:97
+#: src/js/admin/components/Common/SearchResults.jsx:102
 msgid "No results found"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:98
+#: src/js/admin/components/Common/SearchResults.jsx:103
 msgid "field(s) found for"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:105
+#: src/js/admin/components/Common/SearchResults.jsx:110
 msgid "Clear Search"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:142
+#: src/js/admin/components/Common/SearchResults.jsx:147
 msgid "No fields match your search."
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:146
+#: src/js/admin/components/Common/SearchResults.jsx:151
 msgid "Search Tips:"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:149
+#: src/js/admin/components/Common/SearchResults.jsx:154
 msgid "Try different keywords"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:150
+#: src/js/admin/components/Common/SearchResults.jsx:155
 msgid "Check your spelling"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:151
+#: src/js/admin/components/Common/SearchResults.jsx:156
 msgid "Use shorter search terms"
 msgstr ""
 
-#: src/js/admin/components/Common/SearchResults.jsx:152
+#: src/js/admin/components/Common/SearchResults.jsx:157
 msgid "Try searching by field name"
 msgstr ""
 
@@ -397,11 +453,11 @@ msgstr ""
 #: src/js/admin/components/Common/Select.jsx:438
 #: src/js/admin/components/Fields/IconField.jsx:103
 #: src/js/admin/components/Fields/ImageField.jsx:94
-#: src/js/admin/components/Fields/RepeaterField.jsx:57
-#: src/js/admin/components/Fields/RepeaterField.jsx:228
-#: src/js/admin/components/Fields/RepeaterField.jsx:230
-#: src/js/admin/components/Fields/SocialMediaField.jsx:206
-#: src/js/admin/components/Fields/SocialMediaField.jsx:208
+#: src/js/admin/components/Fields/RepeaterField.jsx:56
+#: src/js/admin/components/Fields/RepeaterField.jsx:221
+#: src/js/admin/components/Fields/RepeaterField.jsx:223
+#: src/js/admin/components/Fields/SocialMediaField.jsx:198
+#: src/js/admin/components/Fields/SocialMediaField.jsx:200
 msgid "Remove"
 msgstr ""
 
@@ -434,7 +490,7 @@ msgid "Deselect All"
 msgstr ""
 
 #: src/js/admin/components/Common/Select.jsx:561
-#: src/js/admin/components/Fields/DatePickerField.jsx:154
+#: src/js/admin/components/Fields/DatePickerField.jsx:135
 msgid "Done"
 msgstr ""
 
@@ -446,59 +502,59 @@ msgstr ""
 msgid "Increase"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:97
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:111
 msgid "Hide Usage"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:97
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:111
 msgid "Show Usage"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:106
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:120
 msgid "Title:"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:112
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:126
 msgid "Section:"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:121
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:135
 msgid "Current Value:"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:131
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:145
 msgid "Default Value:"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:140
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:154
 msgid "Depends on:"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:149
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:163
 msgid "Usage Examples"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:156
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:170
 msgid "Bulk Access (Recommended for Multiple Fields)"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:162
 #: src/js/admin/components/DevPanel/DevFieldCard.jsx:176
 #: src/js/admin/components/DevPanel/DevFieldCard.jsx:190
 #: src/js/admin/components/DevPanel/DevFieldCard.jsx:204
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:218
 #: src/js/admin/components/Fields/CodeEditorField.jsx:255
 msgid "Copy"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:171
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:185
 msgid "Single Field Access"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:185
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:199
 msgid "In Template File"
 msgstr ""
 
-#: src/js/admin/components/DevPanel/DevFieldCard.jsx:199
+#: src/js/admin/components/DevPanel/DevFieldCard.jsx:213
 msgid "Direct Access (Advanced)"
 msgstr ""
 
@@ -700,7 +756,7 @@ msgstr ""
 
 #: src/js/admin/components/Fields/CodeEditorField.jsx:188
 #: src/js/admin/components/Fields/CodeEditorField.jsx:273
-#: src/js/admin/components/Fields/DatePickerField.jsx:175
+#: src/js/admin/components/Fields/DatePickerField.jsx:156
 msgid "Clear"
 msgstr ""
 
@@ -720,15 +776,15 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: src/js/admin/components/Fields/DatePickerField.jsx:19
+#: src/js/admin/components/Fields/DatePickerField.jsx:18
 msgid "Select date..."
 msgstr ""
 
-#: src/js/admin/components/Fields/DatePickerField.jsx:143
+#: src/js/admin/components/Fields/DatePickerField.jsx:124
 msgid "Select date and time"
 msgstr ""
 
-#: src/js/admin/components/Fields/DatePickerField.jsx:168
+#: src/js/admin/components/Fields/DatePickerField.jsx:149
 msgid "Today"
 msgstr ""
 
@@ -752,35 +808,35 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:22
+#: src/js/admin/components/Fields/GalleryField.jsx:21
 msgid "Select Images"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:23
+#: src/js/admin/components/Fields/GalleryField.jsx:22
 msgid "Use these images"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:78
+#: src/js/admin/components/Fields/GalleryField.jsx:75
 msgid "Remove image"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:90
+#: src/js/admin/components/Fields/GalleryField.jsx:87
 msgid "Add More Images"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:90
+#: src/js/admin/components/Fields/GalleryField.jsx:87
 msgid "Upload Images"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:99
+#: src/js/admin/components/Fields/GalleryField.jsx:96
 msgid "image"
 msgstr ""
 
-#: src/js/admin/components/Fields/GalleryField.jsx:100
+#: src/js/admin/components/Fields/GalleryField.jsx:97
 msgid "images"
 msgstr ""
 
-#: src/js/admin/components/Fields/GroupField.jsx:48
+#: src/js/admin/components/Fields/GroupField.jsx:45
 msgid "No fields configured for this group."
 msgstr ""
 
@@ -816,19 +872,19 @@ msgstr ""
 msgid "Upload Image"
 msgstr ""
 
-#: src/js/admin/components/Fields/LinkField.jsx:39
+#: src/js/admin/components/Fields/LinkField.jsx:38
 msgid "https://example.com"
 msgstr ""
 
-#: src/js/admin/components/Fields/LinkField.jsx:47
+#: src/js/admin/components/Fields/LinkField.jsx:46
 msgid "Link Text (optional)"
 msgstr ""
 
-#: src/js/admin/components/Fields/LinkField.jsx:56
+#: src/js/admin/components/Fields/LinkField.jsx:55
 msgid "Open in new tab"
 msgstr ""
 
-#: src/js/admin/components/Fields/LinkField.jsx:64
+#: src/js/admin/components/Fields/LinkField.jsx:63
 msgid "Add nofollow"
 msgstr ""
 
@@ -840,60 +896,60 @@ msgstr ""
 msgid "Add Item"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:55
+#: src/js/admin/components/Fields/RepeaterField.jsx:54
 msgid "Remove Item?"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:56
+#: src/js/admin/components/Fields/RepeaterField.jsx:55
 msgid "Are you sure you want to remove this item? This action cannot be undone."
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:67
+#: src/js/admin/components/Fields/RepeaterField.jsx:65
 msgid "Are you sure you want to remove this item?"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:132
+#: src/js/admin/components/Fields/RepeaterField.jsx:126
 msgid "Item"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:152
+#: src/js/admin/components/Fields/RepeaterField.jsx:146
 msgid "item"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:152
+#: src/js/admin/components/Fields/RepeaterField.jsx:146
 msgid "items"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:174
-#: src/js/admin/components/Fields/RepeaterField.jsx:175
+#: src/js/admin/components/Fields/RepeaterField.jsx:168
+#: src/js/admin/components/Fields/RepeaterField.jsx:169
 msgid "Expand"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:174
-#: src/js/admin/components/Fields/RepeaterField.jsx:175
+#: src/js/admin/components/Fields/RepeaterField.jsx:168
+#: src/js/admin/components/Fields/RepeaterField.jsx:169
 msgid "Collapse"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:189
-#: src/js/admin/components/Fields/RepeaterField.jsx:191
-#: src/js/admin/components/Fields/SocialMediaField.jsx:187
-#: src/js/admin/components/Fields/SocialMediaField.jsx:189
+#: src/js/admin/components/Fields/RepeaterField.jsx:183
+#: src/js/admin/components/Fields/RepeaterField.jsx:185
+#: src/js/admin/components/Fields/SocialMediaField.jsx:179
+#: src/js/admin/components/Fields/SocialMediaField.jsx:181
 msgid "Move up"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:200
-#: src/js/admin/components/Fields/RepeaterField.jsx:202
-#: src/js/admin/components/Fields/SocialMediaField.jsx:197
-#: src/js/admin/components/Fields/SocialMediaField.jsx:199
+#: src/js/admin/components/Fields/RepeaterField.jsx:194
+#: src/js/admin/components/Fields/RepeaterField.jsx:196
+#: src/js/admin/components/Fields/SocialMediaField.jsx:189
+#: src/js/admin/components/Fields/SocialMediaField.jsx:191
 msgid "Move down"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:217
-#: src/js/admin/components/Fields/RepeaterField.jsx:219
+#: src/js/admin/components/Fields/RepeaterField.jsx:210
+#: src/js/admin/components/Fields/RepeaterField.jsx:212
 msgid "Duplicate"
 msgstr ""
 
-#: src/js/admin/components/Fields/RepeaterField.jsx:287
+#: src/js/admin/components/Fields/RepeaterField.jsx:280
 msgid "No items yet. Click the button above to add one."
 msgstr ""
 
@@ -913,45 +969,45 @@ msgstr ""
 msgid "Paste"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:130
+#: src/js/admin/components/Fields/SocialMediaField.jsx:125
 msgid "link"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:130
+#: src/js/admin/components/Fields/SocialMediaField.jsx:125
 msgid "links"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:224
+#: src/js/admin/components/Fields/SocialMediaField.jsx:216
 msgid "Add Social Link"
 msgstr ""
 
-#: src/js/admin/components/Fields/SocialMediaField.jsx:241
+#: src/js/admin/components/Fields/SocialMediaField.jsx:233
 msgid "No social media links yet. Click the button above to add one."
 msgstr ""
 
-#: src/js/admin/components/Fields/SpacingField.jsx:118
+#: src/js/admin/components/Fields/SpacingField.jsx:116
 msgid "Top"
 msgstr ""
 
-#: src/js/admin/components/Fields/SpacingField.jsx:131
+#: src/js/admin/components/Fields/SpacingField.jsx:129
 msgid "Right"
 msgstr ""
 
-#: src/js/admin/components/Fields/SpacingField.jsx:145
+#: src/js/admin/components/Fields/SpacingField.jsx:143
 msgid "Bottom"
 msgstr ""
 
-#: src/js/admin/components/Fields/SpacingField.jsx:159
+#: src/js/admin/components/Fields/SpacingField.jsx:157
 msgid "Left"
 msgstr ""
 
-#: src/js/admin/components/Fields/SpacingField.jsx:172
-#: src/js/admin/components/Fields/SpacingField.jsx:173
+#: src/js/admin/components/Fields/SpacingField.jsx:170
+#: src/js/admin/components/Fields/SpacingField.jsx:171
 msgid "Unlink values"
 msgstr ""
 
-#: src/js/admin/components/Fields/SpacingField.jsx:172
-#: src/js/admin/components/Fields/SpacingField.jsx:173
+#: src/js/admin/components/Fields/SpacingField.jsx:170
+#: src/js/admin/components/Fields/SpacingField.jsx:171
 msgid "Link values"
 msgstr ""
 
@@ -1088,11 +1144,11 @@ msgstr ""
 msgid "Import/Export Settings"
 msgstr ""
 
-#: src/js/admin/components/Layout/Body.jsx:118
+#: src/js/admin/components/Layout/Body.jsx:119
 msgid "Select a tab to view settings."
 msgstr ""
 
-#: src/js/admin/components/Layout/Body.jsx:167
+#: src/js/admin/components/Layout/Body.jsx:168
 msgid "No fields available for this section."
 msgstr ""
 
@@ -1504,10 +1560,6 @@ msgstr ""
 
 #: src/js/admin/data/icons.js:288
 msgid "Arrows"
-msgstr ""
-
-#: src/js/admin/data/icons.js:289
-msgid "Social Media"
 msgstr ""
 
 #: src/js/admin/data/icons.js:290

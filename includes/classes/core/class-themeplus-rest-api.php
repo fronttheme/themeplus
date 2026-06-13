@@ -100,8 +100,10 @@ class ThemePlus_REST_API {
    * @return bool|WP_Error
    */
   public function check_permission(WP_REST_Request $request): WP_Error|bool {
+    $capability = ThemePlus_Framework_Config::get('capability', 'edit_theme_options');
+
     // Check if user has required capability
-    if (!current_user_can('manage_options')) {
+    if (!current_user_can($capability)) {
       return new WP_Error(
         'rest_forbidden',
         __('Sorry, you are not allowed to do that.', 'themeplus'),
@@ -158,7 +160,7 @@ class ThemePlus_REST_API {
     try {
       $options = $request->get_param('options');
 
-      if (empty($options) && !is_array($options)) {
+      if (empty($options) || !is_array($options)) {
         return new WP_Error(
           'rest_invalid_param',
           __('Options parameter is required.', 'themeplus'),
@@ -166,13 +168,12 @@ class ThemePlus_REST_API {
         );
       }
 
-      // Force update even if value hasn't changed
       ThemePlus_Settings::update_all_options($options);
 
       return rest_ensure_response([
         'success' => true,
         'message' => __('Options saved successfully.', 'themeplus'),
-        'data'    => $options,
+        'data'    => ThemePlus_Settings::get_all_options(),
       ]);
     } catch (Exception $e) {
       return new WP_Error(
@@ -218,7 +219,7 @@ class ThemePlus_REST_API {
   public function reset_section(WP_REST_Request $request): WP_Error|WP_REST_Response {
     try {
       $section_id = $request->get_param('section_id');
-      $section = ThemePlus_Config::get_section($section_id);
+      $section    = ThemePlus_Config::get_section($section_id);
 
       if (!$section) {
         return new WP_Error(
@@ -270,7 +271,7 @@ class ThemePlus_REST_API {
   public function reset_options(WP_REST_Request $request): WP_Error|WP_REST_Response {
     try {
       // Get all default values
-      $all_fields = ThemePlus_Config::get_all_fields();
+      $all_fields      = ThemePlus_Config::get_all_fields();
       $default_options = [];
 
       foreach ($all_fields as $field_id => $field) {

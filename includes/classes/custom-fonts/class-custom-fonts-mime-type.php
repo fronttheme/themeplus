@@ -72,7 +72,12 @@ class ThemePlus_Custom_Fonts_MimeType {
    * Add font MIME types to WordPress
    */
   public function add_font_mime_types($mimes): array {
-    $mimes['woff'] = 'font/woff';
+    // Only users who can manage the panel may upload fonts.
+    if (!current_user_can(ThemePlus_Framework_Config::get('capability', 'edit_theme_options'))) {
+      return $mimes;
+    }
+
+    $mimes['woff']  = 'font/woff';
     $mimes['woff2'] = 'font/woff2';
 
     return $mimes;
@@ -95,7 +100,7 @@ class ThemePlus_Custom_Fonts_MimeType {
       return $data;
     }
 
-    $data['ext'] = $real_ext;
+    $data['ext']  = $real_ext;
     $data['type'] = $this->get_mime_type($real_ext);
 
     return $data;
@@ -112,13 +117,15 @@ class ThemePlus_Custom_Fonts_MimeType {
     }
 
     // Read file header to verify format
-    $handle = fopen($file, 'rb');
+    // Direct read is intentional: inspecting 4 magic bytes of the uploaded
+    // temp file during upload validation; WP_Filesystem is not appropriate here.
+    $handle = fopen($file, 'rb'); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
     if (!$handle) {
       return false;
     }
 
-    $header = fread($handle, 4);
-    fclose($handle);
+    $header = fread($handle, 4); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+    fclose($handle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
     // Check magic bytes for font formats
     $magic_bytes = [
@@ -132,7 +139,7 @@ class ThemePlus_Custom_Fonts_MimeType {
       }
     }
 
-    return $ext; // Allow if extension matches
+    return false; // Magic bytes don't match a known font format — reject.
   }
 
   /**
@@ -151,7 +158,8 @@ class ThemePlus_Custom_Fonts_MimeType {
    * Sanitize and validate font upload
    */
   public function sanitize_font_upload($file): array {
-    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $ext        = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $capability = ThemePlus_Framework_Config::get('capability', 'edit_theme_options');
 
     // Only process font files
     if (!in_array($ext, self::ALLOWED_TYPES)) {
@@ -159,7 +167,7 @@ class ThemePlus_Custom_Fonts_MimeType {
     }
 
     // Security: Only allow for users with proper permissions
-    if (!current_user_can('edit_theme_options')) {
+    if (!current_user_can($capability)) {
       $file['error'] = __('You do not have permission to upload font files.', 'themeplus');
       return $file;
     }
@@ -175,7 +183,7 @@ class ThemePlus_Custom_Fonts_MimeType {
    */
   public function add_cors_headers(): void {
     if (isset($_SERVER['REQUEST_URI'])) {
-      $request_uri = $_SERVER['REQUEST_URI'];
+      $request_uri = sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
       if (preg_match('/\.(woff2?)(\?.*)?$/i', $request_uri)) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET');

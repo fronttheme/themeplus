@@ -6,7 +6,6 @@
  */
 
 import {__} from '@wordpress/i18n';
-import {useState} from '@wordpress/element';
 import {DateTimePicker, DatePicker, Dropdown} from '@wordpress/components';
 import Button from '../Common/Button';
 
@@ -18,24 +17,14 @@ function DatePickerField({
                            help = '',
                            placeholder = __('Select date...', 'themeplus'),
                            showTime = false, // Toggle time picker
-                           is12Hour = true,  // 12/24 hour format
+                           is12Hour = true,  // 12/24-hour format
                          }) {
-  const [selectedDate, setSelectedDate] = useState(value);
 
   /**
    * Handle date change
    */
   const handleDateChange = (newDate) => {
-    // Format based on whether time is included
-    let formatted;
-    if (showTime) {
-      // Keep full ISO format with time: 2025-01-15T14:30:00
-      formatted = newDate || '';
-    } else {
-      // Date only: 2025-01-15
-      formatted = newDate ? newDate.split('T')[0] : '';
-    }
-    setSelectedDate(formatted);
+    const formatted = showTime ? (newDate || '') : (newDate ? newDate.split('T')[0] : '');
     onChange(formatted);
   };
 
@@ -43,10 +32,10 @@ function DatePickerField({
    * Format display date
    */
   const getDisplayDate = () => {
-    if (!selectedDate) return placeholder;
+    if (!value) return placeholder;
 
     try {
-      const date = new Date(selectedDate);
+      const date = new Date(value);
       const options = {
         year: 'numeric',
         month: 'long',
@@ -62,27 +51,19 @@ function DatePickerField({
 
       return date.toLocaleDateString(undefined, options);
     } catch (e) {
-      return selectedDate;
+      return value;
     }
   };
 
   /**
    * Clear date
    */
-  const clearDate = () => {
-    setSelectedDate('');
-    onChange('');
-  };
+  const clearDate = () => onChange('');
 
   /**
    * Set today
    */
-  const setToday = () => {
-    const today = new Date();
-    const formatted = today.toISOString().split('T')[0];
-    setSelectedDate(formatted);
-    onChange(formatted);
-  };
+  const setToday = () => onChange(new Date().toISOString().split('T')[0]);
 
   return (
     <div className="tpo-field tpo-field--datepicker">
@@ -99,7 +80,7 @@ function DatePickerField({
           <Dropdown
             className="tpo-datepicker__dropdown"
             contentClassName="tpo-datepicker__popover"
-            position="bottom left"
+            popoverProps={{placement: 'bottom-start'}}
             renderToggle={({isOpen, onToggle}) => (
               <div className="tpo-datepicker__input-wrapper">
                 <button
@@ -108,7 +89,7 @@ function DatePickerField({
                   onClick={onToggle}
                   aria-expanded={isOpen}
                 >
-                  <span className={selectedDate ? '' : 'tpo-datepicker__placeholder'}>
+                  <span className={value ? '' : 'tpo-datepicker__placeholder'}>
                     {getDisplayDate()}
                   </span>
                   <i className="fa-solid fa-calendar-days"></i>
@@ -120,7 +101,7 @@ function DatePickerField({
                 {showTime ? (
                   // Full DateTimePicker with time
                   <DateTimePicker
-                    currentDate={selectedDate || null}
+                    currentDate={value || null}
                     onChange={handleDateChange}
                     is12Hour={is12Hour}
                     __nextRemoveHelpButton
@@ -129,7 +110,7 @@ function DatePickerField({
                 ) : (
                   // Date only - use DatePicker component
                   <DatePicker
-                    currentDate={selectedDate || null}
+                    currentDate={value || null}
                     onChange={handleDateChange}
                     __nextRemoveHelpButton
                     __nextRemoveResetButton
@@ -158,7 +139,7 @@ function DatePickerField({
             )}
           />
 
-          {selectedDate && (
+          {value && (
             <div className="tpo-datepicker__actions tpo-field-group--button">
               <Button
                 size="small"

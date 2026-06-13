@@ -10,6 +10,7 @@ package/
 package.json
 package-lock.json
 vite.config.js
+vite.config.mjs
 webpack.config.js
 
 # Git files
@@ -31,7 +32,6 @@ webpack.config.js
 
 # Documentation (WordPress uses readme.txt, not .md files)
 README.md
-CHANGELOG.md
 CONTRIBUTING.md
 SECURITY.md
 
@@ -44,6 +44,5 @@ themeplus-svn/
 # Author Kit
 README/
 
-# Source maps
-assets/js/*.map
+# Source maps & Generated Metadata
 *.map

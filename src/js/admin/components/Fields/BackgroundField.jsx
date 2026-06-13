@@ -40,7 +40,8 @@ function BackgroundField({
     {value: 'color', label: __('Color', 'themeplus')}
   ];
 
-  const [activeMode, setActiveMode] = useState(value.mode || modes[0].value);
+  // Derive from value — no state, so Reset/Import update instantly.
+  const activeMode = value.mode || modes[0].value;
 
   const handleChange = (key, val) => {
     onChange({
@@ -51,10 +52,9 @@ function BackgroundField({
   };
 
   const handleModeChange = (mode) => {
-    setActiveMode(mode);
     onChange({
       ...value,
-      mode: mode,
+      mode,
     });
   };
 
@@ -119,7 +119,7 @@ function BackgroundField({
                 {__('Background Color', 'themeplus')}
               </label>
               <ColorPickerButton
-                color={value.color || '#ffffff'}
+                value={value.color || '#ffffff'}
                 onChange={(val) => handleChange('color', val)}
               />
             </div>

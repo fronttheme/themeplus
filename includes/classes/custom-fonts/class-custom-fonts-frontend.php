@@ -55,9 +55,11 @@ class ThemePlus_Custom_Fonts_Frontend {
     $css = '';
     foreach ($valid_fonts as $font) {
       $slug = sanitize_title($font);
-      $family = str_contains($font, ' ')
-        ? '"' . $font . '", sans-serif'
-        : $font . ', sans-serif';
+      $name = ThemePlus_Custom_Fonts_Manager::sanitize_font_name($font);
+
+      $family = str_contains($name, ' ')
+        ? '"' . $name . '", sans-serif'
+        : $name . ', sans-serif';
 
       $css .= '.has-' . $slug . '-font-family { font-family: ' . $family . '; }' . "\n";
     }
@@ -66,7 +68,7 @@ class ThemePlus_Custom_Fonts_Frontend {
       return;
     }
 
-    echo '<style id="themeplus-gutenberg-font-classes">' . "\n" . $css . '</style>' . "\n";
+    echo '<style id="themeplus-gutenberg-font-classes">' . "\n" . wp_strip_all_tags($css) . '</style>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated font CSS; URLs and names sanitized in the builder, tags stripped as defense in depth.
   }
 
   /**
@@ -113,9 +115,11 @@ class ThemePlus_Custom_Fonts_Frontend {
     $css = '';
     foreach ($valid_fonts as $font) {
       $slug = sanitize_title($font);
-      $family = str_contains($font, ' ')
-        ? '"' . $font . '", sans-serif'
-        : $font . ', sans-serif';
+      $name = ThemePlus_Custom_Fonts_Manager::sanitize_font_name($font);
+
+      $family = str_contains($name, ' ')
+        ? '"' . $name . '", sans-serif'
+        : $name . ', sans-serif';
 
       // Target the editor content specifically
       $css .= '.editor-styles-wrapper .has-' . $slug . '-font-family,' . "\n";
@@ -134,7 +138,7 @@ class ThemePlus_Custom_Fonts_Frontend {
   private function is_block_editor(): bool {
     global $pagenow;
     return in_array($pagenow, ['post.php', 'post-new.php', 'site-editor.php']) ||
-      (defined('REST_REQUEST') && REST_REQUEST && isset($_GET['context']) && $_GET['context'] === 'edit');
+      (defined('REST_REQUEST') && REST_REQUEST && isset($_GET['context']) && $_GET['context'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only context detection; no form data processed, no state changed.
   }
 
   /**
@@ -159,7 +163,7 @@ class ThemePlus_Custom_Fonts_Frontend {
 
     if (!empty($css)) {
       echo '<style id="themeplus-custom-fonts">' . "\n";
-      echo $css;
+      echo wp_strip_all_tags($css); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated @font-face CSS; URLs and names sanitized in the builder, tags stripped as defense in depth.
       echo '</style>' . "\n";
     }
   }
@@ -215,10 +219,11 @@ class ThemePlus_Custom_Fonts_Frontend {
 
     // Add fonts
     foreach ($valid_fonts as $font) {
-      $slug = sanitize_title($font);
-      $font_family = str_contains($font, ' ')
-        ? sprintf('"%s", sans-serif', $font)
-        : sprintf('%s, sans-serif', $font);
+      $slug        = sanitize_title($font);
+      $name        = ThemePlus_Custom_Fonts_Manager::sanitize_font_name($font);
+      $font_family = str_contains($name, ' ')
+        ? sprintf('"%s", sans-serif', $name)
+        : sprintf('%s, sans-serif', $name);
 
       // Check if font already exists to avoid duplicates
       $exists = false;
@@ -239,42 +244,6 @@ class ThemePlus_Custom_Fonts_Frontend {
     }
 
     return $settings;
-  }
-
-  /**
-   * Output custom fonts CSS directly into editor iframe
-   */
-  public function output_editor_fonts_css(): void {
-    global $pagenow;
-
-    // Only run in block editor
-    if (!in_array($pagenow, ['post.php', 'post-new.php', 'site-editor.php'])) {
-      return;
-    }
-
-    $css = get_option('themeplus_custom_fonts_css', '');
-    if (empty($css)) {
-      $css = $this->manager->regenerate_css();
-    }
-
-    if (!empty($css)) {
-      // Output both the font-face rules and the class selectors
-      echo '<style id="themeplus-editor-fonts">';
-      echo $css;
-
-      // Also add the class selectors with !important
-      $valid_fonts = $this->get_valid_fonts();
-      if (!empty($valid_fonts)) {
-        foreach ($valid_fonts as $font) {
-          $slug = sanitize_title($font);
-          $family = str_contains($font, ' ')
-            ? '"' . $font . '", sans-serif'
-            : $font . ', sans-serif';
-          echo '.has-' . $slug . '-font-family { font-family: ' . $family . ' !important; }';
-        }
-      }
-      echo '</style>';
-    }
   }
 
   /**

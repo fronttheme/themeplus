@@ -43,6 +43,6 @@ We appreciate responsible disclosure and will work with you to address the issue
 
 - Always keep ThemePlus updated to the latest version
 - Ensure your WordPress installation and PHP are up to date
-- Only grant `manage_options` capability to trusted administrators — the ThemePlus REST API and admin interface require this capability
+- Only grant `edit_theme_options` capability to trusted users — this is the default capability required by the ThemePlus REST API and admin interface. The capability can be configured via `themeplus_framework_config(['capability' => '...'])`.
 - Always escape output when displaying option values in your theme (`esc_html()`, `esc_url()`, `wp_kses_post()`, etc.)
 - Set a unique `opt_name` per theme in `themeplus_framework_config()` — shared option keys between themes will cause settings to collide in the database

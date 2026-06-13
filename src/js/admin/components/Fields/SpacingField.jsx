@@ -19,13 +19,14 @@ function SpacingField({
                         units = ['px', 'em', 'rem', '%'], // Default units
                         help = ''
                       }) {
-  const [spacing, setSpacing] = useState({
+  const spacing = {
     top: value.top || 0,
     right: value.right || 0,
     bottom: value.bottom || 0,
     left: value.left || 0,
-    unit: value.unit || 'px', // Add unit to state
-  });
+    unit: value.unit || 'px',
+  };
+
   const [linked, setLinked] = useState(false);
 
   const updateSpacing = (side, val) => {
@@ -40,14 +41,12 @@ function SpacingField({
       }
       : {...spacing, [side]: newValue};
 
-    setSpacing(newSpacing);
     onChange(newSpacing);
   };
 
   // Handle unit change
   const handleUnitChange = (newUnit) => {
     const newSpacing = {...spacing, unit: newUnit};
-    setSpacing(newSpacing);
     onChange(newSpacing);
   };
 
@@ -64,7 +63,6 @@ function SpacingField({
         left: spacing.top,
         unit: spacing.unit,
       };
-      setSpacing(allSame);
       onChange(allSame);
     }
   };

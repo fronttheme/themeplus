@@ -187,6 +187,12 @@
   }
 
   // Value Display
+  &__value-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   &__value-input {
     text-align: center;
 
@@ -205,6 +211,7 @@
   &__unit {
     font-size: 12px;
     font-weight: 500;
+    text-transform: uppercase;
     color: var(--themeplus-text-tertiary);
     white-space: nowrap;
   }

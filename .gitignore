@@ -16,16 +16,22 @@ dist/
 # Author Kit
 README/
 
-# WordPress.org
-screenshots/
+# =============================================================================
+# WordPress.org & SVN Deployment Junk
+# =============================================================================
 themeplus-svn/
+.wordpress-org/
+.svn/
+*.zip
 
 # =============================================================================
-# Compiled assets — KEEP assets/ in Git
-# Only ignore Vite's temporary style-only JS chunks
+# Build & Compiled Assets (Regenerated from /src)
 # =============================================================================
-assets/css/*.js
-assets/css/*.js.map
+assets/css/admin.css
+assets/css/admin.css.map
+assets/js/admin.js
+assets/js/admin.js.map
+assets/js/admin.asset.php
 
 # =============================================================================
 # OS Files

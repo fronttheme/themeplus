@@ -39,8 +39,8 @@ function App() {
     return stored === null ? true : stored === 'true';
   });
 
-  // Minimum display time: 6500ms (to see full animation)
-  const MIN_LOADING_TIME = 7000;
+  // Minimum display time
+  const MIN_LOADING_TIME = 700;
 
   useEffect(() => {
     // Set minimum time
@@ -74,12 +74,6 @@ function App() {
     confirmText: __('OK', 'themeplus'),
     cancelText: __('Cancel', 'themeplus'),
   });
-
-  useEffect(() => {
-    loadData().catch(error => {
-      console.error('Failed to load data:', error);
-    });
-  }, []);
 
   const showDialog = useCallback(({
                                     type = 'success',
@@ -185,12 +179,8 @@ function App() {
       });
 
       if (response.success) {
-        // Force re-render by clearing first
-        setOptions({});
-        setTimeout(() => {
-          setOptions(currentValues);
-          markAsSaved();
-        }, 0);
+        setOptions(currentValues);
+        markAsSaved();
         showDialog({
           type: 'success',
           title: __('Success!', 'themeplus'),
@@ -230,12 +220,8 @@ function App() {
 
           if (response.success) {
             const resetData = response.data || {};
-            // Force re-render
-            setOptions({});
-            setTimeout(() => {
-              setOptions(resetData);
-              initialize(resetData);
-            }, 0);
+            setOptions(resetData);
+            initialize(resetData);
             showDialog({
               type: 'success',
               title: __('Success!', 'themeplus'),
@@ -271,11 +257,8 @@ function App() {
           if (response.success) {
             const resetData = response.data || {};
             // Force re-render
-            setOptions({});
-            setTimeout(() => {
-              setOptions(resetData);
-              initialize(resetData);
-            }, 0);
+            setOptions(resetData);
+            initialize(resetData);
             showDialog({
               type: 'success',
               title: __('Success!', 'themeplus'),
@@ -367,7 +350,7 @@ function App() {
             <Body
               sections={config.sections}
               activeTab={activeTab}
-              showDialog={showDialog}
+              showModal={showDialog}
               searchQuery={searchQuery}
               onClearSearch={() => setSearchQuery('')}
             />

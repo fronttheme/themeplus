@@ -89,6 +89,7 @@ function Body({sections = [], activeTab, showModal, searchQuery = '', onClearSea
           <SearchResults
             searchQuery={searchQuery}
             sections={sections}
+            defaults={defaults}
             onClearSearch={onClearSearch}
           />
         </div>

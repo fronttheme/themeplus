@@ -6,20 +6,17 @@
  */
 
 import {__} from '@wordpress/i18n';
-import {useState} from '@wordpress/element';
 import FieldRenderer from '../Common/FieldRenderer';
 
 function GroupField({id, label, value = {}, onChange, fields = [], help = '', showModal}) {
-  const [groupValues, setGroupValues] = useState(value);
+  const groupValues = (value && typeof value === 'object') ? value : {};
 
   /**
    * Update nested field value
    * Accepts just the value (not fieldId)
    */
   const updateField = (fieldId) => (fieldValue) => {
-    const newValues = {...groupValues, [fieldId]: fieldValue};
-    setGroupValues(newValues);
-    onChange(newValues);
+    onChange({...groupValues, [fieldId]: fieldValue});
   };
 
   return (

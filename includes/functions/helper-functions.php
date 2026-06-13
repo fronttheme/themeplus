@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
  * @param mixed $default Default value
  * @return mixed
  */
-function themeplus_get_option(string $key = null, mixed $default = ''): mixed {
+function themeplus_get_option(?string $key = null, mixed $default = ''): mixed {
   // Check if ThemePlus is active
   if (!class_exists('ThemePlus_Settings')) {
     return $default;
@@ -39,6 +39,9 @@ function themeplus_get_option(string $key = null, mixed $default = ''): mixed {
  * @return bool
  */
 function themeplus_update_option(string $key, mixed $value): bool {
+  if (!class_exists('ThemePlus_Settings')) {
+    return false;
+  }
   return ThemePlus_Settings::update_option($key, $value);
 }
 
