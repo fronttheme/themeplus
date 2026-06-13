@@ -32,7 +32,6 @@ webpack.config.js
 
 # Documentation (WordPress uses readme.txt, not .md files)
 README.md
-CHANGELOG.md
 CONTRIBUTING.md
 SECURITY.md
 
@@ -46,5 +45,4 @@ themeplus-svn/
 README/
 
 # Source maps & Generated Metadata
-assets/js/*.map
 *.map
