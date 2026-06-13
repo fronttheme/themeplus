@@ -117,13 +117,15 @@ class ThemePlus_Custom_Fonts_MimeType {
     }
 
     // Read file header to verify format
-    $handle = fopen($file, 'rb');
+    // Direct read is intentional: inspecting 4 magic bytes of the uploaded
+    // temp file during upload validation; WP_Filesystem is not appropriate here.
+    $handle = fopen($file, 'rb'); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
     if (!$handle) {
       return false;
     }
 
-    $header = fread($handle, 4);
-    fclose($handle);
+    $header = fread($handle, 4); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+    fclose($handle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
     // Check magic bytes for font formats
     $magic_bytes = [
@@ -181,7 +183,7 @@ class ThemePlus_Custom_Fonts_MimeType {
    */
   public function add_cors_headers(): void {
     if (isset($_SERVER['REQUEST_URI'])) {
-      $request_uri = $_SERVER['REQUEST_URI'];
+      $request_uri = sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
       if (preg_match('/\.(woff2?)(\?.*)?$/i', $request_uri)) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET');

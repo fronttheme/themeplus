@@ -63,6 +63,13 @@ class ThemePlus_Custom_Fonts_Manager {
   }
 
   /**
+   * Sanitize a font name for safe use inside generated CSS.
+   */
+  public static function sanitize_font_name(string $name): string {
+    return trim(wp_strip_all_tags(str_replace(['"', "'", ';', '{', '}', '\\', '/*', '*/'], '', $name)));
+  }
+
+  /**
    * Get all custom fonts
    */
   public function get_fonts(): array {
@@ -114,7 +121,7 @@ class ThemePlus_Custom_Fonts_Manager {
     foreach ($data['files'] as $variant => $file) {
       if (!empty($file)) {
         $attachment_id = intval($file);
-        $file_url = wp_get_attachment_url($attachment_id);
+        $file_url      = wp_get_attachment_url($attachment_id);
 
         if (!$file_url) {
           return new WP_Error('invalid_file', __('Invalid font file', 'themeplus'));
@@ -122,7 +129,7 @@ class ThemePlus_Custom_Fonts_Manager {
 
         // Verify file type
         $file_path = get_attached_file($attachment_id);
-        $ext = pathinfo($file_path, PATHINFO_EXTENSION);
+        $ext       = pathinfo($file_path, PATHINFO_EXTENSION);
 
         if (!in_array($ext, self::ALLOWED_TYPES)) {
           return new WP_Error('invalid_type', __('Invalid font file type', 'themeplus'));
@@ -169,7 +176,7 @@ class ThemePlus_Custom_Fonts_Manager {
     }
 
     // Update
-    $fonts[$id] = array_merge($fonts[$id], $data);
+    $fonts[$id]             = array_merge($fonts[$id], $data);
     $fonts[$id]['modified'] = current_time('mysql');
 
     // Save
@@ -222,7 +229,7 @@ class ThemePlus_Custom_Fonts_Manager {
    */
   public function regenerate_css(): string {
     $fonts = $this->get_fonts();
-    $css = $this->generate_css($fonts);
+    $css   = $this->generate_css($fonts);
 
     // Save to option for quick access
     update_option('themeplus_custom_fonts_css', $css);
@@ -247,7 +254,8 @@ class ThemePlus_Custom_Fonts_Manager {
    * Generate @font-face rule
    */
   private function generate_font_face($font): string {
-    $css = "/* {$font['name']} */\n";
+    $name = self::sanitize_font_name($font['name']);
+    $css  = "/* {$name} */\n";
 
     $variants = [
       'regular'     => ['weight' => '400', 'style' => 'normal'],
@@ -262,17 +270,17 @@ class ThemePlus_Custom_Fonts_Manager {
       }
 
       $attachment_id = intval($font['files'][$variant]);
-      $file_url = wp_get_attachment_url($attachment_id);
+      $file_url      = esc_url(wp_get_attachment_url($attachment_id));
 
       if (!$file_url) {
         continue;
       }
 
-      $ext = pathinfo($file_url, PATHINFO_EXTENSION);
+      $ext    = pathinfo($file_url, PATHINFO_EXTENSION);
       $format = $this->get_font_format($ext);
 
       $css .= "@font-face {\n";
-      $css .= "  font-family: '{$font['name']}';\n";
+      $css .= "  font-family: '{$name}';\n";
       $css .= "  src: url('{$file_url}') format('{$format}');\n";
       $css .= "  font-weight: {$props['weight']};\n";
       $css .= "  font-style: {$props['style']};\n";
