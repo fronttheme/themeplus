@@ -55,11 +55,12 @@ class ThemePlus_Framework_Config {
     // If display_name is provided, use it for menu titles
     if (!empty($config['display_name'])) {
       $display_name = $config['display_name'];
-      $text_domain = $config['text_domain'] ?? 'themeplus';
 
-      // Update defaults with custom display name
-      $defaults['menu_title'] = sprintf(__('%s Settings', $text_domain), $display_name);
-      $defaults['page_title'] = sprintf(__('%s Options', $text_domain), $display_name);
+      /* translators: %s: the theme's display name. */
+      $defaults['menu_title'] = sprintf(__('%s Settings', 'themeplus'), $display_name);
+
+      /* translators: %s: the theme's display name. */
+      $defaults['page_title'] = sprintf(__('%s Options', 'themeplus'), $display_name);
     }
 
     // Merge user config with (possibly updated) defaults
