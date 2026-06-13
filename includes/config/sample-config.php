@@ -144,7 +144,7 @@ add_action('init', function () {
 // 3. HELPER FUNCTIONS (for your theme)
 // ========================================
 
-if (!function_exists('my_theme_get_option')) {
+if (!function_exists('themeplus_sample_get_option')) {
   /**
    * Get theme option value
    *
@@ -152,7 +152,9 @@ if (!function_exists('my_theme_get_option')) {
    * @param mixed $default Default value
    * @return mixed
    */
-  function my_theme_get_option(string $key, mixed $default = ''): mixed {
+  // Rename this function with your own theme's prefix when you copy this file.
+  // Example: if your theme slug is 'mytheme', rename to 'mytheme_get_option'.
+  function themeplus_sample_get_option(string $key, mixed $default = ''): mixed {
     if (function_exists('themeplus_get_option')) {
       return themeplus_get_option($key, $default);
     }
@@ -166,12 +168,12 @@ if (!function_exists('my_theme_get_option')) {
 
 /*
 // In header.php or template files:
-$primary_color = my_theme_get_option('primary_color', '#2271b1');
-$enable_preloader = my_theme_get_option('enable_preloader', true);
+$primary_color = themeplus_sample_get_option('primary_color', '#2271b1');
+$enable_preloader = themeplus_sample_get_option('enable_preloader', true);
 
 // Conditional example:
 if ($enable_preloader) {
-    $loading_text = my_theme_get_option('preloader_loading_text', 'Loading...');
+    $loading_text = themeplus_sample_get_option('preloader_loading_text', 'Loading...');
     echo '<div class="preloader">' . esc_html($loading_text) . '</div>';
 }
 

@@ -13,6 +13,8 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
   exit;
 }
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup: dynamic option keys require LIKE queries that cannot use WP_Cache; caching is irrelevant during uninstall as the data is being permanently deleted.
+
 /**
  * Simple cleanup that handles dynamic option names
  */

@@ -88,7 +88,7 @@ class ThemePlus_Admin {
           'vite-client',
           'http://localhost:3000/@vite/client',
           [],
-          null,
+          null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite HMR client; never enqueued in production.
           false
       );
 
@@ -97,7 +97,7 @@ class ThemePlus_Admin {
           'themeplus-vite-main',
           'http://localhost:3000/src/js/main.js',
           [],
-          null,
+          null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite entry point; never enqueued in production.
           false
       );
 

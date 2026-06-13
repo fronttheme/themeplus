@@ -92,7 +92,6 @@ final class ThemePlus {
    * Initialize hooks
    */
   private function init_hooks(): void {
-    add_action('init', [$this, 'load_textdomain']);
     add_action('admin_menu', [$this, 'register_admin_menu']);
     add_action('rest_api_init', [new ThemePlus_REST_API(), 'register_routes']);
 
@@ -103,17 +102,6 @@ final class ThemePlus {
     if (is_admin()) {
       new ThemePlus_Admin();
     }
-  }
-
-  /**
-   * Load plugin textdomain
-   */
-  public function load_textdomain(): void {
-    load_plugin_textdomain(
-      'themeplus',
-      false,
-      dirname(THEMEPLUS_BASENAME) . '/languages'
-    );
   }
 
   /**

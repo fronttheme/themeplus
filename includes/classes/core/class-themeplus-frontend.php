@@ -32,9 +32,9 @@ class ThemePlus_Frontend {
    * Auto-enqueue Google Fonts from all typography fields
    */
   public static function enqueue_google_fonts(): void {
-    $options = ThemePlus_Settings::get_all_options();
+    $options    = ThemePlus_Settings::get_all_options();
     $all_fields = ThemePlus_Config::get_all_fields();
-    $font_map = [];
+    $font_map   = [];
 
     // Get custom font names to exclude
     $custom_font_names = array_map(
@@ -60,7 +60,7 @@ class ThemePlus_Frontend {
       if (in_array(strtolower($family), $custom_font_names, true))
         continue;
 
-      $weight = $value['font-weight'] ?? '400';
+      $weight  = $value['font-weight'] ?? '400';
       $subsets = $value['subsets'] ?? ['latin'];
 
       if (!isset($font_map[$family])) {
@@ -68,7 +68,7 @@ class ThemePlus_Frontend {
       }
 
       $font_map[$family]['weights'][] = $weight;
-      $font_map[$family]['subsets'] = array_unique(
+      $font_map[$family]['subsets']   = array_unique(
         array_merge($font_map[$family]['subsets'], (array)$subsets)
       );
     }
@@ -80,7 +80,7 @@ class ThemePlus_Frontend {
       'themeplus-google-fonts',
       self::build_google_fonts_url($font_map),
       [],
-      null
+      null // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- External Google Fonts URL; versioning is handled remotely, appending a local version parameter is not appropriate.
     );
   }
 

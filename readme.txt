@@ -1,24 +1,29 @@
-=== ThemePlus — Modern Theme Options Framework ===
+=== ThemePlus ===
 Contributors: farukahmed
-Tags: theme options, framework, redux alternative, options panel, theme settings
+Tags: theme options, framework, options panel, theme settings, redux alternative
 Requires at least: 6.8
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 8.0
 Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A free, modern, lightweight theme options framework for WordPress. A React-powered alternative to Redux Framework with 30 field types, white-label support, and a beautiful UI.
+A modern, React-powered WordPress theme options framework. 30 field types, white-label support, conditional logic — free forever.
 
 == Description ==
 
 **ThemePlus is a free, open-source WordPress theme options framework built for developers who want a modern, lightweight alternative to Redux Framework — without the bloat, the legacy code, or the outdated UI.**
 
-At just 373KB total, ThemePlus delivers a React-powered admin interface, 30 field types, full white-label support, Google Fonts integration, custom font uploads, Import/Export, conditional logic, a built-in REST API, and a Developer Panel — all for free, with no license keys and no upsells.
+Built from scratch with React, Vite, and modern PHP 8, ThemePlus delivers a polished admin interface, 30 field types, full white-label support, Google Fonts integration, custom font uploads, Import/Export, conditional logic, a REST API, and a Developer Panel — all free, with no licence keys and no upsells.
 
 = Why ThemePlus? =
 
-Redux Framework served the WordPress community well for years. But it carries significant technical debt: legacy PHP patterns with PHP 8.x compatibility issues, a jQuery-heavy frontend, an outdated UI, and infrequent updates. ThemePlus is built from scratch with modern tools — React, Vite, SCSS with BEM — for developers building themes today.
+Redux Framework served the WordPress community well for years. But it carries significant technical debt: legacy PHP patterns, jQuery dependency, an outdated UI, and infrequent updates. ThemePlus is built from scratch with modern tools for developers building themes today.
+
+* **Modern stack** — React 18, Vite 5, SCSS/BEM, PHP 8 type hints throughout
+* **Lightweight** — 393KB total including all assets
+* **White-label** — your users see your theme's panel, never "ThemePlus"
+* **Open source** — GPL-2.0-or-later, free forever, no upsells
 
 = 30 Field Types =
 
@@ -29,175 +34,205 @@ Every input a theme could need, organised into clean categories:
 * **Choice** — Select, Button Set, Radio, Checkbox, Select Image
 * **Toggle** — Toggle / Switch
 * **Color** — Color Picker, Gradient Picker
-* **Media** — Image, Gallery, Icon (FontAwesome)
+* **Media** — Image, Gallery, Icon (FontAwesome 6)
 * **Layout** — Typography, Dimensions, Spacing, Border
 * **Special** — Info, Section, Raw, Shortcode
-* **Date** — Date Picker
-* **Social** — Social Media Links
-* **Code** — Code Editor (CSS & JavaScript)
+* **Date** — Date Picker (date only or date + time)
+* **Social** — Social Media Links (20 platforms)
+* **Code** — Code Editor (CSS, JavaScript, HTML)
 * **Advanced** — Repeater, Background, Link, Group
 
-= Full White-label Support =
+Every field has a verified, documented value shape. For example:
 
-ThemePlus is designed to disappear into your theme. Configure `themeplus_framework_config()` with your theme's name, menu slug, option key, and icon — your users will see your theme's own settings panel, never "ThemePlus".
+* `image` returns `{ id, url, width, height, alt, title }` — empty array when no image selected
+* `gallery` returns an array of `{ id, url, alt }` rows
+* `border` returns `{ width, style, color, radius }`
+* `social_media` returns an array of `{ platform, url }` rows
+* `repeater` returns an array of row arrays keyed by sub-field id
+* `gradient_picker` returns a complete CSS `linear-gradient()` string
+
+= White-Label Support =
+
+ThemePlus is designed to disappear into your theme. Configure `themeplus_framework_config()` with your theme's name, slug, option key, and icon — your users see your theme's own settings panel, never "ThemePlus".
+
+**Convention:** section and subsection `icon` takes a FontAwesome name only (`'pen'`). The Icon *field* default takes the full FontAwesome class (`'fa-solid fa-star'`). The plugin translates its own fallback strings; your theme translates its config strings in your own text domain.
 
 = Google Fonts + Custom Fonts =
 
-Browse and load from 1,899 Google Fonts with live preview directly inside the Typography field. Or upload and manage self-hosted fonts (WOFF2, WOFF, TTF, OTF) via the built-in Custom Fonts module.
+The Typography field includes a searchable browser of 1,899 Google Fonts with live preview, weight and style selection, subset support, and automatic font enqueueing on the frontend. Skip Google Fonts entirely and upload self-hosted fonts (WOFF2, WOFF) via the built-in Custom Fonts module — magic-byte verified, capability-gated, and output into `@font-face` rules automatically.
+
+**Note:** Custom fonts are stored as Media Library attachments and are not affected by Reset All or Reset Section — use the per-font Delete button to remove uploaded files.
 
 = Conditional Logic =
 
-Show or hide any field based on the value of another field. Supports single conditions, multiple AND conditions, multiple OR conditions, and all field types including arrays and checkboxes via dot notation.
+Show or hide any field based on the value of another. Supports 10 operators and three relation formats:
 
-`'required' => ['enable_preloader', '==', true]`
+**Operators:** `==`, `!=`, `>`, `<`, `>=`, `<=`, `contains`, `!contains`, `empty`, `!empty`
+
+**Single condition:**
+`'required' => ['sidebar_position', '==', 'left']`
+
+**Multiple AND conditions:**
+`'required' => [['enable_header', '==', true], ['header_style', '!=', 'minimal']]`
+
+**Multiple OR conditions:**
+`'required' => ['relation' => 'OR', 'conditions' => [['mode', '==', 'simple'], ['mode', '==', 'expert']]]`
+
+**Array value (matches any):**
 `'required' => ['header_elements', 'contains', 'search']`
-`'required' => ['logo', '!empty']`
 
-= Sections & Subsections =
+**Dot-notation sub-key:**
+`'required' => ['body_typography.font-family', '==', 'Inter']`
 
-Organise your theme options into a clean hierarchical sidebar. Sections can contain flat fields, nested subsections, or both. Priority-based ordering gives full control over the sidebar structure.
+**empty / !empty note:** `false` and `0` are NOT considered empty — only truly absent values, empty strings, empty arrays, and `null`.
+
+= Sections and Subsections =
+
+Organise theme options into a hierarchical sidebar. Add sections with `themeplus_add_section()`, nest subsections inline via the `subsections` key, or attach subsections from a separate hook with `themeplus_add_subsection()` — the pattern for child themes and extension plugins.
 
 = Import / Export =
 
-Backup and restore all theme settings with one click. Built-in Import/Export section handles JSON serialisation and restores defaults cleanly.
+Backup and restore all theme settings with one click. Import/Export handles JSON serialisation and restores defaults cleanly.
 
 = REST API =
 
-Full CRUD REST API under the `themeplus/v1` namespace — get options, save options, reset all, reset section, and get full configuration. All endpoints protected by `manage_options` capability with nonce verification.
+Full REST API under the `themeplus/v1` namespace — get options, save options, reset all, reset section, get configuration. All endpoints require the configured capability (default `edit_theme_options`) with nonce verification. Options are sanitized per field type before storage.
 
 = Developer Panel =
 
-Enable dev mode to access a dedicated Developer Panel showing every registered field with its current value, PHP data type, and ready-to-use code snippets for all three access patterns. Includes field statistics grouped by type and section.
+Enable dev mode (`define('THEMEPLUS_DEV', true)`) to access a Developer Panel showing every registered field with its current value, PHP data type, and copy-ready code snippets for all three access patterns. Includes field statistics by type and section.
 
-= Unsaved Changes Detection =
+= Security =
 
-ThemePlus warns before navigating away with unsaved changes — so no accidental loss of work.
-
-= Live Search =
-
-Instantly search across all fields and sections by field title, subtitle, description, or ID.
-
-= Dark & Light Mode =
-
-The admin UI respects the user's WordPress colour scheme preference, with a manual toggle available in the header.
+* All saved options pass through a per-field-type sanitizer (`ThemePlus_Sanitizer`) — unknown keys are dropped, values are validated against registered field configuration
+* REST endpoints are capability-gated with nonce verification
+* Font uploads are MIME-type and magic-byte verified
+* Output is escaped at every render point
 
 = GPL Licensed — Free Forever =
 
-ThemePlus is released under GPL-2.0-or-later — the same licence as WordPress itself. Use it in personal projects, client work, and commercial ThemeForest themes without restriction. No licence keys, no feature tiers, no upsells.
+ThemePlus is GPL-2.0-or-later — the same licence as WordPress itself. Use it in personal projects, client work, and commercial ThemeForest themes without restriction.
 
 == Installation ==
 
-= Option 1 — Upload ZIP =
+= From WordPress.org =
 
-1. Download the latest `themeplus.zip` from [GitHub Releases](https://github.com/fronttheme/themeplus/releases)
+1. Go to **Plugins → Add New**
+2. Search for **ThemePlus**
+3. Click **Install Now** then **Activate**
+
+= Upload ZIP =
+
+1. Download `themeplus.zip` from [GitHub Releases](https://github.com/fronttheme/themeplus/releases)
 2. Go to **Plugins → Add New → Upload Plugin**
-3. Upload the ZIP and click **Activate**
-
-= Option 2 — Clone via Git =
-
-`cd wp-content/plugins && git clone https://github.com/fronttheme/themeplus.git`
-
-Then activate from **Plugins** in your WordPress admin.
-
-= Option 3 — WordPress.org (this page) =
-
-Search for **ThemePlus** in **Plugins → Add New** and click **Install Now**.
+3. Upload the ZIP and activate
 
 = After Activation =
 
 ThemePlus does nothing on its own — it is a framework for theme developers. To add a settings panel to your theme:
 
-1. Copy `includes/config/sample-config.php` from the plugin into your theme
+1. Copy `includes/config/sample-config.php` from the plugin into your theme (rename `my_theme_` prefixes to your own)
 2. Include it in `functions.php`: `require_once get_template_directory() . '/inc/themeplus-config.php';`
 3. Configure `themeplus_framework_config()` with your theme's details
 4. Add sections and fields using `themeplus_add_section()`
-5. Retrieve values in your theme with `themeplus_get_option('field_id')`
+5. Retrieve values with `themeplus_get_option('field_id')`
 
 == Frequently Asked Questions ==
 
 = Is ThemePlus really free? =
 
-Yes, completely. ThemePlus is open-source and licensed under GPL-2.0-or-later. There are no premium tiers, no feature locks, and no licence keys. Everything described on this page is included at no cost.
+Yes, completely. ThemePlus is open-source and GPL-2.0-or-later. There are no premium tiers, no feature locks, and no licence keys.
 
 = Is this a replacement for Redux Framework? =
 
-ThemePlus covers the full feature set of Redux Framework and extends it — 30 field types, white-label support, conditional logic, Google Fonts, custom font uploads, Import/Export, REST API, and a Developer Panel — all in a modern React UI at 373KB. If you are using Redux Framework and want a maintained, modern alternative, ThemePlus is built for exactly that.
+ThemePlus covers the full Redux Framework feature set and extends it — 30 field types, white-label support, conditional logic, Google Fonts, custom fonts, Import/Export, REST API, and a Developer Panel — in a modern React UI. If you are using Redux Framework and want a maintained, modern alternative, ThemePlus is built for exactly that.
 
 = Does it work with PHP 8.0+? =
 
-Yes. ThemePlus requires PHP 8.0 or higher and is built specifically for modern PHP. It uses PHP 8 type hints, named arguments, and match expressions throughout.
+Yes. ThemePlus requires PHP 8.0 or higher and uses PHP 8 type hints, union types, and named arguments throughout.
 
-= How do I get an option value in my theme? =
-
-Use the `themeplus_get_option()` helper:
+= How do I retrieve an option value in my theme? =
 
 `$value = themeplus_get_option( 'field_id', 'default_value' );`
 
-Or get all options at once for multiple fields:
+For structured fields like image, border, or repeater, the return value is an array — see the field shapes in the Description section above.
 
-`$options = themeplus_get_option();`
+= What is the correct way to use the icon field vs section icons? =
+
+Section and subsection `icon` takes a FontAwesome **name only**: `'pen'`, `'palette'`, `'code'`. The Icon **field** `default` takes the **full FontAwesome class**: `'fa-solid fa-star'`, `'fa-brands fa-github'`. The picker modal handles selection in the UI — the default is only the stored fallback.
 
 = Can I use ThemePlus in a ThemeForest theme? =
 
-Yes. ThemePlus is GPL-licensed and can be bundled with commercial themes. The recommended approach for ThemeForest is to require ThemePlus via TGM Plugin Activation so buyers can install it from your theme package.
+Yes. ThemePlus is GPL-licensed and can be bundled with commercial themes. The recommended approach for ThemeForest is TGM Plugin Activation so buyers can install it from your theme package.
 
-= Does it support conditional field logic? =
+= Does it support multisite? =
 
-Yes. Show or hide any field based on another field's value using the `required` key. Supports `==`, `!=`, `>`, `<`, `>=`, `<=`, `contains`, `!contains`, `empty`, and `!empty` operators, plus AND/OR multiple conditions.
+The plugin activates per-site. The uninstall routine cleans up options across all sites on the network.
 
-= Can my theme have its own branding in the settings panel? =
+= Why are my custom fonts not reset when I click Reset All? =
 
-Yes — full white-label support is built in. Set `display_name`, `menu_slug`, `menu_title`, `page_title`, `menu_icon`, and `opt_name` in `themeplus_framework_config()` and the panel appears entirely under your theme's identity.
+Custom fonts are uploaded files stored in the Media Library — not option values. Reset All and Reset Section only affect your option values. Use the Delete button in the Custom Fonts section to remove uploaded font files. This is intentional: resetting settings should never silently delete uploaded assets.
 
-= Does ThemePlus support Google Fonts? =
+= Does the Typography field load Google Fonts automatically? =
 
-Yes. The Typography field includes a searchable Google Fonts browser with 1,899 fonts, live preview, subset selection, and automatic font enqueueing on the frontend.
-
-= Can I upload custom fonts? =
-
-Yes. ThemePlus includes a dedicated Custom Fonts module for uploading and managing self-hosted fonts in WOFF2, WOFF, TTF, and OTF formats.
+Yes. Any typography field set to a Google Font is automatically enqueued on the frontend via a combined Google Fonts URL. System fonts and custom uploaded fonts are detected and excluded from the Google Fonts request automatically.
 
 = What is the Developer Panel? =
 
-When dev mode is active (`define('THEMEPLUS_DEV', true)` in `wp-config.php`), a Developer Panel section appears in the sidebar showing every registered field with its current value, PHP data type, and copy-ready code snippets. Useful for building and debugging theme configs.
+When `define('THEMEPLUS_DEV', true)` is added to `wp-config.php`, a Developer Panel appears in the sidebar showing every registered field with its current saved value, PHP data type, dependency metadata, and code snippets for `themeplus_get_option()`, direct array access, and `themeplus_update_option()`. Remove the constant on production sites.
 
-= Will it be available on WordPress.org? =
+= Can I add a subsection from a child theme or extension plugin? =
 
-Yes — a WordPress.org submission is in progress. Once approved, ThemePlus will be installable directly from the WordPress plugin directory.
+Yes — use `themeplus_add_subsection( 'parent_section_id', [ ...subsection config... ] )` from your own `init` hook (priority 20 or later, after the parent section is registered). This is the recommended pattern for child themes and addon plugins extending a parent theme's panel.
+
+= Does ThemePlus support empty/!empty conditional logic on false and 0? =
+
+No — intentionally. `false` and `0` are NOT considered empty. Only truly absent values, empty strings, empty arrays, and `null` trigger `empty`. This matches PHP's `empty()` semantics for booleans and integers, which is the least surprising behaviour for theme developers.
+
+== External Services ==
+
+This plugin can optionally connect to Google Fonts (fonts.googleapis.com) when a Typography field is configured to use a Google Font. The selected font family name is sent to Google's servers to load the font stylesheet.
+
+* Google Fonts is only requested when a typography field value contains a Google Font name — it is never loaded by default
+* No personal data is sent — only font family names and subset preferences
+* Google Privacy Policy: https://policies.google.com/privacy
+* Google Fonts Terms: https://developers.google.com/fonts/terms
+
+To avoid any Google Fonts requests entirely, use only system fonts or upload self-hosted fonts via the Custom Fonts module.
 
 == Screenshots ==
 
-1. ThemePlus admin panel — clean, modern React UI
-2. Field types overview — all 30 field types in one view
-3. Typography field — Google Fonts browser with live preview
-4. Custom Fonts module — upload and manage self-hosted fonts
-5. Conditional logic — fields shown/hidden based on other values
-6. Import/Export — backup and restore settings
-7. Developer Panel — field metadata and code snippets
-8. Dark mode — admin UI in dark colour scheme
+1. ThemePlus admin panel — clean, modern React UI with sidebar navigation
+2. All 30 field types — complete field type overview
+3. Typography field — Google Fonts browser with live preview and subset selection
+4. Custom Fonts module — upload and manage self-hosted WOFF2/WOFF fonts
+5. Conditional logic — fields shown and hidden based on other field values
+6. Import/Export — one-click backup and restore of all settings
+7. Developer Panel — field metadata, current values, and code snippets
+8. Dark mode — full dark colour scheme matching WordPress admin
 
 == Changelog ==
 
-= 1.0.0 — March 2026 =
+= 1.0.0 =
 * Initial release
-* Add: 30 field types — Text, Textarea, Number, Spinner, Slider, Select, Button Set, Radio, Checkbox, Select Image, Toggle, Color Picker, Gradient Picker, Image, Gallery, Icon, Typography, Dimensions, Spacing, Border, Info, Section, Raw, Shortcode, Date Picker, Social Media, Code Editor, Repeater, Background, Link, Group
-* Add: React-powered admin UI with WordPress components
-* Add: Full white-label support via themeplus_framework_config()
-* Add: Sections and subsections with priority-based ordering
-* Add: Conditional logic with 10 operators and AND/OR relations
-* Add: Google Fonts integration with 1,899 fonts and live preview
-* Add: Custom Fonts module for self-hosted font uploads
-* Add: Import/Export settings
-* Add: REST API under themeplus/v1 namespace
-* Add: Developer Panel (dev mode only)
-* Add: Live field search
-* Add: Dark and light mode
-* Add: Unsaved changes detection
-* Add: Helper functions — themeplus_get_option(), themeplus_update_option()
-* Add: Full i18n/l10n support with .pot file
-* Add: Vite 5 (SCSS) + webpack/wp-scripts (React) hybrid build system
+* 30 field types: Text, Textarea, Number, Spinner, Slider, Select, Button Set, Radio, Checkbox, Select Image, Toggle, Switch, Color Picker, Gradient Picker, Image, Gallery, Icon, Typography, Dimensions, Spacing, Border, Info, Section, Raw, Shortcode, Date Picker, Social Media, Code Editor, Repeater, Background, Link, Group
+* React 18 + WordPress components admin UI
+* White-label support via themeplus_framework_config()
+* Sections and subsections with priority ordering and themeplus_add_subsection() API
+* Conditional logic: 10 operators, AND/OR relations, array values, dot-notation sub-keys
+* Google Fonts integration: 1,899 fonts, live preview, subset selection, auto-enqueue
+* Custom Fonts module: WOFF2/WOFF upload, magic-byte verification, @font-face generation
+* Per-field-type sanitization on all saved options via ThemePlus_Sanitizer
+* REST API: themeplus/v1 — get, save, reset-all, reset-section, config
+* Developer Panel with field metadata and code snippets (dev mode only)
+* Live field search across titles, subtitles, descriptions, and IDs
+* Import/Export settings as JSON
+* Unsaved changes detection with navigation warning
+* Dark and light mode
+* Helper functions: themeplus_get_option(), themeplus_update_option(), themeplus_add_section(), themeplus_add_subsection()
+* Full i18n/l10n support with .pot file
 
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release.
+Initial release — no upgrade steps required.
