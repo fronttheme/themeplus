@@ -10,6 +10,7 @@ package/
 package.json
 package-lock.json
 vite.config.js
+vite.config.mjs
 webpack.config.js
 
 # Git files
