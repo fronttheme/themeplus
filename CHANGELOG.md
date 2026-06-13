@@ -39,4 +39,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Add: Singleton pattern for the main `ThemePlus` class
 - Add: `SECURITY.md`, `CONTRIBUTING.md`, `.distignore`, `.gitattributes` for repository hygiene
 
+### Fixed (pre-release audit)
+- Fix: Per-field-type sanitization of all saved options via ThemePlus_Sanitizer — unknown keys dropped, values validated against registered field config
+- Fix: Font upload magic-byte verification now correctly rejects files with mismatched bytes
+- Fix: REST API permission check now honors configured capability instead of hardcoded manage_options
+- Fix: Font MIME types gated behind configured capability — previously added for all uploaders
+- Fix: Stale useState in eight fields (Link, Social, Background, Spacing, Gallery, DatePicker, Repeater, Group) — all now derive from props for correct Reset/Import behavior
+- Fix: App.jsx forced re-render workaround removed — fields derive from props correctly
+- Fix: Dev Panel conditional parser handles all five dependency formats
+- Fix: Search tokenized matching includes section/subsection titles and field type in haystack
+- Fix: highlightText regex escape prevents crash on special characters
+- Fix: contains/!contains uses loose equality consistent with == operator
+- Fix: DatePicker Dropdown deprecation — position prop replaced with popoverProps.placement
+- Fix: framework-config i18n — variable text domain replaced with literal; strings now extractable by WP.org translation system
+- Fix: Font CSS output escaping — family names sanitized, URLs escaped at build time in generate_font_face()
+- Fix: save_options empty payload guard — && corrected to || preventing accidental options wipe
+- Fix: clean_admin_page uses exact screen ID match instead of substring check
+- Fix: load_plugin_textdomain() removed — auto-loaded by WordPress since 4.6
+- Fix: sample-config.php example function renamed to themeplus_sample_get_option
+
 [1.0.0]: https://github.com/fronttheme/themeplus/releases/tag/v1.0.0

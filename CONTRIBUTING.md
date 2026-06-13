@@ -1,6 +1,6 @@
 # Contributing to ThemePlus
 
-Thank you for your interest in contributing to ThemePlus! Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and pull requests.
+Thank you for your interest in contributing to ThemePlus. Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and pull requests.
 
 Please take a moment to read this guide before opening an issue or submitting a PR.
 
@@ -29,7 +29,7 @@ This project follows the [WordPress Community Code of Conduct](https://make.word
 
 ## Ways to Contribute
 
-- **Report a bug** — Open an [issue](https://github.com/fronttheme/themeplus/issues) with a clear description and reproduction steps
+- **Report a bug** — Open an [issue](https://github.com/fronttheme/themeplus/issues) with clear steps to reproduce
 - **Request a feature** — Open an [issue](https://github.com/fronttheme/themeplus/issues) describing the use case and proposed solution
 - **Fix a bug** — Fork, fix, and open a pull request
 - **Add a field type** — See [Adding a New Field Type](#adding-a-new-field-type) below
@@ -44,7 +44,7 @@ This project follows the [WordPress Community Code of Conduct](https://make.word
 
 - Node.js 18+
 - npm
-- Local WordPress install (e.g. [LocalWP](https://localwp.com/), Laragon, MAMP)
+- Local WordPress install ([LocalWP](https://localwp.com/) recommended)
 - PHP 8.0+
 
 ### Setup
@@ -68,7 +68,7 @@ define( 'WP_DEBUG_DISPLAY', false );
 define( 'WP_ENVIRONMENT_TYPE', 'local' );
 ```
 
-> **Important:** `THEMEPLUS_DEV` must be the boolean `true` — not the string `"true"`.
+> `THEMEPLUS_DEV` must be the boolean `true` — not the string `"true"`.
 
 ### Build Commands
 
@@ -102,42 +102,56 @@ npm run package
 
 ```
 themeplus/
-├── assets/               # Compiled assets (do not edit directly)
-│   ├── css/admin.css
-│   ├── js/admin.js
-│   └── fonts/fontawesome/
+├── assets/                        # Compiled assets (do not edit directly)
+│   ├── css/admin.css              # Built by Vite from src/scss/
+│   ├── js/admin.js                # Built by wp-scripts from src/js/
+│   ├── js/admin.asset.php         # wp-scripts dependency manifest
+│   └── fonts/fontawesome/         # Bundled FontAwesome 6
 ├── includes/
 │   ├── classes/
-│   │   ├── core/         # Framework core classes
-│   │   └── custom-fonts/ # Custom Fonts module classes
+│   │   ├── core/                  # Framework core classes
+│   │   │   ├── class-themeplus-framework-config.php
+│   │   │   ├── class-themeplus-config.php
+│   │   │   ├── class-themeplus-settings.php
+│   │   │   ├── class-themeplus-sanitizer.php
+│   │   │   ├── class-themeplus-rest-api.php
+│   │   │   ├── class-themeplus-admin.php
+│   │   │   ├── class-themeplus-frontend.php
+│   │   │   └── class-themeplus-dev-panel.php
+│   │   └── custom-fonts/          # Custom Fonts module
+│   │       ├── class-custom-fonts-manager.php
+│   │       ├── class-custom-fonts-api.php
+│   │       ├── class-custom-fonts-frontend.php
+│   │       └── class-custom-fonts-mime-type.php
 │   ├── config/
-│   │   ├── default-config.php   # Built-in sections (Custom Fonts, Import/Export, Dev Panel)
-│   │   └── sample-config.php    # Copy-and-customize template for theme developers
-│   └── functions/        # Helper and config public functions
+│   │   ├── default-config.php     # Built-in sections (Custom Fonts, Import/Export, Dev Panel)
+│   │   └── sample-config.php      # Copy-and-customize template for theme developers
+│   └── functions/                 # Public helper and config functions
 ├── src/
 │   ├── js/admin/
 │   │   ├── components/
-│   │   │   ├── Fields/   # One file per field type
-│   │   │   ├── Common/   # Shared UI components (FieldRenderer, Dialog, Select, etc.)
-│   │   │   ├── Layout/   # Sidebar, Header, Body, Footer, MainWrapper
-│   │   │   ├── Sections/ # Import/Export, Custom Font Uploader
-│   │   │   └── DevPanel/ # Developer Panel components
-│   │   ├── context/      # React Context providers (Settings, Theme)
-│   │   ├── hooks/        # Custom React hooks
-│   │   ├── services/     # Google Fonts and Custom Fonts API services
-│   │   ├── utils/        # fieldHelpers.js (conditional logic)
-│   │   └── App.jsx       # Root application component
-│   └── scss/             # SCSS source — 7-1 modular architecture
-├── languages/            # .pot file and translations
-├── themeplus.php         # Plugin entry point — constants and bootstrap
-└── includes/class-themeplus.php  # Main singleton class
+│   │   │   ├── Fields/            # One file per field type (30 components)
+│   │   │   ├── Common/            # Shared UI — FieldRenderer, Dialog, Select, SearchResults
+│   │   │   ├── Layout/            # Sidebar, Header, Body, Footer, MainWrapper
+│   │   │   ├── Sections/          # Import/Export, Custom Font Uploader
+│   │   │   └── DevPanel/          # Developer Panel components
+│   │   ├── context/               # React Context — Settings, Theme
+│   │   ├── hooks/                 # Custom React hooks
+│   │   ├── services/              # Google Fonts and Custom Fonts API services
+│   │   ├── utils/                 # fieldHelpers.js — conditional logic evaluation
+│   │   └── App.jsx                # Root application component
+│   └── scss/                      # SCSS source — 7-1 modular architecture
+├── languages/                     # themeplus.pot + translations
+├── themeplus.php                  # Plugin entry point — constants and bootstrap
+├── uninstall.php                  # Clean removal of all plugin data
+└── includes/class-themeplus.php   # Main singleton class and loader
 ```
 
 ---
 
 ## Adding a New Field Type
 
-ThemePlus is designed to make adding new field types straightforward. Follow these steps:
+ThemePlus is designed to make adding field types straightforward. Every new field type requires changes in six places — follow all six steps to keep the framework consistent.
 
 ### 1. Create the React component
 
@@ -145,8 +159,9 @@ Add a new file in `src/js/admin/components/Fields/`:
 
 ```jsx
 // src/js/admin/components/Fields/MyNewField.jsx
+import { useState } from '@wordpress/element';
 
-function MyNewField({ id, label, value, onChange, help, ...props }) {
+function MyNewField({ id, label, value = '', onChange, help = '' }) {
   return (
     <div className="tpo-field tpo-field--my-new-field">
       <div className="tpo-field__header">
@@ -158,7 +173,7 @@ function MyNewField({ id, label, value, onChange, help, ...props }) {
         <input
           id={id}
           type="text"
-          value={value || ''}
+          value={value}
           onChange={(e) => onChange(e.target.value)}
         />
       </div>
@@ -168,6 +183,8 @@ function MyNewField({ id, label, value, onChange, help, ...props }) {
 
 export default MyNewField;
 ```
+
+**Important:** Do not copy the field's `value` prop into `useState` — derive directly from `value` and call `onChange` with the new value. Copying into state causes stale values after Reset and Import.
 
 ### 2. Export from the Fields index
 
@@ -179,12 +196,11 @@ export { default as MyNewField } from './MyNewField';
 
 ### 3. Register in FieldRenderer
 
-Import and register the component in `src/js/admin/components/Common/FieldRenderer.jsx`:
+Import and register in `src/js/admin/components/Common/FieldRenderer.jsx`:
 
 ```jsx
 import { MyNewField } from '../Fields';
 
-// Inside the fields map object:
 const fields = {
   // ...existing fields
   my_new_field: MyNewField,
@@ -193,12 +209,12 @@ const fields = {
 
 ### 4. Add SCSS styles
 
-Create a new partial in `src/scss/components/`:
+Create a partial in `src/scss/components/`:
 
 ```scss
 // src/scss/components/_my-new-field.scss
 .tpo-field--my-new-field {
-  // Your styles here
+  // Your styles here — use existing SCSS variables and mixins
 }
 ```
 
@@ -208,9 +224,24 @@ Import it in `src/scss/admin.scss`:
 @use 'components/my-new-field';
 ```
 
-### 5. Document the return type
+### 5. Register in ThemePlus_Sanitizer
 
-If the field returns a non-obvious value type, document it clearly in your PR description — what it returns, in what format, and a usage example.
+Add a case to `includes/classes/core/class-themeplus-sanitizer.php` inside `sanitize_field()`:
+
+```php
+case 'my_new_field':
+    return sanitize_text_field( (string) $value );
+```
+
+For structured values (arrays), follow the pattern of existing types like `sanitize_border()` or `sanitize_link()`. Without this step, the field falls back to `sanitize_text_field()` — safe for strings but incorrect for arrays.
+
+### 6. Document the return value
+
+Every field type must have a documented, consistent return value. In your PR description, include:
+
+- What the field returns (scalar or array shape)
+- The default value when nothing is saved
+- A usage example in a theme template
 
 ---
 
@@ -219,87 +250,94 @@ If the field returns a non-obvious value type, document it clearly in your PR de
 ### PHP
 
 - Follow [WordPress PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/)
-- Use PHP 8.0+ features where appropriate — type hints, match expressions, named arguments
-- All new classes must use the singleton pattern consistent with existing core classes
-- Use `str_contains()`, `str_starts_with()`, `str_ends_with()` instead of `strpos()` for PHP 8.0+
+- PHP 8.0+ features are encouraged — type hints, union types, match expressions, named arguments
+- All new classes use the singleton pattern consistent with existing core classes
+- Use `str_contains()`, `str_starts_with()`, `str_ends_with()` over `strpos()` for PHP 8.0+
+- Sanitize all input; escape all output — `esc_html()`, `esc_attr()`, `esc_url()`, `wp_kses_post()`
 - Never use `extract()` or short PHP tags
+- All user-facing strings use `__()` or `esc_html__()` with the `themeplus` text domain
+
+**i18n convention:** ThemePlus translates its own strings with the `themeplus` domain. Any string passed in by a theme (via `themeplus_framework_config()` or `themeplus_add_section()`) is the theme's responsibility to translate in its own domain — the plugin treats these as opaque, already-translated strings.
 
 ### JavaScript / React
 
-- All React components must be functional components — no class components
-- Use `@wordpress/element` for React (`import { useState } from '@wordpress/element'`), not `react` directly
-- Follow the BEM naming convention for CSS classes: `.tpo-block__element--modifier`
-- Keep components focused — if a component exceeds ~200 lines, consider splitting it
+- Functional components only — no class components
+- Use `@wordpress/element` for React imports (`import { useState } from '@wordpress/element'`), never `react` directly
+- Derive field display from the `value` prop — never copy `value` into `useState` at mount
+- Follow BEM naming: `.tpo-block__element--modifier`
 - No jQuery — ever
+- No `console.log()` in production code — guard dev logging with `isDev`
 
 ### SCSS
 
-- Follow the 7-1 modular architecture already established in `src/scss/`
+- Follow the 7-1 modular architecture in `src/scss/`
 - One partial per component, prefixed with `_`
-- Use existing SCSS variables and mixins from `src/scss/abstracts/`
+- Use existing variables and mixins from `src/scss/abstracts/`
 - No hardcoded colour values — use CSS custom properties or SCSS variables
-
-### General
-
-- No `console.log()` in production code — dev logging only (guarded by `isDev`)
-- Escape all output in PHP — `esc_html()`, `esc_attr()`, `esc_url()`, `wp_kses_post()`
-- Sanitize all input — `sanitize_text_field()`, `absint()`, etc.
-- All user-facing strings must be wrapped in `__()` or `esc_html__()` with the `themeplus` text domain
 
 ---
 
 ## Commit Messages
 
-Use clear, descriptive commit messages. Prefix with a type:
+Use [Conventional Commits](https://www.conventionalcommits.org/) format:
 
 ```
-Add: Typography field Google Fonts live preview
-Fix: Conditional logic not evaluating nested OR conditions correctly
-Update: SliderField min/max/step now accept float values
-Remove: Deprecated themeplus_get_all_options() function
-Docs: Add Repeater field usage example to README
-Refactor: Split ThemePlus_Admin into Admin and AssetLoader classes
+feat(fields): add DateRange field type
+fix(conditions): correct empty operator for boolean false
+refactor(sanitizer): extract sanitize_row() helper for repeater and group
+docs(readme): update field value shapes table
+chore(build): update vite to v7
 ```
+
+**Types:** `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `style`
+
+**Scopes** (optional but helpful): `fields`, `conditions`, `admin`, `rest`, `sanitizer`, `fonts`, `build`, `readme`
+
+**Shell quoting note:** In zsh, use single quotes for commit messages containing `!` (e.g. `!empty`, `!contains`) — the `!` character triggers history expansion in double-quoted strings.
 
 ---
 
 ## Pull Request Process
 
-1. **Fork** the repository and create your branch from `main`:
+1. **Fork** the repository and create your branch from `develop`:
    ```bash
-   git checkout -b feature/your-feature-name
+   git checkout -b feat/your-feature-name develop
    ```
 
-2. **Make your changes** following the coding standards above
+2. **Follow the coding standards** above
 
-3. **Test thoroughly** — test in both dev mode and production build, and across light/dark admin colour schemes
+3. **Test thoroughly:**
+   - Test in both dev mode (`THEMEPLUS_DEV=true`) and a production build (`npm run build && npm run blocks:build`)
+   - Test Reset Section and Reset All — field values must update immediately without a page reload
+   - Test Import — importing a JSON snapshot must restore all field values immediately
+   - Test in both light and dark WordPress admin colour schemes
 
-4. **Build for production** before submitting:
-   ```bash
-   npm run build && npm run blocks:build
-   ```
+4. **For new field types:** run the ThemePlus Demo theme to verify your field appears in the All Values panel with the correct shape
 
-5. **Open a pull request** against the `main` branch with:
-   - A clear title describing what the PR does
-   - A description of the change and why it is needed
-   - Screenshots or screen recordings for any UI changes
+5. **Run Plugin Check** against a built ZIP before submitting — target zero errors and zero warnings
+
+6. **Open a pull request** against `develop` (not `main`) with:
+   - A clear title
+   - Description of the change and why it is needed
+   - For new fields: the documented return value shape
+   - Screenshots or recordings for UI changes
    - Notes on any breaking changes
 
-6. **Be responsive** — address review feedback promptly. PRs inactive for 30 days may be closed.
+7. **Be responsive** — PRs inactive for 30 days may be closed
 
 ---
 
 ## Reporting Bugs
 
-Please open an [issue](https://github.com/fronttheme/themeplus/issues) and include:
+Open an [issue](https://github.com/fronttheme/themeplus/issues) and include:
 
 - ThemePlus version
 - WordPress version
 - PHP version
 - Active theme name
-- Clear steps to reproduce the bug
-- What you expected to happen vs. what actually happened
-- Any relevant error messages from the browser console or PHP error log
+- Steps to reproduce
+- Expected vs actual behaviour
+- Browser console errors or PHP error log output (if any)
 
 ---
 
@@ -309,12 +347,12 @@ Open an [issue](https://github.com/fronttheme/themeplus/issues) describing:
 
 - The use case — what problem does this solve?
 - Your proposed solution
-- Any alternative approaches you considered
+- Any alternatives you considered
 
-Feature requests with a clear use case are far more likely to be considered and implemented.
+Feature requests with a clear use case are far more likely to be implemented.
 
 ---
 
-Thank you for helping make ThemePlus better for the entire WordPress community.
+Thank you for helping make ThemePlus better for the WordPress community.
 
 Made with ❤️ by [Faruk Ahmed](https://farukdesign.com) · [fronttheme.com](https://fronttheme.com)
