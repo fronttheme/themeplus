@@ -45,6 +45,6 @@ themeplus-svn/
 # Author Kit
 README/
 
-# Source maps
+# Source maps & Generated Metadata
 assets/js/*.map
 *.map

@@ -21,7 +21,7 @@ Built from scratch with React, Vite, and modern PHP 8, ThemePlus delivers a poli
 Redux Framework served the WordPress community well for years. But it carries significant technical debt: legacy PHP patterns, jQuery dependency, an outdated UI, and infrequent updates. ThemePlus is built from scratch with modern tools for developers building themes today.
 
 * **Modern stack** — React 18, Vite 5, SCSS/BEM, PHP 8 type hints throughout
-* **Lightweight** — 393KB total including all assets
+* **Lightweight** — 392KB total including all assets
 * **White-label** — your users see your theme's panel, never "ThemePlus"
 * **Open source** — GPL-2.0-or-later, free forever, no upsells
 
