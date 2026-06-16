@@ -1,6 +1,6 @@
-=== ThemePlus ===
+=== ThemePlus – Modern Theme Options Framework by FrontTheme ===
 Contributors: farukahmed
-Tags: theme options, framework, options panel, theme settings, redux alternative
+Tags: theme options, framework, options panel, theme settings, admin panel
 Requires at least: 6.8
 Tested up to: 7.0
 Requires PHP: 8.0
@@ -12,22 +12,13 @@ A modern, React-powered WordPress theme options framework. 30 field types, white
 
 == Description ==
 
-**ThemePlus is a free, open-source WordPress theme options framework built for developers who want a modern, lightweight alternative to Redux Framework — without the bloat, the legacy code, or the outdated UI.**
+**ThemePlus is a free, open-source WordPress theme options framework built for developers who want a modern, lightweight React-powered options panel — no legacy dependencies, no upsells, no license keys.**
 
-Built from scratch with React, Vite, and modern PHP 8, ThemePlus delivers a polished admin interface, 30 field types, full white-label support, Google Fonts integration, custom font uploads, Import/Export, conditional logic, a REST API, and a Developer Panel — all free, with no licence keys and no upsells.
-
-= Why ThemePlus? =
-
-Redux Framework served the WordPress community well for years. But it carries significant technical debt: legacy PHP patterns, jQuery dependency, an outdated UI, and infrequent updates. ThemePlus is built from scratch with modern tools for developers building themes today.
-
-* **Modern stack** — React 18, Vite 5, SCSS/BEM, PHP 8 type hints throughout
-* **Lightweight** — 392KB total including all assets
-* **White-label** — your users see your theme's panel, never "ThemePlus"
-* **Open source** — GPL-2.0-or-later, free forever, no upsells
+Built from scratch with React, Vite, and modern PHP 8, ThemePlus delivers a polished admin interface, 30 field types, full white-label support, Google Fonts integration, custom font uploads, Import/Export, conditional logic, a REST API, and a Developer Panel — all free, with no license keys and no upsells.
 
 = 30 Field Types =
 
-Every input a theme could need, organised into clean categories:
+Every input a theme could need, organized into clean categories:
 
 * **Text** — Text, Textarea
 * **Number** — Number / Spinner, Slider
@@ -88,11 +79,11 @@ Show or hide any field based on the value of another. Supports 10 operators and 
 
 = Sections and Subsections =
 
-Organise theme options into a hierarchical sidebar. Add sections with `themeplus_add_section()`, nest subsections inline via the `subsections` key, or attach subsections from a separate hook with `themeplus_add_subsection()` — the pattern for child themes and extension plugins.
+Organize theme options into a hierarchical sidebar. Add sections with `themeplus_add_section()`, nest subsections inline via the `subsections` key, or attach subsections from a separate hook with `themeplus_add_subsection()` — the pattern for child themes and extension plugins.
 
 = Import / Export =
 
-Backup and restore all theme settings with one click. Import/Export handles JSON serialisation and restores defaults cleanly.
+Backup and restore all theme settings with one click. Import/Export handles JSON serialization and restores defaults cleanly.
 
 = REST API =
 
@@ -111,7 +102,7 @@ Enable dev mode (`define('THEMEPLUS_DEV', true)`) to access a Developer Panel sh
 
 = GPL Licensed — Free Forever =
 
-ThemePlus is GPL-2.0-or-later — the same licence as WordPress itself. Use it in personal projects, client work, and commercial ThemeForest themes without restriction.
+ThemePlus is GPL-2.0-or-later — the same license as WordPress itself. Use it in personal projects, client work, and commercial ThemeForest themes without restriction.
 
 == Installation ==
 
@@ -141,11 +132,11 @@ ThemePlus does nothing on its own — it is a framework for theme developers. To
 
 = Is ThemePlus really free? =
 
-Yes, completely. ThemePlus is open-source and GPL-2.0-or-later. There are no premium tiers, no feature locks, and no licence keys.
+Yes, completely. ThemePlus is open-source and GPL-2.0-or-later. There are no premium tiers, no feature locks, and no license keys.
 
-= Is this a replacement for Redux Framework? =
+= Can ThemePlus replace my current theme options framework? =
 
-ThemePlus covers the full Redux Framework feature set and extends it — 30 field types, white-label support, conditional logic, Google Fonts, custom fonts, Import/Export, REST API, and a Developer Panel — in a modern React UI. If you are using Redux Framework and want a maintained, modern alternative, ThemePlus is built for exactly that.
+ThemePlus provides 30 field types, white-label support, conditional logic, Google Fonts, custom fonts, Import/Export, a REST API, and a Developer Panel — all in a modern React UI. It is designed as a complete, standalone theme options solution for WordPress theme developers.
 
 = Does it work with PHP 8.0+? =
 
@@ -187,7 +178,7 @@ Yes — use `themeplus_add_subsection( 'parent_section_id', [ ...subsection conf
 
 = Does ThemePlus support empty/!empty conditional logic on false and 0? =
 
-No — intentionally. `false` and `0` are NOT considered empty. Only truly absent values, empty strings, empty arrays, and `null` trigger `empty`. This matches PHP's `empty()` semantics for booleans and integers, which is the least surprising behaviour for theme developers.
+No — intentionally. `false` and `0` are NOT considered empty. Only truly absent values, empty strings, empty arrays, and `null` trigger `empty`. This matches PHP's `empty()` semantics for booleans and integers, which is the least surprising behavior for theme developers.
 
 == External Services ==
 
@@ -209,7 +200,7 @@ To avoid any Google Fonts requests entirely, use only system fonts or upload sel
 5. Conditional logic — fields shown and hidden based on other field values
 6. Import/Export — one-click backup and restore of all settings
 7. Developer Panel — field metadata, current values, and code snippets
-8. Dark mode — full dark colour scheme matching WordPress admin
+8. Dark mode — full dark color scheme matching WordPress admin
 
 == Changelog ==
 

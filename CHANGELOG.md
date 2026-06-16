@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Add: REST API under `themeplus/v1` namespace with full CRUD — get options, save options, reset all, reset section, get config
 - Add: Developer Panel (dev mode only) — dedicated sidebar section showing every registered field with its current value, PHP data type, and ready-to-use code snippets for all three access patterns
 - Add: Live field search — instantly search across all fields and sections by title, subtitle, description, or ID
-- Add: Dark and light mode — admin UI respects the user's WordPress colour scheme with a manual toggle in the header
+- Add: Dark and light mode — admin UI respects the user's WordPress color scheme with a manual toggle in the header
 - Add: Unsaved changes detection — warns before navigating away with unsaved changes
 - Add: Helper functions — `themeplus_get_option()`, `themeplus_update_option()`, `themeplus_is_active()`, `themeplus_get_version()`
 - Add: Config functions — `themeplus_add_section()`, `themeplus_add_subsection()`, `themeplus_get_sections()`, `themeplus_get_section()`, `themeplus_get_all_fields()`
@@ -43,19 +43,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fix: Per-field-type sanitization of all saved options via ThemePlus_Sanitizer — unknown keys dropped, values validated against registered field config
 - Fix: Font upload magic-byte verification now correctly rejects files with mismatched bytes
 - Fix: REST API permission check now honors configured capability instead of hardcoded manage_options
-- Fix: Font MIME types gated behind configured capability — previously added for all uploaders
+- Fix: Font MIME types gated behind configured capability — previously added for all uploads
 - Fix: Stale useState in eight fields (Link, Social, Background, Spacing, Gallery, DatePicker, Repeater, Group) — all now derive from props for correct Reset/Import behavior
 - Fix: App.jsx forced re-render workaround removed — fields derive from props correctly
 - Fix: Dev Panel conditional parser handles all five dependency formats
 - Fix: Search tokenized matching includes section/subsection titles and field type in haystack
 - Fix: highlightText regex escape prevents crash on special characters
 - Fix: contains/!contains uses loose equality consistent with == operator
-- Fix: DatePicker Dropdown deprecation — position prop replaced with popoverProps.placement
+- Fix: DatePicker Dropdown deprecation — position prop replaced with popoverProps placement
 - Fix: framework-config i18n — variable text domain replaced with literal; strings now extractable by WP.org translation system
 - Fix: Font CSS output escaping — family names sanitized, URLs escaped at build time in generate_font_face()
 - Fix: save_options empty payload guard — && corrected to || preventing accidental options wipe
 - Fix: clean_admin_page uses exact screen ID match instead of substring check
-- Fix: load_plugin_textdomain() removed — auto-loaded by WordPress since 4.6
+- Fix: load_plugin_textdomain() removed — autoloaded by WordPress since 4.6
 - Fix: sample-config.php example function renamed to themeplus_sample_get_option
 
 [1.0.0]: https://github.com/fronttheme/themeplus/releases/tag/v1.0.0

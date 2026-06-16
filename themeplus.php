@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ThemePlus
  * Plugin URI: https://www.fronttheme.com/products/themeplus
- * Description: A modern theme options framework for WordPress
+ * Description: A modern, React-powered theme options framework. 30 field types, white-label support, conditional logic — free forever.
  * Version: 1.0.0
  * Author: Faruk Ahmed
  * Author URI: https://fronttheme.com

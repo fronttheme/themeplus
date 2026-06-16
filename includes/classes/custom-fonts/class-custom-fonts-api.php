@@ -79,7 +79,8 @@ class ThemePlus_Custom_Fonts_API {
    * Check permissions
    */
   public function check_permissions(): bool {
-    return current_user_can('edit_theme_options');
+    $capability = ThemePlus_Framework_Config::get('capability', 'edit_theme_options');
+    return current_user_can($capability);
   }
 
   /**
@@ -95,13 +96,13 @@ class ThemePlus_Custom_Fonts_API {
    */
   public function get_font_names(): WP_Error|WP_REST_Response|WP_HTTP_Response {
     $manager = ThemePlus_Custom_Fonts_Manager::instance();
-    $fonts = $manager->get_fonts();
+    $fonts   = $manager->get_fonts();
 
     $names = [];
     foreach ($fonts as $font) {
       // Validate that font file still exists
       if (isset($font['files']['regular'])) {
-        $file_id = $font['files']['regular'];
+        $file_id  = $font['files']['regular'];
         $file_url = wp_get_attachment_url($file_id);
 
         // Only include if file exists
@@ -144,7 +145,7 @@ class ThemePlus_Custom_Fonts_API {
    * Update font
    */
   public function update_font($request): WP_Error|WP_REST_Response|WP_HTTP_Response {
-    $id = $request->get_param('id');
+    $id   = $request->get_param('id');
     $data = $request->get_params();
 
     $result = $this->manager->update_font($id, $data);

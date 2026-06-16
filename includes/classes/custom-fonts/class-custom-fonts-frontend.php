@@ -68,7 +68,9 @@ class ThemePlus_Custom_Fonts_Frontend {
       return;
     }
 
-    echo '<style id="themeplus-gutenberg-font-classes">' . "\n" . wp_strip_all_tags($css) . '</style>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated font CSS; URLs and names sanitized in the builder, tags stripped as defense in depth.
+    wp_register_style('themeplus-gutenberg-font-classes', false, [], THEMEPLUS_VERSION);
+    wp_enqueue_style('themeplus-gutenberg-font-classes');
+    wp_add_inline_style('themeplus-gutenberg-font-classes', wp_strip_all_tags($css));
   }
 
   /**
@@ -162,9 +164,9 @@ class ThemePlus_Custom_Fonts_Frontend {
     }
 
     if (!empty($css)) {
-      echo '<style id="themeplus-custom-fonts">' . "\n";
-      echo wp_strip_all_tags($css); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated @font-face CSS; URLs and names sanitized in the builder, tags stripped as defense in depth.
-      echo '</style>' . "\n";
+      wp_register_style('themeplus-custom-fonts', false, [], THEMEPLUS_VERSION);
+      wp_enqueue_style('themeplus-custom-fonts');
+      wp_add_inline_style('themeplus-custom-fonts', wp_strip_all_tags($css));
     }
   }
 

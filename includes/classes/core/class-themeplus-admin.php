@@ -48,7 +48,7 @@ class ThemePlus_Admin {
 
     // Enqueue WordPress Code Editor
     wp_enqueue_code_editor([
-        'type' => 'text/css', // or 'text/javascript', 'text/html', etc.
+      'type' => 'text/css', // or 'text/javascript', 'text/html', etc.
     ]);
 
     // This loads CodeMirror assets
@@ -57,10 +57,10 @@ class ThemePlus_Admin {
 
     // Enqueue FontAwesome
     wp_enqueue_style(
-        'themeplus-fontawesome',
-        THEMEPLUS_URL . 'assets/fonts/fontawesome/css/all.min.css',
-        [],
-        '7.2.0'
+      'themeplus-fontawesome',
+      THEMEPLUS_URL . 'assets/fonts/fontawesome/css/all.min.css',
+      [],
+      '7.2.0'
     );
 
     // JavaScript (webpack)
@@ -70,11 +70,11 @@ class ThemePlus_Admin {
       $asset_data = include $asset_file;
 
       wp_enqueue_script(
-          'themeplus-admin',
-          THEMEPLUS_URL . 'assets/js/admin.js',
-          $asset_data['dependencies'],
-          $asset_data['version'],
-          true
+        'themeplus-admin',
+        THEMEPLUS_URL . 'assets/js/admin.js',
+        $asset_data['dependencies'],
+        $asset_data['version'],
+        true
       );
     }
 
@@ -85,20 +85,20 @@ class ThemePlus_Admin {
 
       // Development
       wp_enqueue_script(
-          'vite-client',
-          'http://localhost:3000/@vite/client',
-          [],
-          null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite HMR client; never enqueued in production.
-          false
+        'vite-client',
+        'http://localhost:3000/@vite/client',
+        [],
+        null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite HMR client; never enqueued in production.
+        false
       );
 
       // Load the dev entry point that imports SCSS
       wp_enqueue_script(
-          'themeplus-vite-main',
-          'http://localhost:3000/src/js/main.js',
-          [],
-          null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite entry point; never enqueued in production.
-          false
+        'themeplus-vite-main',
+        'http://localhost:3000/src/js/main.js',
+        [],
+        null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dev-only Vite entry point; never enqueued in production.
+        false
       );
 
       add_filter('script_loader_tag', [$this, 'add_vite_module_type'], 10, 2);
@@ -109,17 +109,17 @@ class ThemePlus_Admin {
       // Production: Built CSS file
       if (file_exists(THEMEPLUS_PATH . 'assets/css/admin.css')) {
         wp_enqueue_style(
-            'themeplus-admin',
-            THEMEPLUS_URL . 'assets/css/admin.css',
-            ['wp-components', 'themeplus-fontawesome'],
-            $version
+          'themeplus-admin',
+          THEMEPLUS_URL . 'assets/css/admin.css',
+          ['wp-components', 'themeplus-fontawesome'],
+          $version
         );
       }
     }
 
     // Add CSS to hide other notices
     wp_add_inline_style(
-        'themeplus-admin', '
+      'themeplus-admin', '
       .toplevel_page_' . esc_attr($menu_slug) . ' .notice:not(.themeplus-notice) {
         display: none !important;
       }
@@ -133,12 +133,12 @@ class ThemePlus_Admin {
 
     // Set up REST API nonce middleware (handles authentication automatically)
     wp_add_inline_script(
-        'themeplus-admin',
-        sprintf(
-            'wp.apiFetch.use( wp.apiFetch.createNonceMiddleware( "%s" ) );',
-            wp_create_nonce('wp_rest')
-        ),
-        'before'
+      'themeplus-admin',
+      sprintf(
+        'wp.apiFetch.use( wp.apiFetch.createNonceMiddleware( "%s" ) );',
+        wp_create_nonce('wp_rest')
+      ),
+      'before'
     );
 
     // Get active theme info
@@ -146,22 +146,22 @@ class ThemePlus_Admin {
 
     // Localize script
     wp_localize_script('themeplus-admin', 'themePlusData', [
-        'config'         => ThemePlus_Framework_Config::get_all(),
-        'version'        => THEMEPLUS_VERSION,
-        'pluginUrl'      => THEMEPLUS_URL,
-        'imagesUrl'      => THEMEPLUS_URL . 'assets/images/',
-        'restUrl'        => rest_url('themeplus/v1'), // Full REST API base URL
-        'restNonce'      => wp_create_nonce('wp_rest'), // Available if needed manually
-        'themeName'      => $theme->get('Name'),
-        'themeVersion'   => $theme->get('Version'),
-        'isProVersion'   => false, // feature flag
-        'ajaxUrl'        => admin_url('admin-ajax.php'),
-        'googleFontsUrl' => plugin_dir_url(THEMEPLUS_FILE) . 'assets/data/google-fonts.json',
-        'isDev'          => $is_dev,
-        'i18n'           => [
-            'saved' => __('Settings saved!', 'themeplus'),
-            'error' => __('An error occurred.', 'themeplus'),
-        ],
+      'config'         => ThemePlus_Framework_Config::get_all(),
+      'version'        => THEMEPLUS_VERSION,
+      'pluginUrl'      => THEMEPLUS_URL,
+      'imagesUrl'      => THEMEPLUS_URL . 'assets/images/',
+      'restUrl'        => rest_url('themeplus/v1'), // Full REST API base URL
+      'restNonce'      => wp_create_nonce('wp_rest'), // Available if needed manually
+      'themeName'      => $theme->get('Name'),
+      'themeVersion'   => $theme->get('Version'),
+      'isProVersion'   => false, // feature flag
+      'ajaxUrl'        => admin_url('admin-ajax.php'),
+      'googleFontsUrl' => plugin_dir_url(THEMEPLUS_FILE) . 'assets/data/google-fonts.json',
+      'isDev'          => $is_dev,
+      'i18n'           => [
+        'saved' => __('Settings saved!', 'themeplus'),
+        'error' => __('An error occurred.', 'themeplus'),
+      ],
     ]);
   }
 
@@ -177,52 +177,28 @@ class ThemePlus_Admin {
       return;
     }
 
-    // CSS to hide all notices (except ThemePlus)
-    ?>
-    <style>
-      /* Hide ALL notices on ThemePlus page */
-      .toplevel_page_<?php echo esc_attr($menu_slug); ?> .notice:not(.themeplus-notice),
-      .toplevel_page_<?php echo esc_attr($menu_slug); ?> .update-nag,
-      .toplevel_page_<?php echo esc_attr($menu_slug); ?> .updated {
-        display: none !important;
-      }
+    // CSS to hide all notices (except ThemePlus) — scoped to this page only, injected via wp_add_inline_style
+    $css = '
+    .toplevel_page_' . esc_attr($menu_slug) . ' .notice:not(.themeplus-notice),
+    .toplevel_page_' . esc_attr($menu_slug) . ' .update-nag,
+    .toplevel_page_' . esc_attr($menu_slug) . ' .updated { display: none !important; }
+    .themeplus-notice { display: block !important; margin: 15px 0 !important; border-left-color: #2271b1 !important; }
+    .toplevel_page_' . esc_attr($menu_slug) . ' #wpbody-content > .notice { display: none; }
+    .toplevel_page_' . esc_attr($menu_slug) . ' #screen-meta,
+    .toplevel_page_' . esc_attr($menu_slug) . ' #screen-meta-links { display: none; }
+';
+    wp_add_inline_style('themeplus-admin', $css);
 
-      /* Show only ThemePlus notices */
-      .themeplus-notice {
-        display: block !important;
-        margin: 15px 0 !important;
-        border-left-color: #2271b1 !important;
-      }
-
-      /* Optional: Clean up admin UI */
-      .toplevel_page_<?php echo esc_attr($menu_slug); ?> #wpbody-content > .notice {
-        display: none;
-      }
-
-      /* Hide screen options & help tabs */
-      .toplevel_page_<?php echo esc_attr($menu_slug); ?> #screen-meta,
-      .toplevel_page_<?php echo esc_attr($menu_slug); ?> #screen-meta-links {
-        display: none;
-      }
-    </style>
-
-    <!-- Optional: Remove admin footer text -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Remove footer text
-        const footer = document.getElementById('footer-left');
-        if (footer) {
-          footer.innerHTML = '';
-        }
-
-        // Remove footer upgrade notice
-        const upgrade = document.getElementById('footer-upgrade');
-        if (upgrade) {
-          upgrade.remove();
-        }
-      });
-    </script>
-    <?php
+    // JS — remove admin footer text via wp_add_inline_script
+    $js = '
+    document.addEventListener("DOMContentLoaded", function() {
+        var footer = document.getElementById("footer-left");
+        if (footer) { footer.innerHTML = ""; }
+        var upgrade = document.getElementById("footer-upgrade");
+        if (upgrade) { upgrade.remove(); }
+    });
+';
+    wp_add_inline_script('themeplus-admin', $js);
 
     // Remove admin notices via PHP
     // scoped exclusively to the plugin's own settings screen to keep the React app's layout intact.

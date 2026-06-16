@@ -310,7 +310,7 @@ chore(build): update vite to v7
    - Test in both dev mode (`THEMEPLUS_DEV=true`) and a production build (`npm run build && npm run blocks:build`)
    - Test Reset Section and Reset All — field values must update immediately without a page reload
    - Test Import — importing a JSON snapshot must restore all field values immediately
-   - Test in both light and dark WordPress admin colour schemes
+   - Test in both light and dark WordPress admin color schemes
 
 4. **For new field types:** run the ThemePlus Demo theme to verify your field appears in the All Values panel with the correct shape
 
@@ -336,7 +336,7 @@ Open an [issue](https://github.com/fronttheme/themeplus/issues) and include:
 - PHP version
 - Active theme name
 - Steps to reproduce
-- Expected vs actual behaviour
+- Expected vs actual behavior
 - Browser console errors or PHP error log output (if any)
 
 ---

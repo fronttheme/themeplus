@@ -23,20 +23,20 @@ Build powerful theme options panels with a beautiful React UI — no bloat, no p
 - 🎨 **React-Powered Admin UI** — Modern, polished interface built with React and WordPress components
 - 🧩 **30 Field Types** — Every input type a theme could need, nothing more
 - 🏷️ **Full White-label Support** — Rename everything: menu title, slug, icon, option key — it becomes your theme's own settings panel
-- 📂 **Sections & Subsections** — Organise options into a clean hierarchical sidebar with `themeplus_add_section()` and `themeplus_add_subsection()`
+- 📂 **Sections & Subsections** — Organize options into a clean hierarchical sidebar with `themeplus_add_section()` and `themeplus_add_subsection()`
 - 🔀 **Conditional Logic** — Show or hide any field based on the value of another; 10 operators, AND/OR relations, dot-notation sub-keys
 - 🔤 **Google Fonts Integration** — Browse and load from 1,899 Google Fonts with live preview inside the Typography field
 - 🅰️ **Custom Fonts Module** — Upload and manage self-hosted fonts (WOFF2, WOFF); magic-byte verified, capability-gated, auto-enqueued
 - 🔒 **Per-field Sanitization** — Every saved value passes through `ThemePlus_Sanitizer` — type-checked, key-whitelisted, safe
 - 📤 **Import / Export** — Backup and restore all theme settings as JSON with one click
 - 🔍 **Live Search** — Instantly search across all fields and sections by title, subtitle, description, or ID
-- 🌗 **Dark & Light Mode** — Admin UI respects the user's WordPress colour scheme with a manual toggle
+- 🌗 **Dark & Light Mode** — Admin UI respects the user's WordPress color scheme with a manual toggle
 - ⚠️ **Unsaved Changes Detection** — Warns before navigating away with unsaved changes
 - 🔌 **REST API** — Full CRUD endpoints under the `themeplus/v1` namespace; capability-gated with nonce verification
 - 🛠️ **Developer Panel** — Dev-mode-only panel showing field metadata, current values, PHP data types, and copy-ready code snippets
 - 🪶 **392KB total** — Lightweight alternative to Redux Framework with a fraction of the footprint
 - 🧹 **Modern PHP 8.0+** — Clean, singleton-pattern architecture with type hints throughout
-- 🌍 **i18n Ready** — Full internationalisation support with `.pot` file included
+- 🌍 **i18n Ready** — Full internationalization support with `.pot` file included
 
 ---
 
@@ -118,7 +118,7 @@ git clone https://github.com/fronttheme/themeplus.git
 
 Activate from **Plugins** in your WordPress admin.
 
-> **Note for Git / direct ZIP installs:** WordPress.org auto-loads translations for directory-listed plugins. For installs outside WordPress.org, add `load_plugin_textdomain( 'themeplus', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' )` to your theme if you need translations.
+> **Note for Git / direct ZIP installs:** WordPress.org autoloads translations for directory-listed plugins. For installs outside WordPress.org, add `load_plugin_textdomain( 'themeplus', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' )` to your theme if you need translations.
 
 ### Option 4 — TGM Plugin Activation *(recommended for ThemeForest themes)*
 
@@ -509,7 +509,7 @@ Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full
 
 ## 📄 License
 
-ThemePlus is licensed under [GPL-2.0-or-later](./LICENSE) — the same licence as WordPress itself. Use it freely in personal projects, client work, and commercial themes.
+ThemePlus is licensed under [GPL-2.0-or-later](./LICENSE) — the same license as WordPress itself. Use it freely in personal projects, client work, and commercial themes.
 
 ---
 

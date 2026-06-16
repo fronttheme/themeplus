@@ -40,27 +40,7 @@ function themeplus_uninstall_simple(): void {
     delete_option($option_name);
   }
 
-  // 3. Clean up other possible patterns (extra safety)
-  $common_patterns = [
-    'themeplus_%_options',    // Matches: themeplus_mytheme_options
-    '%_themeplus_settings',   // Matches: my_themeplus_settings (less common)
-  ];
-
-  foreach ($common_patterns as $pattern) {
-    $options = $wpdb->get_col(
-      $wpdb->prepare(
-        "SELECT option_name FROM $wpdb->options 
-         WHERE option_name LIKE %s",
-        $pattern
-      )
-    );
-
-    foreach ($options as $option_name) {
-      delete_option($option_name);
-    }
-  }
-
-  // 4. Multisite cleanup (clean every site in network)
+  // 3. Multisite cleanup (clean every site in network)
   if (is_multisite()) {
     $blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
 
@@ -89,7 +69,7 @@ function themeplus_uninstall_simple(): void {
     }
   }
 
-  // 5. Clear WordPress object cache
+  // 4. Clear WordPress object cache
   wp_cache_flush();
 }
 
