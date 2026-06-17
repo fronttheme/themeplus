@@ -65,6 +65,16 @@ class ThemePlus_Framework_Config {
 
     // Merge user config with (possibly updated) defaults
     self::$framework_config = wp_parse_args($config, $defaults);
+
+    // Track this opt_name so uninstall.php can clean up precisely —
+    // avoids wildcard LIKE queries against the options table.
+    $opt_name = self::$framework_config['opt_name'] ?? 'themeplus_options';
+    $known    = get_option('themeplus_known_opt_names', []);
+
+    if (!in_array($opt_name, $known, true)) {
+      $known[] = $opt_name;
+      update_option('themeplus_known_opt_names', $known);
+    }
   }
 
   /**
