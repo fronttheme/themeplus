@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-13T17:16:26+00:00\n"
+"POT-Creation-Date: 2026-06-17T20:57:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: themeplus\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #. Description of the plugin
 #: themeplus.php
-msgid "A modern theme options framework for WordPress"
+msgid "A modern, React-powered theme options framework. 30 field types, white-label support, conditional logic — free forever."
 msgstr ""
 
 #. Author of the plugin
@@ -93,22 +93,22 @@ msgstr ""
 msgid "Options reset successfully."
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-api.php:139
+#: includes/classes/custom-fonts/class-custom-fonts-api.php:140
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:420
 msgid "Font added successfully"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-api.php:162
+#: includes/classes/custom-fonts/class-custom-fonts-api.php:163
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:417
 msgid "Font updated successfully"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-api.php:184
+#: includes/classes/custom-fonts/class-custom-fonts-api.php:185
 #: src/js/admin/components/Sections/CustomFontUploader.jsx:469
 msgid "Font deleted successfully"
 msgstr ""
 
-#: includes/classes/custom-fonts/class-custom-fonts-frontend.php:190
+#: includes/classes/custom-fonts/class-custom-fonts-frontend.php:192
 #: includes/config/default-config.php:23
 #: src/js/admin/components/Layout/Body.jsx:33
 msgid "Custom Fonts"
