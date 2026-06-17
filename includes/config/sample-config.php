@@ -177,10 +177,9 @@ if ($enable_preloader) {
     echo '<div class="preloader">' . esc_html($loading_text) . '</div>';
 }
 
-// Inline CSS example:
-echo '<style>
-    :root {
-        --primary-color: ' . esc_attr($primary_color) . ';
-    }
-</style>';
+// Example: output a CSS custom property using wp_add_inline_style()
+// (Register a handle first via wp_enqueue_style(), then:)
+//
+// $css = ':root { --primary-color: ' . esc_attr($primary_color) . '; }';
+// wp_add_inline_style( 'your-theme-style', $css );
 */
