@@ -2,76 +2,58 @@
 /**
  * ThemePlus Uninstall
  *
- * Fired when the plugin is uninstalled. Safely removes all
- * ThemePlus data including user-configured dynamic options.
+ * Fired when the plugin is deleted via the Plugins screen. Removes all
+ * ThemePlus options, including dynamic option names registered by themes
+ * via themeplus_framework_config(). No wildcard database queries are used —
+ * only explicitly tracked option names are deleted.
  *
  * @package ThemePlus
  */
 
-// If uninstall not called from WordPress, exit
+// If uninstall not called from WordPress, exit.
 if (!defined('WP_UNINSTALL_PLUGIN')) {
   exit;
 }
 
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup: dynamic option keys require LIKE queries that cannot use WP_Cache; caching is irrelevant during uninstall as the data is being permanently deleted.
-
 /**
- * Simple cleanup that handles dynamic option names
+ * Delete all known ThemePlus options for a single site.
  */
-function themeplus_uninstall_simple(): void {
-  global $wpdb;
-
-  // 1. Default options (always the same)
+function themeplus_uninstall_delete_site_options(): void {
+  // 1. Default options created by the plugin itself.
   delete_option('themeplus_options');
   delete_option('themeplus_custom_fonts');
   delete_option('themeplus_custom_fonts_css');
 
-  // 2. Find and delete dynamic options created by users
-  // Pattern: themeplus_options_xxxxxxxx (e.g., themeplus_options_mytheme)
-  $options = $wpdb->get_col(
-    $wpdb->prepare(
-      "SELECT option_name FROM $wpdb->options 
-       WHERE option_name LIKE %s",
-      'themeplus_options_%'
-    )
-  );
+  // 2. Dynamic opt_name values registered by themes via
+  // themeplus_framework_config(). Tracked explicitly at registration
+  // time — no wildcard LIKE queries against the options table.
+  $known_opt_names = get_option('themeplus_known_opt_names', []);
 
-  foreach ($options as $option_name) {
-    delete_option($option_name);
+  foreach ($known_opt_names as $opt_name) {
+    delete_option($opt_name);
   }
 
-  // 3. Multisite cleanup (clean every site in network)
+  delete_option('themeplus_known_opt_names');
+}
+
+/**
+ * Run the uninstall cleanup across the site or, on multisite, every site
+ * in the network.
+ */
+function themeplus_uninstall_simple(): void {
   if (is_multisite()) {
-    $blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+    $site_ids = get_sites(['fields' => 'ids']);
 
-    foreach ($blog_ids as $blog_id) {
-      switch_to_blog($blog_id);
-
-      // Delete default options for this site
-      delete_option('themeplus_options');
-      delete_option('themeplus_custom_fonts');
-      delete_option('themeplus_custom_fonts_css');
-
-      // Delete dynamic options for this site
-      $site_options = $wpdb->get_col(
-        $wpdb->prepare(
-          "SELECT option_name FROM $wpdb->options 
-           WHERE option_name LIKE %s",
-          'themeplus_options_%'
-        )
-      );
-
-      foreach ($site_options as $option_name) {
-        delete_option($option_name);
-      }
-
+    foreach ($site_ids as $site_id) {
+      switch_to_blog($site_id);
+      themeplus_uninstall_delete_site_options();
       restore_current_blog();
     }
+  } else {
+    themeplus_uninstall_delete_site_options();
   }
 
-  // 4. Clear WordPress object cache
   wp_cache_flush();
 }
 
-// Run cleanup
 themeplus_uninstall_simple();
