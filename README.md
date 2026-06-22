@@ -98,9 +98,9 @@ Every field returns a documented, consistent value. Key shapes:
 
 ## 🚀 Installation
 
-### Option 1 — WordPress.org *(submission in progress)*
+### Option 1 — WordPress.org
 
-ThemePlus has been submitted to the WordPress.org plugin directory. Once approved, search for **ThemePlus** in **Plugins → Add New**.
+Search for **ThemePlus** in **Plugins → Add New**.
 
 ### Option 2 — Download ZIP
 
