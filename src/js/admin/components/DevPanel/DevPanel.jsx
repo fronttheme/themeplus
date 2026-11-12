@@ -12,9 +12,10 @@ import DevFieldCard from './DevFieldCard';
 import Button from "../Common/Button";
 
 function DevPanel() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({
+  const [data, setData]                 = useState(null);
+  const [loading, setLoading]           = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [filters, setFilters]           = useState({
     type: 'all',
     section: 'all',
     search: ''
@@ -30,13 +31,20 @@ function DevPanel() {
       setData(response);
     } catch (error) {
       console.error('Dev panel error:', error);
+      setErrorMessage(error?.message || __('Unknown error.', 'themeplus'));
     } finally {
       setLoading(false);
     }
   }
 
-  if (loading) return <div className="tpo-dev-loading">Loading...</div>;
-  if (!data) return <div className="tpo-dev-error">Failed to load</div>;
+  if (loading) return <div className="tpo-dev-loading">{__('Loading…', 'themeplus')}</div>;
+  if (!data) {
+    return (
+      <div className="tpo-dev-error">
+        {__('Failed to load the Developer Panel:', 'themeplus')} {errorMessage}
+      </div>
+    );
+  }
 
   // Get unique types
   const types = [
@@ -77,7 +85,7 @@ function DevPanel() {
 
     // Search filter
     if (filters.search) {
-      const search = filters.search.toLowerCase();
+      const search     = filters.search.toLowerCase();
       const searchable = [
         field.id,
         field.title,

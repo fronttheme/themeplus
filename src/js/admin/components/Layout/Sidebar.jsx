@@ -19,7 +19,7 @@ function Sidebar({
                    isLoaded = false
                  }) {
   const [mainWalkerStyle, setMainWalkerStyle] = useState({});
-  const subWalkerRefs = useRef({});
+  const subWalkerRefs                         = useRef({});
 
   // Scrollbar hooks for both scrollable areas
   const {scrollRef: sidebarRef, scrollbarClass: sidebarScrollClass} = useScrollbar({
@@ -201,7 +201,7 @@ function Sidebar({
               {__('ThemePlus', 'themeplus')}
             </h1>
             <span className="tpo-sidebar__version">
-              {window.themePlusData?.version || '1.0.0'}
+              {window.themePlusData?.version ?? ''}
             </span>
           </div>
         </div>
@@ -250,7 +250,7 @@ function Sidebar({
           {sections.map((section) => {
             const hasSubsections = section.subsections && section.subsections.length > 0;
             const subWalkerStyle = getSubWalkerStyle(section.id);
-            const isExpanded = hasSubsections && isTabActive(section.id);
+            const isExpanded     = hasSubsections && isTabActive(section.id);
 
             const itemClasses = [
               'tpo-sidebar__item',

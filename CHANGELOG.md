@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.1.0] — November 2026
+
+### Fixed
+- Fix: Select, Radio, Button Set, Checkbox and Select Image fields save options with numeric keys, such as post IDs
+- Fix: Options with numeric keys keep the order they are defined in
+- Fix: Numeric defaults show as selected before the first save
+- Fix: The `'relation' => 'OR', 'conditions' => [...]` format of `required` now evaluates its conditions
+- Fix: Footer preloader toggle label underline on hover
+- Fix: Developer Panel shows only when THEMEPLUS_DEV is true or the theme config sets 'dev_mode' => true — no longer on every WP_DEBUG or local site
+
+### Changed
+- Change: Requires PHP 8.2 or higher
+- Change: Build tools updated to Vite 8 and Sass 1.98; Node.js 20.19+ for development
+- Dev: Sass code moved to the sass:color, sass:map and sass:math modules
+- Fix: Date picker buttons use the ThemePlus primary colour for their focus outline
+
+---
+
 ## [1.0.0] — March 2026
 
 ### Added
@@ -59,3 +77,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fix: sample-config.php example function renamed to themeplus_sample_get_option
 
 [1.0.0]: https://github.com/fronttheme/themeplus/releases/tag/v1.0.0
+[1.1.0]: https://github.com/fronttheme/themeplus/releases/tag/v1.1.0

@@ -6,8 +6,8 @@ Only the latest stable release of ThemePlus receives security updates.
 
 | Version | Supported |
 |---|---|
-| 1.0.x (latest) | ✅ |
-| < 1.0.0 | ❌ |
+| 1.1.x (latest) | ✅ |
+| < 1.1.0 | ❌ |
 
 ---
 

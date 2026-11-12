@@ -42,10 +42,10 @@ This project follows the [WordPress Community Code of Conduct](https://make.word
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.19+
 - npm
 - Local WordPress install ([LocalWP](https://localwp.com/) recommended)
-- PHP 8.0+
+- PHP 8.2+
 
 ### Setup
 
@@ -106,7 +106,7 @@ themeplus/
 │   ├── css/admin.css              # Built by Vite from src/scss/
 │   ├── js/admin.js                # Built by wp-scripts from src/js/
 │   ├── js/admin.asset.php         # wp-scripts dependency manifest
-│   └── fonts/fontawesome/         # Bundled FontAwesome 6
+│   └── fonts/fontawesome/         # Bundled FontAwesome 7
 ├── includes/
 │   ├── classes/
 │   │   ├── core/                  # Framework core classes
@@ -250,7 +250,7 @@ Every field type must have a documented, consistent return value. In your PR des
 ### PHP
 
 - Follow [WordPress PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/)
-- PHP 8.0+ features are encouraged — type hints, union types, match expressions, named arguments
+- PHP 8.2+ features are encouraged — type hints, union types, match expressions, named arguments
 - All new classes use the singleton pattern consistent with existing core classes
 - Use `str_contains()`, `str_starts_with()`, `str_ends_with()` over `strpos()` for PHP 8.0+
 - Sanitize all input; escape all output — `esc_html()`, `esc_attr()`, `esc_url()`, `wp_kses_post()`

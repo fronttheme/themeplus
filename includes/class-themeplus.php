@@ -59,6 +59,7 @@ final class ThemePlus {
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-rest-api.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-admin.php';
     require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-sanitizer.php';
+    require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-dev-panel.php';
 
     // ======================
     // 3. CUSTOM FONTS MODULE
@@ -79,13 +80,6 @@ final class ThemePlus {
     // 5. DEFAULT CONFIGURATION
     // ======================
     require_once THEMEPLUS_PATH . 'includes/config/default-config.php';
-
-    // ======================
-    // 6. DEVELOPMENT TOOLS
-    // ======================
-    if (ThemePlus_Framework_Config::is_dev_mode()) {
-      require_once THEMEPLUS_PATH . 'includes/classes/core/class-themeplus-dev-panel.php';
-    }
   }
 
   /**

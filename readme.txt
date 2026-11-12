@@ -2,9 +2,9 @@
 Contributors: farukahmed
 Tags: theme options, framework, options panel, theme settings, admin panel
 Requires at least: 6.8
-Tested up to: 7.0
-Requires PHP: 8.0
-Stable tag: 1.0.0
+Tested up to: 7.1
+Requires PHP: 8.2
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ Every input a theme could need, organized into clean categories:
 * **Choice** — Select, Button Set, Radio, Checkbox, Select Image
 * **Toggle** — Toggle / Switch
 * **Color** — Color Picker, Gradient Picker
-* **Media** — Image, Gallery, Icon (FontAwesome 6)
+* **Media** — Image, Gallery, Icon (FontAwesome 7)
 * **Layout** — Typography, Dimensions, Spacing, Border
 * **Special** — Info, Section, Raw, Shortcode
 * **Date** — Date Picker (date only or date + time)
@@ -38,13 +38,14 @@ Every field has a verified, documented value shape. For example:
 * `image` returns `{ id, url, width, height, alt, title }` — empty array when no image selected
 * `gallery` returns an array of `{ id, url, alt }` rows
 * `border` returns `{ width, style, color, radius }`
+* `select`, `radio` and `button_set` return the chosen key as a string — numeric keys such as post IDs come back as `'7435'`
 * `social_media` returns an array of `{ platform, url }` rows
 * `repeater` returns an array of row arrays keyed by sub-field id
 * `gradient_picker` returns a complete CSS `linear-gradient()` string
 
 = White-Label Support =
 
-ThemePlus is designed to disappear into your theme. Configure `themeplus_framework_config()` with your theme's name, slug, option key, and icon — your users see your theme's own settings panel, never "ThemePlus".
+Configure `themeplus_framework_config()` with your theme's name, menu title, page title, slug, option key, and menu icon — the admin menu, browser title and saved options belong to your theme. The panel itself keeps the ThemePlus brand.
 
 **Convention:** section and subsection `icon` takes a FontAwesome name only (`'pen'`). The Icon *field* default takes the full FontAwesome class (`'fa-solid fa-star'`). The plugin translates its own fallback strings; your theme translates its config strings in your own text domain.
 
@@ -138,9 +139,9 @@ Yes, completely. ThemePlus is open-source and GPL-2.0-or-later. There are no pre
 
 ThemePlus provides 30 field types, white-label support, conditional logic, Google Fonts, custom fonts, Import/Export, a REST API, and a Developer Panel — all in a modern React UI. It is designed as a complete, standalone theme options solution for WordPress theme developers.
 
-= Does it work with PHP 8.0+? =
+= Which PHP version does ThemePlus need? =
 
-Yes. ThemePlus requires PHP 8.0 or higher and uses PHP 8 type hints, union types, and named arguments throughout.
+PHP 8.2 or higher. ThemePlus uses modern PHP type hints and union types throughout.
 
 = How do I retrieve an option value in my theme? =
 
@@ -204,6 +205,18 @@ To avoid any Google Fonts requests entirely, use only system fonts or upload sel
 
 == Changelog ==
 
+= 1.1.0 =
+* Fix: Select, Radio, Button Set and Select Image fields now save options with numeric keys, such as post IDs.
+* Fix: Options with numeric keys keep the order they are defined in.
+* Fix: Numeric defaults show as selected before the first save.
+* Fix: The 'relation' => 'OR', 'conditions' => [...] format of required now evaluates its conditions.
+* Fix: Checkbox fields keep numeric option keys in order.
+* Fix: Date picker buttons use the ThemePlus primary colour for their focus outline.
+* Fix: Developer Panel shows only when THEMEPLUS_DEV is true or the theme config sets 'dev_mode' => true.
+* Change: Requires PHP 8.2 or higher.
+* Dev: Build tools updated to Vite 8 and Sass 1.98.
+* Dev: Sass code moved to the sass:color, sass:map and sass:math modules
+
 = 1.0.0 =
 * Initial release
 * 30 field types: Text, Textarea, Number, Spinner, Slider, Select, Button Set, Radio, Checkbox, Select Image, Toggle, Switch, Color Picker, Gradient Picker, Image, Gallery, Icon, Typography, Dimensions, Spacing, Border, Info, Section, Raw, Shortcode, Date Picker, Social Media, Code Editor, Repeater, Background, Link, Group
@@ -224,6 +237,9 @@ To avoid any Google Fonts requests entirely, use only system fonts or upload sel
 * Full i18n/l10n support with .pot file
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Fixes saving choice fields that use numeric keys. Requires PHP 8.2 or higher.
 
 = 1.0.0 =
 Initial release — no upgrade steps required.

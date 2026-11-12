@@ -2,6 +2,10 @@
  * ThemePlus Variables
  */
 
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:math';
+
 // Typography
 $font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 $font-size-base: 14px;
@@ -50,20 +54,30 @@ $z-index-header: 90;
 $z-index-modal: 1000;
 
 // ============== COLORS ============== //
+
+// Palette shade: adjusts saturation, then lightness, each kept within 0%–100%.
+@function palette-shade($color, $saturation-change, $lightness-change) {
+  $saturation: color.channel($color, "saturation", $space: hsl) + $saturation-change;
+  $color: color.change($color, $saturation: math.clamp(0%, $saturation, 100%));
+
+  $lightness: color.channel($color, "lightness", $space: hsl) + $lightness-change;
+  @return color.change($color, $lightness: math.clamp(0%, $lightness, 100%));
+}
+
 // Function to generate palette from base color
 @function generate-color-palette($base-color) {
   $palette: (
-      50: lighten(desaturate($base-color, 10%), 42%),
-      100: lighten(desaturate($base-color, 8%), 36%),
-      200: lighten(desaturate($base-color, 6%), 28%),
-      300: lighten(desaturate($base-color, 4%), 18%),
-      400: lighten(desaturate($base-color, 2%), 8%),
+      50: palette-shade($base-color, -10%, 42%),
+      100: palette-shade($base-color, -8%, 36%),
+      200: palette-shade($base-color, -6%, 28%),
+      300: palette-shade($base-color, -4%, 18%),
+      400: palette-shade($base-color, -2%, 8%),
       500: $base-color,
-      600: darken(saturate($base-color, 5%), 8%),
-      700: darken(saturate($base-color, 8%), 16%),
-      800: darken(saturate($base-color, 10%), 24%),
-      900: darken(saturate($base-color, 12%), 32%),
-      950: darken(saturate($base-color, 15%), 42%)
+      600: palette-shade($base-color, 5%, -8%),
+      700: palette-shade($base-color, 8%, -16%),
+      800: palette-shade($base-color, 10%, -24%),
+      900: palette-shade($base-color, 12%, -32%),
+      950: palette-shade($base-color, 15%, -42%)
   );
 
   @return $palette;
@@ -71,7 +85,11 @@ $z-index-modal: 1000;
 
 // Function to convert hex color to RGB string
 @function hex-to-rgb($color) {
-  @return #{red($color)}, #{green($color)}, #{blue($color)};
+  $red: math.round(color.channel($color, "red", $space: rgb));
+  $green: math.round(color.channel($color, "green", $space: rgb));
+  $blue: math.round(color.channel($color, "blue", $space: rgb));
+
+  @return #{$red}, #{$green}, #{$blue};
 }
 
 // Function to generate RGB palette
@@ -80,7 +98,7 @@ $z-index-modal: 1000;
   $rgb-palette: ();
 
   @each $key, $color in $palette {
-    $rgb-palette: map-merge($rgb-palette, (
+    $rgb-palette: map.merge($rgb-palette, (
         $key: hex-to-rgb($color)
     ));
   }

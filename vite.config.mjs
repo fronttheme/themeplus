@@ -8,28 +8,23 @@ export default defineConfig({
   // Base public path
   base: './',
 
-  // Build configuration
+  // Build configuration: compiles the admin SCSS into assets/css/admin.css
   build: {
     outDir: 'assets',
     emptyOutDir: false,
 
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         'admin-styles': path.resolve(__dirname, 'src/scss/admin.scss'),
       },
       output: {
-        // JS output naming
-        entryFileNames: (chunkInfo) => {
-          if (chunkInfo.name.includes('styles')) {
-            return 'css/[name].js'; // Temporary, will be removed
-          }
-          return 'js/[name].min.js';
-        },
+        // CSS-only entry: any JS stub Vite writes stays next to the CSS
+        entryFileNames: 'css/[name].js',
 
         // CSS output naming
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
-          const ext = info[info.length - 1];
+          const ext  = info[info.length - 1];
 
           if (ext === 'css') {
             // Remove '-styles' suffix from CSS files
@@ -44,39 +39,14 @@ export default defineConfig({
 
           return 'assets/[name][extname]';
         },
-
-        // Code splitting
-        chunkFileNames: 'js/chunks/[name]-[hash].js',
-
-        // External dependencies (jQuery is provided by WordPress)
-        globals: {
-          jquery: 'jQuery'
-        }
-      },
-
-      // Externalize jQuery (WordPress provides it)
-      external: ['jquery']
-    },
-
-    // Minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.logs in production
       },
     },
 
     // Source maps for debugging
-    sourcemap: false, // Disable sourcemaps in build
+    sourcemap: false,
   },
 
   css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern',
-        silenceDeprecations: ['legacy-js-api', 'color-functions', 'global-builtin'],
-      }
-    },
     devSourcemap: true
   },
 

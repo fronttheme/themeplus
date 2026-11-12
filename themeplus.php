@@ -3,7 +3,7 @@
  * Plugin Name: ThemePlus
  * Plugin URI: https://www.fronttheme.com/products/themeplus
  * Description: A modern, React-powered theme options framework. 30 field types, white-label support, conditional logic — free forever.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Faruk Ahmed
  * Author URI: https://fronttheme.com
  * License: GPL v2 or later
@@ -11,7 +11,7 @@
  * Text Domain: themeplus
  * Domain Path: /languages
  * Requires at least: 6.8
- * Requires PHP: 8.0
+ * Requires PHP: 8.2
  *
  * @package ThemePlus
  */
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('THEMEPLUS_VERSION', '1.0.0');
+define('THEMEPLUS_VERSION', '1.1.0');
 define('THEMEPLUS_FILE', __FILE__);
 define('THEMEPLUS_PATH', plugin_dir_path(__FILE__));
 define('THEMEPLUS_URL', plugin_dir_url(__FILE__));

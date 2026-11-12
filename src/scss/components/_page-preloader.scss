@@ -9,21 +9,21 @@
   // Base styles
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 12px;
   background: linear-gradient(0deg, #e7e4f7, white);
   border: 2px solid #fff;
-  border-radius: 20px;
+  border-radius: 1000px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.3px;
   cursor: pointer;
   transition: all 0.3s ease;
 
-  // Icon styles
-  &__icon {
+  // Icon
+  .tpo-footer__preloader-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,8 +38,8 @@
     }
   }
 
-  // Label styles
-  &__label {
+  // Label with an underline that grows from the left
+  .tpo-footer__preloader-label {
     position: relative;
     padding-right: 4px;
 
@@ -51,29 +51,26 @@
       width: 0;
       height: 2px;
       border-radius: 2px;
+      background: currentColor;
       transition: width 0.3s ease;
     }
+  }
+
+  // Full underline while hovered or focused with the keyboard
+  &:is(:hover, :focus-visible) .tpo-footer__preloader-label::after {
+    width: 20px;
   }
 
   // Disabled state (OFF)
   &.is-disabled {
     color: var(--themeplus-text-muted);
 
-    .tpo-footer__preloader-icon {
-      i {
-        color: #ef4444; // Red for ban icon
-      }
-    }
-
-    &__label::after {
+    .tpo-footer__preloader-icon i {
+      color: #ef4444; // Red for ban icon
     }
 
     &:hover {
       background: linear-gradient(120deg, white, #e7e4f7);
-
-      &__label::after {
-        width: 100%;
-      }
     }
   }
 
@@ -84,22 +81,8 @@
     color: var(--themeplus-text-muted);
     box-shadow: 0 0 8px var(--themeplus-bg-canvas);
 
-    .tpo-footer__preloader-icon {
-      i {
-        color: #a869f0;
-      }
-    }
-
-    &__label::after {
-    }
-
-    &:hover {
-      &__label::after {
-        width: 100%;
-      }
-    }
-
-    &:active {
+    .tpo-footer__preloader-icon i {
+      color: #a869f0;
     }
   }
 
@@ -107,10 +90,6 @@
   &:focus-visible {
     outline: 2px solid rgba($color-primary, 0.25);
     outline-offset: 2px;
-  }
-
-  // Click/tap effect
-  &:active {
   }
 }
 

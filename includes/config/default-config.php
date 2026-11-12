@@ -21,7 +21,7 @@ function themeplus_register_default_config(): void {
   themeplus_add_section([
     'id'       => 'custom-fonts',
     'title'    => __('Custom Fonts', 'themeplus'),
-    'icon'     => 'fa-solid fa-font',
+    'icon'     => 'font',
     'priority' => 90,
     'fields'   => [],
   ]);
@@ -32,7 +32,7 @@ function themeplus_register_default_config(): void {
   themeplus_add_section([
     'id'       => 'import-export',
     'title'    => __('Import/Export', 'themeplus'),
-    'icon'     => 'fa-solid fa-database',
+    'icon'     => 'database',
     'priority' => 100,
     'fields'   => [],
   ]);
@@ -44,7 +44,7 @@ function themeplus_register_default_config(): void {
     themeplus_add_section([
       'id'       => 'developer-panel',
       'title'    => __('Developer Panel', 'themeplus'),
-      'icon'     => 'fa-solid fa-laptop-code',
+      'icon'     => 'laptop-code',
       'priority' => 999, // Last section
       'fields'   => [], // No fields, React will handle rendering
     ]);

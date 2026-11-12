@@ -15,6 +15,7 @@
   position: sticky;
   top: 0;
   z-index: $z-index-header;
+  overflow-x: auto;
 
   &__left,
   &__right {
@@ -31,6 +32,7 @@
   &__theme-toggle {
     width: 36px;
     height: 36px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: var(--themeplus-bg-canvas);
     color: var(--themeplus-text-secondary);

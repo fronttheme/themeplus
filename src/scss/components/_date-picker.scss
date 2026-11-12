@@ -23,6 +23,11 @@
     box-shadow: none !important;
   }
 
+  .components-button:focus:not(:active) {
+    outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--themeplus-primary, #7f27ff);
+    outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
+  }
+
   .tpo-button__text {
     color: #fff;
   }

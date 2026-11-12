@@ -12,6 +12,7 @@
   justify-content: space-between;
   padding: 0 $spacing-lg;
   gap: $spacing-lg;
+  overflow-x: auto;
 
   &__left,
   &__right {

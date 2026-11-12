@@ -22,6 +22,82 @@ class ThemePlus_Config {
   private static array $sections = [];
 
   /**
+   * Field types whose options are sent to the admin panel as ordered { value, label } rows.
+   */
+  private const CHOICE_FIELD_TYPES = ['select', 'radio', 'button_set', 'checkbox'];
+
+  /**
+   * Convert any supported options format into an ordered list of rows with a string 'value'.
+   *
+   * Supported formats: 'key' => 'Label' map, list of scalars, list of { value, label } rows.
+   * A list (keys 0, 1, 2…) uses its items as values; any other array uses its keys, numeric keys included.
+   *
+   * @param array $options Options as written in the field config.
+   * @return array<int, array> Rows such as ['value' => '7435', 'label' => 'Footer 1'].
+   */
+  public static function option_rows(array $options): array {
+    $is_list = array_is_list($options);
+    $rows    = [];
+
+    foreach ($options as $key => $option) {
+      if (is_array($option) && isset($option['value'])) {
+        $option['value'] = (string)$option['value'];
+        $rows[]          = $option;
+      } elseif (!$is_list) {
+        $rows[] = is_array($option)
+          ? ['value' => (string)$key] + $option
+          : ['value' => (string)$key, 'label' => (string)$option];
+      } elseif (is_scalar($option)) {
+        $rows[] = ['value' => (string)$option, 'label' => (string)$option];
+      }
+    }
+
+    return $rows;
+  }
+
+  /**
+   * Prepare a list of fields for the admin panel and the sanitizer.
+   *
+   * @param array $fields Fields as written in the section config.
+   * @return array
+   */
+  private static function prepare_fields(array $fields): array {
+    foreach ($fields as $index => $field) {
+      $fields[$index] = self::prepare_field($field);
+    }
+
+    return $fields;
+  }
+
+  /**
+   * Choice fields get ordered option rows and a string default; nested fields are prepared the same way.
+   *
+   * @param array $field Field configuration.
+   * @return array
+   */
+  private static function prepare_field(array $field): array {
+    $is_choice_field = in_array($field['type'] ?? '', self::CHOICE_FIELD_TYPES, true);
+
+    if ($is_choice_field && is_array($field['options'] ?? null)) {
+      $field['options'] = self::option_rows($field['options']);
+
+      if (is_array($field['default'] ?? null)) {
+        $field['default'] = array_map('strval', $field['default']);
+      } elseif (is_scalar($field['default'] ?? null)) {
+        $field['default'] = (string)$field['default'];
+      }
+    }
+
+    foreach (['fields', 'sub_fields'] as $nested_key) {
+      if (is_array($field[$nested_key] ?? null)) {
+        $field[$nested_key] = self::prepare_fields($field[$nested_key]);
+      }
+    }
+
+    return $field;
+  }
+
+  /**
    * Add a section
    *
    * @param array $section Section configuration
@@ -40,6 +116,12 @@ class ThemePlus_Config {
 
     if (empty($section['id'])) {
       return;
+    }
+
+    $section['fields'] = self::prepare_fields($section['fields']);
+
+    foreach ($section['subsections'] as $index => $subsection) {
+      $section['subsections'][$index]['fields'] = self::prepare_fields($subsection['fields'] ?? []);
     }
 
     self::$sections[$section['id']] = $section;
@@ -67,6 +149,8 @@ class ThemePlus_Config {
     if (empty($subsection['id'])) {
       return;
     }
+
+    $subsection['fields'] = self::prepare_fields($subsection['fields']);
 
     self::$sections[$parent_id]['subsections'][] = $subsection;
   }

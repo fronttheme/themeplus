@@ -28,8 +28,8 @@ function CheckboxField({
   const normalizeOptions = () => {
     if (Array.isArray(options)) {
       return options.map(option => {
-        if (typeof option === 'object' && option.value && option.label) {
-          return {value: option.value, label: option.label};
+        if (typeof option === 'object' && option !== null) {
+          return {value: option.value, label: option.label ?? option.value};
         }
         return {value: option, label: option};
       });

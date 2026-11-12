@@ -555,26 +555,17 @@ class ThemePlus_Sanitizer {
   // ==================================================================
 
   /**
-   * Extract the allowed values from any supported options format:
-   * 'key' => 'Label' map, array of scalars, array of { value, label } rows.
+   * Extract the allowed values from any supported options format, as strings.
+   *
+   * @param mixed $options Options from the field config.
+   * @return array<int, string>
    */
   private static function extract_option_values(mixed $options): array {
     if (!is_array($options)) {
       return [];
     }
 
-    $values = [];
-    foreach ($options as $key => $option) {
-      if (is_array($option) && isset($option['value'])) {
-        $values[] = (string)$option['value'];
-      } elseif (is_string($key) && !is_array($option)) {
-        $values[] = $key;
-      } elseif (is_scalar($option)) {
-        $values[] = (string)$option;
-      }
-    }
-
-    return $values;
+    return array_column(ThemePlus_Config::option_rows($options), 'value');
   }
 
   /**

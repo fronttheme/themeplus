@@ -6,9 +6,9 @@
 Build powerful theme options panels with a beautiful React UI — no bloat, no paywalls, no legacy code.
 
 [![WordPress](https://img.shields.io/badge/WordPress-6.8%2B-blue?logo=wordpress)](https://wordpress.org)
-[![PHP](https://img.shields.io/badge/PHP-8.0%2B-777BB4?logo=php)](https://php.net)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net)
 [![License](https://img.shields.io/badge/License-GPL--2.0--or--later-green)](./LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-orange)](https://github.com/fronttheme/themeplus/releases)
+[![Version](https://img.shields.io/badge/Version-1.1.0-orange)](https://github.com/fronttheme/themeplus/releases)
 
 [Features](#-features) · [Field Types](#-field-types) · [Installation](#-installation) · [Usage](#-usage) · [White-label](#-white-label) · [Conditional Logic](#-conditional-logic) · [REST API](#-rest-api) · [Contributing](#-contributing)
 
@@ -22,7 +22,7 @@ Build powerful theme options panels with a beautiful React UI — no bloat, no p
 
 - 🎨 **React-Powered Admin UI** — Modern, polished interface built with React and WordPress components
 - 🧩 **30 Field Types** — Every input type a theme could need, nothing more
-- 🏷️ **Full White-label Support** — Rename everything: menu title, slug, icon, option key — it becomes your theme's own settings panel
+- 🏷️ **Full White-label Support** — Your theme’s menu title, slug, menu icon and option key
 - 📂 **Sections & Subsections** — Organize options into a clean hierarchical sidebar with `themeplus_add_section()` and `themeplus_add_subsection()`
 - 🔀 **Conditional Logic** — Show or hide any field based on the value of another; 10 operators, AND/OR relations, dot-notation sub-keys
 - 🔤 **Google Fonts Integration** — Browse and load from 1,899 Google Fonts with live preview inside the Typography field
@@ -34,8 +34,8 @@ Build powerful theme options panels with a beautiful React UI — no bloat, no p
 - ⚠️ **Unsaved Changes Detection** — Warns before navigating away with unsaved changes
 - 🔌 **REST API** — Full CRUD endpoints under the `themeplus/v1` namespace; capability-gated with nonce verification
 - 🛠️ **Developer Panel** — Dev-mode-only panel showing field metadata, current values, PHP data types, and copy-ready code snippets
-- 🪶 **392KB total** — Lightweight alternative to Redux Framework with a fraction of the footprint
-- 🧹 **Modern PHP 8.0+** — Clean, singleton-pattern architecture with type hints throughout
+- 🪶 **396KB total** — Lightweight alternative to Redux Framework with a fraction of the footprint
+- 🧹 **Modern PHP 8.2+** — Clean, singleton-pattern architecture with type hints throughout
 - 🌍 **i18n Ready** — Full internationalization support with `.pot` file included
 
 ---
@@ -44,20 +44,20 @@ Build powerful theme options panels with a beautiful React UI — no bloat, no p
 
 30 field types across 12 categories — everything a theme needs, nothing it doesn't.
 
-| Category | Fields |
-|---|---|
-| **Text** | Text, Textarea |
-| **Number** | Number / Spinner, Slider |
+| Category | Fields                                            |
+|---|---------------------------------------------------|
+| **Text** | Text, Textarea                                    |
+| **Number** | Number / Spinner, Slider                          |
 | **Choice** | Select, Button Set, Radio, Checkbox, Select Image |
-| **Toggle** | Toggle / Switch |
-| **Color** | Color Picker, Gradient Picker |
-| **Media** | Image, Gallery, Icon (FontAwesome 6) |
-| **Layout** | Typography, Dimensions, Spacing, Border |
-| **Special** | Info, Section, Shortcode, Raw |
-| **Date** | Date Picker (date only or date + time) |
-| **Social** | Social Media Links (20 platforms) |
-| **Code** | Code Editor (CSS, JavaScript, HTML) |
-| **Advanced** | Repeater, Background, Link, Group |
+| **Toggle** | Toggle / Switch                                   |
+| **Color** | Color Picker, Gradient Picker                     |
+| **Media** | Image, Gallery, Icon (FontAwesome 7)              |
+| **Layout** | Typography, Dimensions, Spacing, Border           |
+| **Special** | Info, Section, Shortcode, Raw                     |
+| **Date** | Date Picker (date only or date + time)            |
+| **Social** | Social Media Links (20 platforms)                 |
+| **Code** | Code Editor (CSS, JavaScript, HTML)               |
+| **Advanced** | Repeater, Background, Link, Group                 |
 
 ### Value shapes (verified)
 
@@ -77,6 +77,8 @@ Every field returns a documented, consistent value. Key shapes:
 | `gradient_picker` | Complete CSS `linear-gradient()` string |
 | `repeater` | Array of row arrays, each keyed by sub-field id |
 | `group` | Single row array keyed by sub-field id |
+| `select` / `radio` / `button_set` | Selected key as a string — numeric keys such as post IDs return `'7435'` |
+| `checkbox` | Array of checked keys as strings |
 
 ### Icon field convention
 
@@ -92,7 +94,7 @@ Every field returns a documented, consistent value. Key shapes:
 | Requirement | Version |
 |---|---|
 | WordPress | 6.8 or higher |
-| PHP | 8.0 or higher |
+| PHP | 8.2 or higher |
 
 ---
 
@@ -369,7 +371,7 @@ Show or hide any field based on another field's value using the `required` key.
 
 ## 🎨 White-label
 
-ThemePlus is designed to disappear into your theme. Your users see your theme's own settings panel — never "ThemePlus".
+The admin menu, browser title and option key belong to your theme. The panel itself keeps the ThemePlus brand.
 
 ```php
 themeplus_framework_config([
@@ -442,10 +444,10 @@ define( 'THEMEPLUS_DEV', true );
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.19+
 - npm
 - Local WordPress install ([LocalWP](https://localwp.com/) recommended)
-- PHP 8.0+
+- PHP 8.2+
 
 ### Setup
 
@@ -493,10 +495,10 @@ wp-scripts generates `admin.asset.php` with a content-hash version and the full 
 
 ### Tech stack
 
-- **Build:** Vite 7 (CSS) + webpack via `@wordpress/scripts` (JS)
+- **Build:** Vite 8 (CSS) + webpack via `@wordpress/scripts` (JS)
 - **CSS:** SCSS — modular 7-1 architecture with BEM methodology
 - **JS/UI:** React (via `@wordpress/element`), WordPress Components
-- **PHP:** Singleton pattern, PHP 8.0+, type hints throughout
+- **PHP:** Singleton pattern, PHP 8.2+, type hints throughout
 - **Fonts:** Google Fonts API (1,899 fonts) + custom font upload system
 
 ---

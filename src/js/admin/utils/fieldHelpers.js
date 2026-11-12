@@ -60,7 +60,7 @@
 const resolveValue = (fieldId, options, defaults = {}) => {
   if (fieldId.includes('.')) {
     const [key, subKey] = fieldId.split('.');
-    const parent = options[key] ?? defaults[key];
+    const parent        = options[key] ?? defaults[key];
     if (parent && typeof parent === 'object') {
       return parent[subKey];
     }
@@ -81,7 +81,7 @@ const resolveValue = (fieldId, options, defaults = {}) => {
  */
 const evaluateRule = (rule, options, defaults = {}) => {
   const [fieldId, operator, conditionValue] = rule;
-  const currentValue = resolveValue(fieldId, options, defaults);
+  const currentValue                        = resolveValue(fieldId, options, defaults);
 
   // ── Array of values — ['field', '==', ['a', 'b']] ────────────────────────
   if (Array.isArray(conditionValue)) {
@@ -186,8 +186,10 @@ export const shouldShowField = (field, options, defaults = {}) => {
   // 'required' => ['relation'=>'OR', ['field','==','a'], [...]]       → OR
   const relation = (required.relation || 'AND').toUpperCase();
 
-  // Collect only the actual rule arrays (skip the 'relation' key)
-  const rules = Object.values(required).filter(item => Array.isArray(item));
+  // Rules sit either under a 'conditions' key or directly next to 'relation'
+  const rules = Array.isArray(required.conditions)
+    ? required.conditions
+    : Object.values(required).filter(item => Array.isArray(item));
 
   if (relation === 'OR') {
     return rules.some(rule => evaluateRule(rule, options, defaults));
@@ -209,8 +211,8 @@ export const highlightText = (text, query) => {
 
   // Escape regex special characters — raw user input like "(" or "[" must not break the RegExp.
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const regex = new RegExp(`(${escaped})`, 'gi');
-  const parts = text.split(regex);
+  const regex   = new RegExp(`(${escaped})`, 'gi');
+  const parts   = text.split(regex);
 
   return parts.map((part, index) => {
     if (part.toLowerCase() === query.toLowerCase()) {

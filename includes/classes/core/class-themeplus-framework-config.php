@@ -30,11 +30,11 @@ class ThemePlus_Framework_Config {
 
       // Menu
       'menu_slug'     => 'themeplus',
-      'menu_title'    => __('ThemePlus', 'themeplus'),
-      'page_title'    => __('ThemePlus Options', 'themeplus'),
+      'menu_title'    => '', // Built by get_title() when empty.
+      'page_title'    => '', // Built by get_title() when empty.
       'menu_icon'     => $svg_icon,
       'menu_position' => 59,
-      'capability'    => 'manage_options',
+      'capability'    => 'edit_theme_options',
 
       // Features
       'admin_bar'     => true,
@@ -50,21 +50,7 @@ class ThemePlus_Framework_Config {
    * Set framework configuration (called by theme/plugin)
    */
   public static function set(array $config): void {
-    $defaults = self::get_defaults();
-
-    // If display_name is provided, use it for menu titles
-    if (!empty($config['display_name'])) {
-      $display_name = $config['display_name'];
-
-      /* translators: %s: the theme's display name. */
-      $defaults['menu_title'] = sprintf(__('%s Settings', 'themeplus'), $display_name);
-
-      /* translators: %s: the theme's display name. */
-      $defaults['page_title'] = sprintf(__('%s Options', 'themeplus'), $display_name);
-    }
-
-    // Merge user config with (possibly updated) defaults
-    self::$framework_config = wp_parse_args($config, $defaults);
+    self::$framework_config = wp_parse_args($config, self::get_defaults());
 
     // Track this opt_name so uninstall.php can clean up precisely —
     // avoids wildcard LIKE queries against the options table.
@@ -81,19 +67,62 @@ class ThemePlus_Framework_Config {
    * Get framework config value
    */
   public static function get(string $key, $default = '') {
-    $config = self::get_all();
-    return $config[$key] ?? $default;
+    if ($key === 'menu_title' || $key === 'page_title') {
+      return self::get_title($key);
+    }
+
+    return self::get_raw()[$key] ?? $default;
   }
 
   /**
-   * Get all framework config
+   * Get all framework config, with the menu and page titles filled in
    */
   public static function get_all(): array {
+    $config = self::get_raw();
+
+    $config['menu_title'] = self::get_title('menu_title');
+    $config['page_title'] = self::get_title('page_title');
+
+    return $config;
+  }
+
+  /**
+   * Stored config, or the defaults when no theme has configured the framework
+   */
+  private static function get_raw(): array {
     if (empty(self::$framework_config)) {
-      // Return defaults if no user config
       return self::get_defaults();
     }
+
     return self::$framework_config;
+  }
+
+  /**
+   * Menu or page title: the theme's own title, or a translated default built from display_name
+   *
+   * @param string $key 'menu_title' or 'page_title'.
+   * @return string
+   */
+  private static function get_title(string $key): string {
+    $config = self::get_raw();
+
+    if (!empty($config[$key])) {
+      return $config[$key];
+    }
+
+    $display_name = $config['display_name'] ?? '';
+
+    if ($key === 'menu_title') {
+      return $display_name !== ''
+        /* translators: %s: the theme's display name. */
+        ? sprintf(__('%s Settings', 'themeplus'), $display_name)
+        : __('ThemePlus', 'themeplus');
+    }
+
+    return $display_name !== ''
+      /* translators: %s: the theme's display name. */
+      ? sprintf(__('%s Options', 'themeplus'), $display_name)
+      : __('ThemePlus Options', 'themeplus');
   }
 
   /**
@@ -104,24 +133,19 @@ class ThemePlus_Framework_Config {
   }
 
   /**
-   * Check if development mode is enabled
+   * Whether the Developer Panel is enabled.
+   *
+   * On when THEMEPLUS_DEV is defined as boolean true, or when the theme's
+   * framework config sets 'dev_mode' => true. The 'themeplus/is_dev_mode'
+   * filter has the final say.
+   *
+   * @return bool
    */
   public static function is_dev_mode(): bool {
-    $is_dev = false;
+    $constant_on = defined('THEMEPLUS_DEV') && THEMEPLUS_DEV === true;
+    $config_on   = self::get('dev_mode', false) === true;
 
-    // 1. Custom constant (highest priority)
-    if (defined('THEMEPLUS_DEV')) {
-      $is_dev = THEMEPLUS_DEV;
-    } // 2. WordPress debug mode
-    elseif (defined('WP_DEBUG') && WP_DEBUG) {
-      $is_dev = true;
-    } // 3. WordPress environment
-    elseif (defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'local') {
-      $is_dev = true;
-    }
-
-    // 4. Filter for custom conditions
-    return apply_filters('themeplus/is_dev_mode', $is_dev);
+    return (bool)apply_filters('themeplus/is_dev_mode', $constant_on || $config_on);
   }
 
 }
